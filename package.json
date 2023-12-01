@@ -1,12 +1,11 @@
 {
-  "name": "rapidbuild",
   "private": true,
   "license": "MPL-2.0",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "biome format . --write"    
+    "format": "biome format . --write"
   },
   "devDependencies": {
     "@biomejs/biome": "1.4.1",

@@ -15,7 +15,9 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "complexity": { "noExtraBooleanCast": "off" },
+      "suspicious": { "noExplicitAny": "off" }
     }
   },
   "organizeImports": {

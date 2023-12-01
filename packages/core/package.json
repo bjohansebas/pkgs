@@ -1,0 +1,46 @@
+{
+  "name": "rapidbuild",
+  "version": "0.1.0",
+  "author": "Sebastian Beltran <bjohansebas@gmail.com>",
+  "keywords": ["react", "next.js", "config"],
+  "description": "",
+  "license": "MPL-2.0",
+  "types": "./dist/index.d.ts",
+  "bin": "./dist/index.js",
+  "files": ["dist/**/*"],
+  "scripts": {
+    "build": "tsup",
+    "check-types": "tsc --noEmit",
+    "dev": "tsup --watch"
+  },
+  "devDependencies": {
+    "@types/async-retry": "1.4.8",
+    "@types/cross-spawn": "6.0.6",
+    "@types/node": "20.10.1",
+    "@types/prompts": "2.4.9",
+    "@types/tar": "6.1.10",
+    "@types/validate-npm-package-name": "4.0.2",
+    "commander": "11.1.0",
+    "cross-spawn": "7.0.3",
+    "fast-glob": "3.3.2",
+    "got": "14.0.0",
+    "picocolors": "1.0.0",
+    "prompts": "2.4.2",
+    "tar": "6.2.0",
+    "tsup": "8.0.1",
+    "typescript": "5.3.2",
+    "update-check": "1.5.4",
+    "validate-npm-package-name": "5.0.0"
+  },
+  "homepage": "https://github.com/bjohansebas/rapidbuild",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bjohansebas/rapidbuild.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bjohansebas/rapidbuild/issues"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}
