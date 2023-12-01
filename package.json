@@ -1,16 +1,15 @@
 {
   "name": "rapidbuild",
   "private": true,
+  "license": "MPL-2.0",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "biome format . --write"    
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "prettier": "^3.1.0",
+    "@biomejs/biome": "1.4.1",
     "turbo": "latest"
   },
   "packageManager": "pnpm@8.9.0",
