@@ -123,6 +123,67 @@ async function run(): Promise<void> {
   if (folderExists && !isFolderEmpty(root, appName)) {
     process.exit(1)
   }
+
+  const config = {
+    biome: {
+      formatter: Boolean(program.opts().biome),
+      linter: Boolean(program.opts().biome),
+    },
+    eslint: Boolean(program.opts().eslint),
+    prettier: Boolean(program.opts().prettier),
+  }
+
+  if (
+    (!process.argv.includes('--biome') && !process.argv.includes('--prettier')) ||
+    (process.argv.includes('--biome') && process.argv.includes('--prettier'))
+  ) {
+    const { formatter } = await prompts({
+      onState: onPromptState,
+      type: 'select',
+      name: 'formatter',
+      message: 'Which formatter tool would you like to use?',
+      choices: [
+        { title: 'Biome', value: 'biome' },
+        { title: 'Prettier', value: 'prettier' },
+      ],
+    })
+
+    if (formatter === 'biome') {
+      config.biome.formatter = true
+      config.prettier = false
+    }
+
+    if (formatter === 'prettier') {
+      config.biome.formatter = false
+      config.prettier = true
+    }
+  }
+
+  if (
+    (!process.argv.includes('--biome') && !process.argv.includes('--eslint')) ||
+    (process.argv.includes('--biome') && process.argv.includes('--eslint'))
+  ) {
+    const { linter } = await prompts({
+      onState: onPromptState,
+      type: 'select',
+      name: 'linter',
+      message: 'Which linter tool would you like to use?',
+      choices: [
+        { title: 'Biome', value: 'biome' },
+        { title: 'ESLint', value: 'eslint' },
+      ],
+    })
+
+    if (linter === 'biome') {
+      config.biome.linter = true
+      config.eslint = false
+    }
+
+    if (linter === 'eslint') {
+      config.biome.linter = false
+      config.eslint = true
+    }
+  }
 }
 
 run()
