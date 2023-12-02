@@ -5,13 +5,8 @@
   "keywords": ["react", "next.js", "config"],
   "description": "",
   "license": "MPL-2.0",
-  "types": "./dist/index.d.ts",
-  "bin": "./dist/index.js",
-  "files": ["dist/**/*"],
   "scripts": {
-    "build": "tsup",
-    "check-types": "tsc --noEmit",
-    "dev": "tsup --watch"
+    "dev": "ncc build ./index.ts -w -o dist/"
   },
   "devDependencies": {
     "@types/async-retry": "1.4.8",
@@ -20,6 +15,7 @@
     "@types/prompts": "2.4.9",
     "@types/tar": "6.1.10",
     "@types/validate-npm-package-name": "4.0.2",
+    "@vercel/ncc": "0.38.1",
     "commander": "11.1.0",
     "cross-spawn": "7.0.3",
     "fast-glob": "3.3.2",
@@ -27,7 +23,6 @@
     "picocolors": "1.0.0",
     "prompts": "2.4.2",
     "tar": "6.2.0",
-    "tsup": "8.0.1",
     "typescript": "5.3.2",
     "update-check": "1.5.4",
     "validate-npm-package-name": "5.0.0"
