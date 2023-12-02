@@ -3,6 +3,7 @@ import path from 'path'
 
 import { blue, green, yellow } from 'picocolors'
 import validateProjectName from 'validate-npm-package-name'
+
 import { EMOJIS } from '../ui/emojis'
 
 export type PackageManager = 'npm' | 'pnpm' | 'yarn' | 'bun'
@@ -93,4 +94,17 @@ export function isFolderEmpty(root: string, name: string): boolean {
   }
 
   return true
+}
+
+export async function isWriteable(directory: string): Promise<boolean> {
+  try {
+    await fs.promises.access(directory, (fs.constants || fs).W_OK)
+    return true
+  } catch (err) {
+    return false
+  }
+}
+
+export function makeDir(root: string, options = { recursive: true }): Promise<string | undefined> {
+  return fs.promises.mkdir(root, options)
 }

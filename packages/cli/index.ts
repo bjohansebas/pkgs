@@ -8,7 +8,8 @@ import { bold, cyan, green, red } from 'picocolors'
 import prompts from 'prompts'
 
 import packageJson from './package.json'
-import { isFolderEmpty, validateNpmName } from './src/utils'
+import { createApp } from './src/create-app'
+import { getPkgManager, isFolderEmpty, validateNpmName } from './src/utils'
 
 let projectPath = ''
 
@@ -88,7 +89,7 @@ async function run(): Promise<void> {
     console.log(
       `\nPlease specify the project directory:\n  ${cyan(program.name())} ${green(
         '<project-directory>',
-      )}\nFor example:\n  ${cyan(program.name())} ${green('my-next-app')}\n\nRun ${cyan(
+      )}\nFor example:\n  ${cyan(program.name())} ${green('my-app')}\n\nRun ${cyan(
         `${program.name()} --help`,
       )} to see all options.`,
     )
@@ -184,6 +185,10 @@ async function run(): Promise<void> {
       config.eslint = true
     }
   }
+
+  await createApp({
+    appPath: resolvedProjectPath,
+  })
 }
 
 run()
