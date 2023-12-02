@@ -8,6 +8,9 @@
   "scripts": {
     "dev": "ncc build ./index.ts -w -o dist/"
   },
+  "dependencies": {
+    "node-emoji": "2.1.3"
+  },
   "devDependencies": {
     "@types/async-retry": "1.4.8",
     "@types/cross-spawn": "6.0.6",
