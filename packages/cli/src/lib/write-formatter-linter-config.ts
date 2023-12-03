@@ -2,6 +2,7 @@ import os from 'os'
 import path from 'path'
 import fs from 'fs/promises'
 
+import { FormatterTools, LinterTools } from '../types'
 import { BiomeConfig } from '../types/biome'
 
 export async function writeFormatterAndLinterConfig({
@@ -9,8 +10,8 @@ export async function writeFormatterAndLinterConfig({
   formatter,
   root,
 }: {
-  linter: string
-  formatter: string
+  linter: LinterTools
+  formatter: FormatterTools
   root: string
 }) {
   if (linter === 'biome' && formatter === 'biome') {
@@ -43,7 +44,7 @@ export async function writeFormatterAndLinterConfig({
     return
   }
 
-  if (linter !== '') {
+  if (linter != null) {
     if (linter === 'biome') {
       const biomeConfig: BiomeConfig = {
         $schema: './node_modules/@biomejs/biome/configuration_schema.json',
@@ -70,7 +71,7 @@ export async function writeFormatterAndLinterConfig({
     }
   }
 
-  if (formatter !== '') {
+  if (formatter != null) {
     if (formatter === 'biome') {
       const biomeConfig: BiomeConfig = {
         $schema: './node_modules/@biomejs/biome/configuration_schema.json',

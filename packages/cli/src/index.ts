@@ -202,8 +202,8 @@ async function run(): Promise<void> {
 
   await createApp({
     appPath: resolvedProjectPath,
-    linter: config.eslint ? 'eslint' : config.biome.linter ? 'biome' : '',
-    formatter: config.prettier ? 'prettier' : config.biome.formatter ? 'biome' : '',
+    linter: config.eslint ? 'eslint' : config.biome.linter ? 'biome' : null,
+    formatter: config.prettier ? 'prettier' : config.biome.formatter ? 'biome' : null,
     packageManager,
   })
 }

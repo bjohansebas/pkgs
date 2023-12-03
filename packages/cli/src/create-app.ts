@@ -6,6 +6,7 @@ import { green } from 'picocolors'
 import { writeFormatterAndLinterConfig } from './lib/write-formatter-linter-config'
 import { writeGitIgnore } from './lib/write-git-ignore'
 import { writePackageJson } from './lib/write-package-json'
+import { FormatterTools, LinterTools } from './types'
 import { PackageManager, isFolderEmpty, isWriteable, makeDir } from './utils'
 import { tryGitInit } from './utils/git'
 import { getOnline } from './utils/online'
@@ -19,8 +20,8 @@ export async function createApp({
   packageManager,
 }: {
   appPath: string
-  linter: string
-  formatter: string
+  linter: LinterTools
+  formatter: FormatterTools
   packageManager: PackageManager
 }): Promise<void> {
   const root = path.resolve(appPath)

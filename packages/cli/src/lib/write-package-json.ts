@@ -4,6 +4,7 @@ import fs from 'fs/promises'
 
 import { cyan } from 'picocolors'
 
+import { FormatterTools, LinterTools } from '../types'
 import { PackageJsonConfig } from '../types/package'
 import { PackageManager, installPackages } from '../utils/package'
 
@@ -16,8 +17,8 @@ export async function writePackageJson({
   isOnline,
 }: {
   appName: string
-  linter: string
-  formatter: string
+  linter: LinterTools
+  formatter: FormatterTools
   root: string
   packageManager: PackageManager
   isOnline: boolean
@@ -31,7 +32,7 @@ export async function writePackageJson({
     devDependencies: {},
   }
 
-  if (linter !== '') {
+  if (linter != null) {
     if (linter === 'eslint') {
       packageJsonConfig.devDependencies.eslint = '^8'
       packageJsonConfig.scripts.lint = 'eslint "src/**/*.{ts,js,tsx,jsx}" --fix'
@@ -43,7 +44,7 @@ export async function writePackageJson({
     }
   }
 
-  if (formatter !== '') {
+  if (formatter != null) {
     if (formatter === 'prettier') {
       packageJsonConfig.devDependencies.prettier = '^3'
       packageJsonConfig.scripts.format = 'prettier --write "src/**/*.{ts,js,tsx,jsx}"'
