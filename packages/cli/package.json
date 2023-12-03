@@ -8,9 +8,6 @@
   "scripts": {
     "dev": "ncc build ./index.ts -w -o dist/"
   },
-  "dependencies": {
-    "node-emoji": "2.1.3"
-  },
   "devDependencies": {
     "@types/async-retry": "1.4.8",
     "@types/cross-spawn": "6.0.6",
@@ -23,6 +20,8 @@
     "cross-spawn": "7.0.3",
     "fast-glob": "3.3.2",
     "got": "14.0.0",
+    "node-emoji": "2.1.3",
+    "ora": "7.0.1",
     "picocolors": "1.0.0",
     "prompts": "2.4.2",
     "tar": "6.2.0",

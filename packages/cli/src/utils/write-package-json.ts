@@ -5,13 +5,23 @@ import fs from 'fs/promises'
 import { cyan } from 'picocolors'
 
 import { PackageJsonConfig } from '../types/package'
+import { PackageManager, installPackages } from './package'
 
 export async function writePackageJson({
   appName,
   linter,
   formatter,
+  packageManager,
   root,
-}: { appName: string; linter: string; formatter: string; root: string }) {
+  isOnline,
+}: {
+  appName: string
+  linter: string
+  formatter: string
+  root: string
+  packageManager: PackageManager
+  isOnline: boolean
+}) {
   const packageJsonConfig: PackageJsonConfig = {
     name: appName,
     version: '0.1.0',
@@ -52,7 +62,10 @@ export async function writePackageJson({
     console.log('\nInstalling devDependencies:')
     for (const dependency in packageJsonConfig.devDependencies) console.log(`- ${cyan(dependency)}`)
   }
+
   console.log()
 
   await fs.writeFile(path.join(root, 'package.json'), JSON.stringify(packageJsonConfig, null, 2) + os.EOL)
+
+  await installPackages(packageManager, isOnline)
 }

@@ -2,8 +2,9 @@ import path from 'path'
 
 import { green } from 'picocolors'
 
-import { isFolderEmpty, isWriteable, makeDir } from './utils'
+import { PackageManager, isFolderEmpty, isWriteable, makeDir } from './utils'
 import { tryGitInit } from './utils/git'
+import { getOnline } from './utils/online'
 import { writePackageJson } from './utils/write-package-json'
 
 export class DownloadError extends Error {}
@@ -12,12 +13,17 @@ export async function createApp({
   appPath,
   linter,
   formatter,
+  packageManager,
 }: {
   appPath: string
   linter: string
   formatter: string
+  packageManager: PackageManager
 }): Promise<void> {
   const root = path.resolve(appPath)
+
+  const useYarn = packageManager === 'yarn'
+  const isOnline = !useYarn || (await getOnline())
 
   if (!(await isWriteable(path.dirname(root)))) {
     console.error('The application path is not writable, please check folder permissions and try again.')
@@ -40,8 +46,7 @@ export async function createApp({
   console.log()
 
   process.chdir(root)
-
-  await writePackageJson({ appName, linter, formatter, root })
+  await writePackageJson({ appName, linter, formatter, root, isOnline, packageManager })
 
   if (tryGitInit(root)) {
     console.log('Initialized a git repository.')

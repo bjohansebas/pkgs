@@ -59,6 +59,8 @@ const program = new Command(packageJson.name)
   .allowUnknownOption()
   .parse(process.argv)
 
+const packageManager = getPkgManager()
+
 async function run(): Promise<void> {
   if (typeof projectPath === 'string') {
     projectPath = projectPath.trim()
@@ -202,6 +204,7 @@ async function run(): Promise<void> {
     appPath: resolvedProjectPath,
     linter: config.eslint ? 'eslint' : config.biome.linter ? 'biome' : '',
     formatter: config.prettier ? 'prettier' : config.biome.formatter ? 'biome' : '',
+    packageManager,
   })
 }
 
