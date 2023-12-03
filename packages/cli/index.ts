@@ -146,6 +146,7 @@ async function run(): Promise<void> {
       choices: [
         { title: 'Biome', value: 'biome' },
         { title: 'Prettier', value: 'prettier' },
+        { title: 'None of these', value: 'none' },
       ],
     })
 
@@ -157,6 +158,11 @@ async function run(): Promise<void> {
     if (formatter === 'prettier') {
       config.biome.formatter = false
       config.prettier = true
+    }
+
+    if (formatter === 'none') {
+      config.biome.formatter = false
+      config.prettier = false
     }
   }
 
@@ -172,6 +178,7 @@ async function run(): Promise<void> {
       choices: [
         { title: 'Biome', value: 'biome' },
         { title: 'ESLint', value: 'eslint' },
+        { title: 'None of these', value: 'none' },
       ],
     })
 
@@ -184,10 +191,17 @@ async function run(): Promise<void> {
       config.biome.linter = false
       config.eslint = true
     }
+
+    if (linter === 'none') {
+      config.biome.linter = false
+      config.eslint = false
+    }
   }
 
   await createApp({
     appPath: resolvedProjectPath,
+    linter: config.eslint ? 'eslint' : config.biome.linter ? 'biome' : '',
+    formatter: config.prettier ? 'prettier' : config.biome.formatter ? 'biome' : '',
   })
 }
 

@@ -4,13 +4,18 @@ import { green } from 'picocolors'
 
 import { isFolderEmpty, isWriteable, makeDir } from './utils'
 import { tryGitInit } from './utils/git'
+import { writePackageJson } from './utils/write-package-json'
 
 export class DownloadError extends Error {}
 
 export async function createApp({
   appPath,
+  linter,
+  formatter,
 }: {
   appPath: string
+  linter: string
+  formatter: string
 }): Promise<void> {
   const root = path.resolve(appPath)
 
@@ -35,6 +40,8 @@ export async function createApp({
   console.log()
 
   process.chdir(root)
+
+  await writePackageJson({ appName, linter, formatter, root })
 
   if (tryGitInit(root)) {
     console.log('Initialized a git repository.')
