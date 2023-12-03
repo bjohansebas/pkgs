@@ -7,9 +7,9 @@ import { Command } from 'commander'
 import { bold, cyan, green, red } from 'picocolors'
 import prompts from 'prompts'
 
-import packageJson from './package.json'
-import { createApp } from './src/create-app'
-import { getPkgManager, isFolderEmpty, validateNpmName } from './src/utils'
+import packageJson from '../package.json'
+import { createApp } from './create-app'
+import { getPkgManager, isFolderEmpty, validateNpmName } from './utils'
 
 let projectPath = ''
 

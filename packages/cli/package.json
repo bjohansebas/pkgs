@@ -6,9 +6,9 @@
   "description": "",
   "license": "MPL-2.0",
   "scripts": {
-    "dev": "ncc build ./index.ts -w -o dist/",
+    "dev": "ncc build ./src/index.ts -w -o dist/",
     "prerelease": "node ./src/scripts/rm.mjs dist",
-    "release": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register",
+    "release": "ncc build ./src/index.ts -o ./dist/ --minify --no-cache --no-source-map-register",
     "prepublishOnly": "cd ../../ && turbo run build",
     "build": "pnpm release"
   },

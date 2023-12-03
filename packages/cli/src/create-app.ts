@@ -2,10 +2,10 @@ import path from 'path'
 
 import { green } from 'picocolors'
 
+import { writePackageJson } from './lib/write-package-json'
 import { PackageManager, isFolderEmpty, isWriteable, makeDir } from './utils'
 import { tryGitInit } from './utils/git'
 import { getOnline } from './utils/online'
-import { writePackageJson } from './utils/write-package-json'
 
 export class DownloadError extends Error {}
 
@@ -46,7 +46,14 @@ export async function createApp({
   console.log()
 
   process.chdir(root)
+
   await writePackageJson({ appName, linter, formatter, root, isOnline, packageManager })
+
+  // const ignorePath = path.join(root, '.gitignore')
+
+  // if (!fs.existsSync(ignorePath)) {
+  //   fs.copyFileSync('', ignorePath)
+  // }
 
   if (tryGitInit(root)) {
     console.log('Initialized a git repository.')

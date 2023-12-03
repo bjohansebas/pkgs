@@ -5,7 +5,7 @@ import fs from 'fs/promises'
 import { cyan } from 'picocolors'
 
 import { PackageJsonConfig } from '../types/package'
-import { PackageManager, installPackages } from './package'
+import { PackageManager, installPackages } from '../utils/package'
 
 export async function writePackageJson({
   appName,
@@ -34,20 +34,24 @@ export async function writePackageJson({
   if (linter !== '') {
     if (linter === 'eslint') {
       packageJsonConfig.devDependencies.eslint = '^8'
+      packageJsonConfig.scripts.lint = 'eslint "src/**/*.{ts,js,tsx,jsx}" --fix'
     }
 
     if (linter === 'biome') {
       packageJsonConfig.devDependencies['@biomejs/biome'] = '^1'
+      packageJsonConfig.scripts.lint = '@biomejs/biome lint . --apply'
     }
   }
 
   if (formatter !== '') {
     if (formatter === 'prettier') {
       packageJsonConfig.devDependencies.prettier = '^3'
+      packageJsonConfig.scripts.format = 'prettier --write "src/**/*.{ts,js,tsx,jsx}"'
     }
 
     if (formatter === 'biome') {
       packageJsonConfig.devDependencies['@biomejs/biome'] = '^1'
+      packageJsonConfig.scripts.format = '@biomejs/biome format . --write'
     }
   }
   const devDeps = Object.keys(packageJsonConfig.devDependencies).length
@@ -68,4 +72,6 @@ export async function writePackageJson({
   await fs.writeFile(path.join(root, 'package.json'), JSON.stringify(packageJsonConfig, null, 2) + os.EOL)
 
   await installPackages(packageManager, isOnline)
+
+  console.log()
 }
