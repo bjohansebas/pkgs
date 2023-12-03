@@ -3,6 +3,7 @@ import path from 'path'
 
 import { green } from 'picocolors'
 
+import { writeFormatterAndLinterConfig } from './lib/write-formatter-linter-config'
 import { writeGitIgnore } from './lib/write-git-ignore'
 import { writePackageJson } from './lib/write-package-json'
 import { PackageManager, isFolderEmpty, isWriteable, makeDir } from './utils'
@@ -50,6 +51,12 @@ export async function createApp({
   process.chdir(root)
 
   await writePackageJson({ appName, linter, formatter, root, isOnline, packageManager })
+
+  await writeFormatterAndLinterConfig({
+    formatter,
+    linter,
+    root,
+  })
 
   const ignorePath = path.join(root, '.gitignore')
 
