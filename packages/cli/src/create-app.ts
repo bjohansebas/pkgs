@@ -1,7 +1,9 @@
+import fs from 'fs'
 import path from 'path'
 
 import { green } from 'picocolors'
 
+import { writeGitIgnore } from './lib/write-git-ignore'
 import { writePackageJson } from './lib/write-package-json'
 import { PackageManager, isFolderEmpty, isWriteable, makeDir } from './utils'
 import { tryGitInit } from './utils/git'
@@ -49,11 +51,11 @@ export async function createApp({
 
   await writePackageJson({ appName, linter, formatter, root, isOnline, packageManager })
 
-  // const ignorePath = path.join(root, '.gitignore')
+  const ignorePath = path.join(root, '.gitignore')
 
-  // if (!fs.existsSync(ignorePath)) {
-  //   fs.copyFileSync('', ignorePath)
-  // }
+  if (!fs.existsSync(ignorePath)) {
+    await writeGitIgnore({ root })
+  }
 
   if (tryGitInit(root)) {
     console.log('Initialized a git repository.')
