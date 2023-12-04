@@ -1,9 +1,9 @@
 {
-  "name": "rapidbuild",
+  "name": "create-rapidbuild",
   "version": "0.0.1",
   "author": "Sebastian Beltran <bjohansebas@gmail.com>",
-  "keywords": ["react", "next.js", "config"],
-  "description": "",
+  "keywords": ["react", "next.js", "config", "build-tools", "zero-configuration", "typescript", "javascript"],
+  "description": "The fastest and most customizable way to set up a modern web app in seconds.",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "ncc build ./src/index.ts -w -o dist/",
