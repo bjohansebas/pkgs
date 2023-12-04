@@ -45,6 +45,22 @@ export async function writeFormatterAndLinterConfig({
   }
 
   if (linter != null) {
+    if (linter === 'eslint') {
+      const eslintConfig = {
+        env: {
+          browser: true,
+          es2021: true,
+        },
+        extends: 'eslint:recommended',
+        parserOptions: {
+          ecmaVersion: 'latest',
+          sourceType: 'module',
+        },
+        rules: {},
+      }
+
+      await fs.writeFile(path.join(root, '.eslintrc.json'), JSON.stringify(eslintConfig, null, 2) + os.EOL)
+    }
     if (linter === 'biome') {
       const biomeConfig: BiomeConfig = {
         $schema: './node_modules/@biomejs/biome/configuration_schema.json',
@@ -72,6 +88,10 @@ export async function writeFormatterAndLinterConfig({
   }
 
   if (formatter != null) {
+    if (formatter === 'prettier') {
+      fs.writeFile(path.join(root, '.prettierrc'), '{}\n')
+    }
+
     if (formatter === 'biome') {
       const biomeConfig: BiomeConfig = {
         $schema: './node_modules/@biomejs/biome/configuration_schema.json',
