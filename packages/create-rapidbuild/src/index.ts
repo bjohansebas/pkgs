@@ -137,6 +137,38 @@ async function run(): Promise<void> {
   }
 
   if (
+    (!process.argv.includes('--biome') && !process.argv.includes('--eslint')) ||
+    (process.argv.includes('--biome') && process.argv.includes('--eslint'))
+  ) {
+    const { linter } = await prompts({
+      onState: onPromptState,
+      type: 'select',
+      name: 'linter',
+      message: 'Which linter tool would you like to use?',
+      choices: [
+        { title: 'Biome', value: 'biome' },
+        { title: 'ESLint', value: 'eslint' },
+        { title: 'None of these', value: 'none' },
+      ],
+    })
+
+    if (linter === 'biome') {
+      config.biome.linter = true
+      config.eslint = false
+    }
+
+    if (linter === 'eslint') {
+      config.biome.linter = false
+      config.eslint = true
+    }
+
+    if (linter === 'none') {
+      config.biome.linter = false
+      config.eslint = false
+    }
+  }
+
+  if (
     (!process.argv.includes('--biome') && !process.argv.includes('--prettier')) ||
     (process.argv.includes('--biome') && process.argv.includes('--prettier'))
   ) {
@@ -168,37 +200,6 @@ async function run(): Promise<void> {
     }
   }
 
-  if (
-    (!process.argv.includes('--biome') && !process.argv.includes('--eslint')) ||
-    (process.argv.includes('--biome') && process.argv.includes('--eslint'))
-  ) {
-    const { linter } = await prompts({
-      onState: onPromptState,
-      type: 'select',
-      name: 'linter',
-      message: 'Which linter tool would you like to use?',
-      choices: [
-        { title: 'Biome', value: 'biome' },
-        { title: 'ESLint', value: 'eslint' },
-        { title: 'None of these', value: 'none' },
-      ],
-    })
-
-    if (linter === 'biome') {
-      config.biome.linter = true
-      config.eslint = false
-    }
-
-    if (linter === 'eslint') {
-      config.biome.linter = false
-      config.eslint = true
-    }
-
-    if (linter === 'none') {
-      config.biome.linter = false
-      config.eslint = false
-    }
-  }
 
   await createApp({
     appPath: resolvedProjectPath,
