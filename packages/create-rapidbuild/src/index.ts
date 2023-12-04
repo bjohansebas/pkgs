@@ -3,13 +3,14 @@
 import fs from 'fs'
 import path from 'path'
 
-import { Command } from 'commander'
+import { Command, Option } from 'commander'
 import { bold, cyan, green, red } from 'picocolors'
 import prompts from 'prompts'
 
 import packageJson from '../package.json'
 import { createApp } from './create-app'
-import { getPkgManager, isFolderEmpty, validateNpmName } from './utils'
+import { type ConfigApp } from './types'
+import { isFolderEmpty, validateNpmName } from './utils'
 
 let projectPath = ''
 
@@ -35,31 +36,16 @@ const program = new Command(packageJson.name)
   .action((name) => {
     projectPath = name
   })
-  .option(
-    '--eslint',
-    `
-
-  Initialize with eslint config.
-`,
+  .addOption(
+    new Option('--formatter <formatter>', 'Select the formatter tool of your preference.').choices([
+      'biome',
+      'prettier',
+    ]),
   )
-  .option(
-    '--biome',
-    `
+  .addOption(new Option('--linter <linter>', 'Select the linter tool of your preference.').choices(['biome', 'eslint']))
 
-  Initialize with biome config.
-`,
-  )
-  .option(
-    '--prettier',
-    `
-
-  Initialize with prettier config.
-`,
-  )
   .allowUnknownOption()
   .parse(process.argv)
-
-const packageManager = getPkgManager()
 
 async function run(): Promise<void> {
   if (typeof projectPath === 'string') {
@@ -127,19 +113,14 @@ async function run(): Promise<void> {
     process.exit(1)
   }
 
-  const config = {
-    biome: {
-      formatter: Boolean(program.opts().biome),
-      linter: Boolean(program.opts().biome),
-    },
-    eslint: Boolean(program.opts().eslint),
-    prettier: Boolean(program.opts().prettier),
+  const config: ConfigApp = {
+    appPath: resolvedProjectPath,
+    formatter: program.opts().formatter === 'biome' ? 'biome' : 'prettier',
+    linter: program.opts().linter === 'biome' ? 'biome' : 'eslint',
+    packageManager: 'npm',
   }
 
-  if (
-    (!process.argv.includes('--biome') && !process.argv.includes('--eslint')) ||
-    (process.argv.includes('--biome') && process.argv.includes('--eslint'))
-  ) {
+  if (!process.argv.includes('--linter')) {
     const { linter } = await prompts({
       onState: onPromptState,
       type: 'select',
@@ -152,26 +133,10 @@ async function run(): Promise<void> {
       ],
     })
 
-    if (linter === 'biome') {
-      config.biome.linter = true
-      config.eslint = false
-    }
-
-    if (linter === 'eslint') {
-      config.biome.linter = false
-      config.eslint = true
-    }
-
-    if (linter === 'none') {
-      config.biome.linter = false
-      config.eslint = false
-    }
+    config.linter = linter === 'biome' ? 'biome' : linter === 'eslint' ? 'eslint' : null
   }
 
-  if (
-    (!process.argv.includes('--biome') && !process.argv.includes('--prettier')) ||
-    (process.argv.includes('--biome') && process.argv.includes('--prettier'))
-  ) {
+  if (!process.argv.includes('--formatter')) {
     const { formatter } = await prompts({
       onState: onPromptState,
       type: 'select',
@@ -184,29 +149,10 @@ async function run(): Promise<void> {
       ],
     })
 
-    if (formatter === 'biome') {
-      config.biome.formatter = true
-      config.prettier = false
-    }
-
-    if (formatter === 'prettier') {
-      config.biome.formatter = false
-      config.prettier = true
-    }
-
-    if (formatter === 'none') {
-      config.biome.formatter = false
-      config.prettier = false
-    }
+    config.formatter = formatter === 'biome' ? 'biome' : formatter === 'prettier' ? 'prettier' : null
   }
 
-
-  await createApp({
-    appPath: resolvedProjectPath,
-    linter: config.eslint ? 'eslint' : config.biome.linter ? 'biome' : null,
-    formatter: config.prettier ? 'prettier' : config.biome.formatter ? 'biome' : null,
-    packageManager,
-  })
+  await createApp(config)
 }
 
 run()

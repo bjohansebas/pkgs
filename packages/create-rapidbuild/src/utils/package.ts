@@ -3,9 +3,8 @@ import ora from 'ora'
 import { bold, cyan, yellow } from 'picocolors'
 import validateProjectName from 'validate-npm-package-name'
 
+import { type PackageManager } from '../types'
 import { EMOJIS } from '../ui/emojis'
-
-export type PackageManager = 'npm' | 'pnpm' | 'yarn' | 'bun'
 
 export function getPkgManager(): PackageManager {
   const userAgent = process.env.npm_config_user_agent || ''

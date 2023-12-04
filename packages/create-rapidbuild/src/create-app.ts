@@ -6,24 +6,14 @@ import { green } from 'picocolors'
 import { writeFormatterAndLinterConfig } from './lib/write-formatter-linter-config'
 import { writeGitIgnore } from './lib/write-git-ignore'
 import { writePackageJson } from './lib/write-package-json'
-import { FormatterTools, LinterTools } from './types'
-import { PackageManager, isFolderEmpty, isWriteable, makeDir } from './utils'
+import { ConfigApp } from './types'
+import { isFolderEmpty, isWriteable, makeDir } from './utils'
 import { tryGitInit } from './utils/git'
 import { getOnline } from './utils/online'
 
 export class DownloadError extends Error {}
 
-export async function createApp({
-  appPath,
-  linter,
-  formatter,
-  packageManager,
-}: {
-  appPath: string
-  linter: LinterTools
-  formatter: FormatterTools
-  packageManager: PackageManager
-}): Promise<void> {
+export async function createApp({ appPath, linter, formatter, packageManager }: ConfigApp): Promise<void> {
   const root = path.resolve(appPath)
 
   const useYarn = packageManager === 'yarn'
