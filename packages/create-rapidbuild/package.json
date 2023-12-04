@@ -35,7 +35,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bjohansebas/rapidbuild.git",
-    "directory": "packages/cli"
+    "directory": "packages/create-rapidbuild"
   },
   "bugs": {
     "url": "https://github.com/bjohansebas/rapidbuild/issues"
