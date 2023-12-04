@@ -15,7 +15,7 @@ importers:
         specifier: latest
         version: 1.10.16
 
-  packages/cli:
+  packages/create-rapidbuild:
     devDependencies:
       '@types/cross-spawn':
         specifier: 6.0.6
