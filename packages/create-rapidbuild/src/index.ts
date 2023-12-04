@@ -195,4 +195,16 @@ async function run(): Promise<void> {
   await createApp(config)
 }
 
-run()
+run().catch(async (reason) => {
+  console.log()
+  console.log('Aborting installation.')
+  console.log()
+  if (reason.command) {
+    console.log(`  ${cyan(reason.command)} has failed.`)
+  } else {
+    console.log(`${red('Unexpected error. Please report it as a bug:')}\n`, reason)
+  }
+  console.log()
+
+  process.exit(1)
+})

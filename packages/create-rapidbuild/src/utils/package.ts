@@ -62,11 +62,12 @@ export async function installPackages(
         DISABLE_OPENCOLLECTIVE: '1',
       },
     })
-    const commandToRun = `${packageManager} install`
+
+    const commandToRun = `${packageManager} ${args.join(' ')}`
 
     child.on('close', (code) => {
       if (code !== 0) {
-        reject({ command: `${packageManager} ${args.join(' ')}` })
+        reject({ command: commandToRun })
         spinner.fail()
 
         console.error(
