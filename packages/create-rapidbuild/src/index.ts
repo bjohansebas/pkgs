@@ -11,6 +11,7 @@ import packageJson from '../package.json'
 import { createApp } from './create-app'
 import { type ConfigApp } from './types'
 import { isFolderEmpty, validateNpmName } from './utils'
+import { MESSAGES } from './utils/constants/messages'
 
 let projectPath = ''
 
@@ -43,7 +44,14 @@ const program = new Command(packageJson.name)
     ]),
   )
   .addOption(new Option('--linter <linter>', 'Select the linter tool of your preference.').choices(['biome', 'eslint']))
-
+  .addOption(
+    new Option('-p, --package-manager <package manager>', 'Select the package manager of your preference.').choices([
+      'npm',
+      'pnpm',
+      'bun',
+      'yarn',
+    ]),
+  )
   .allowUnknownOption()
   .parse(process.argv)
 
@@ -117,9 +125,14 @@ async function run(): Promise<void> {
     appPath: resolvedProjectPath,
     formatter: program.opts().formatter === 'biome' ? 'biome' : 'prettier',
     linter: program.opts().linter === 'biome' ? 'biome' : 'eslint',
-    packageManager: 'npm',
+    packageManager: program.opts().packageManager ?? 'npm',
   }
 
+  /**
+   * Checks if the `--linter` option is included in the command line arguments.
+   * If not included, prompts the user to select a linter tool from a list of choices
+   * and assigns the selected linter to the `config.linter` variable.
+   */
   if (!process.argv.includes('--linter')) {
     const { linter } = await prompts({
       onState: onPromptState,
@@ -136,6 +149,11 @@ async function run(): Promise<void> {
     config.linter = linter === 'biome' ? 'biome' : linter === 'eslint' ? 'eslint' : null
   }
 
+  /**
+   * Checks if the `--formatter` option is included in the command line arguments.
+   * If not included, prompts the user to select a formatter tool from a list of choices
+   * and assigns the selected formatter to the `config.formatter` variable.
+   */
   if (!process.argv.includes('--formatter')) {
     const { formatter } = await prompts({
       onState: onPromptState,
@@ -150,6 +168,28 @@ async function run(): Promise<void> {
     })
 
     config.formatter = formatter === 'biome' ? 'biome' : formatter === 'prettier' ? 'prettier' : null
+  }
+
+  /**
+   * Checks if the `--package-manager` or `-p` flag is present in the command line arguments.
+   * If the flag is not present, prompts the user to select a package manager using the `prompts` library
+   * and assigns the selected package manager to the `config.packageManager` variable.
+   */
+  if (!process.argv.includes('--package-manager') && !process.argv.includes('-p')) {
+    const { packageManager } = await prompts({
+      onState: onPromptState,
+      type: 'select',
+      name: 'packageManager',
+      message: MESSAGES.PACKAGE_MANAGER_QUESTION,
+      choices: [
+        { title: 'npm', value: 'npm' },
+        { title: 'pnpm', value: 'pnpm' },
+        { title: 'yarn', value: 'yarn' },
+        { title: 'bun', value: 'bun' },
+      ],
+    })
+
+    config.packageManager = packageManager
   }
 
   await createApp(config)

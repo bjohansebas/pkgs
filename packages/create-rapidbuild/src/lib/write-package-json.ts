@@ -4,9 +4,9 @@ import fs from 'fs/promises'
 
 import { cyan } from 'picocolors'
 
-import { FormatterTools, LinterTools } from '../types'
+import { FormatterTools, LinterTools, PackageManager } from '../types'
 import { PackageJsonConfig } from '../types/package'
-import { PackageManager, installPackages } from '../utils/package'
+import { installPackages } from '../utils/package'
 
 export async function writePackageJson({
   appName,
