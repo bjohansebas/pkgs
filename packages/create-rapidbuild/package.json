@@ -1,6 +1,6 @@
 {
   "name": "create-rapidbuild",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Sebastian Beltran <bjohansebas@gmail.com>",
   "keywords": ["react", "next.js", "config", "build-tools", "zero-configuration", "typescript", "javascript"],
   "description": "The fastest and most customizable way to set up a modern web app in seconds.",
