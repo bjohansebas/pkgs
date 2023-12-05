@@ -2,17 +2,20 @@ import os from 'os'
 import path from 'path'
 import fs from 'fs/promises'
 
-import { FormatterTools, LinterTools } from '../types'
+import { FormatterTools, Languages, LinterTools } from '../types'
 import { BiomeConfig } from '../types/biome'
+import { ESLintConfig } from '../types/eslint'
 
 export async function writeFormatterAndLinterConfig({
   linter,
   formatter,
+  language,
   root,
 }: {
   linter: LinterTools
   formatter: FormatterTools
   root: string
+  language: Languages
 }) {
   if (linter === 'biome' && formatter === 'biome') {
     const biomeConfig: BiomeConfig = {
@@ -46,7 +49,7 @@ export async function writeFormatterAndLinterConfig({
 
   if (linter != null) {
     if (linter === 'eslint') {
-      const eslintConfig = {
+      const eslintConfig: ESLintConfig = {
         env: {
           browser: true,
           es2021: true,
@@ -57,6 +60,12 @@ export async function writeFormatterAndLinterConfig({
           sourceType: 'module',
         },
         rules: {},
+      }
+
+      if (language === 'typescript') {
+        eslintConfig.extends = ['eslint:recommended', 'plugin:@typescript-eslint/recommended']
+        eslintConfig.parser = '@typescript-eslint/parser'
+        eslintConfig.plugins = ['@typescript-eslint']
       }
 
       await fs.writeFile(path.join(root, '.eslintrc.json'), JSON.stringify(eslintConfig, null, 2) + os.EOL)

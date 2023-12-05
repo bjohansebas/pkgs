@@ -13,7 +13,7 @@ import { getOnline } from './utils/online'
 
 export class DownloadError extends Error {}
 
-export async function createApp({ appPath, linter, formatter, packageManager }: ConfigApp): Promise<void> {
+export async function createApp({ appPath, linter, formatter, packageManager, language }: ConfigApp): Promise<void> {
   const root = path.resolve(appPath)
 
   const useYarn = packageManager === 'yarn'
@@ -41,11 +41,12 @@ export async function createApp({ appPath, linter, formatter, packageManager }: 
 
   process.chdir(root)
 
-  await writePackageJson({ appName, linter, formatter, root, isOnline, packageManager })
+  await writePackageJson({ appName, linter, formatter, root, isOnline, packageManager, language })
 
   await writeFormatterAndLinterConfig({
     formatter,
     linter,
+    language,
     root,
   })
 
