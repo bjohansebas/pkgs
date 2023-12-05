@@ -6,6 +6,7 @@ import { green } from 'picocolors'
 import { writeFormatterAndLinterConfig } from './lib/write-formatter-linter-config'
 import { writeGitIgnore } from './lib/write-git-ignore'
 import { writePackageJson } from './lib/write-package-json'
+import { writeTypescriptConfig } from './lib/write-typescript-config'
 import { ConfigApp } from './types'
 import { isFolderEmpty, isWriteable, makeDir } from './utils'
 import { tryGitInit } from './utils/git'
@@ -42,6 +43,10 @@ export async function createApp({ appPath, linter, formatter, packageManager, la
   process.chdir(root)
 
   await writePackageJson({ appName, linter, formatter, root, isOnline, packageManager, language })
+
+  if (language === 'typescript') {
+    await writeTypescriptConfig({ root })
+  }
 
   await writeFormatterAndLinterConfig({
     formatter,
