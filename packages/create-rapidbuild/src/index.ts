@@ -129,6 +129,10 @@ async function run(): Promise<void> {
     linter: program.opts().linter === 'biome' ? 'biome' : 'eslint',
     packageManager: program.opts().packageManager ?? 'npm',
     language: program.opts().typescript ? 'typescript' : 'javascript',
+    vscode: {
+      extensions: false,
+      settings: false,
+    },
   }
 
   if (
@@ -196,6 +200,34 @@ async function run(): Promise<void> {
     })
 
     config.formatter = formatter === 'biome' ? 'biome' : formatter === 'prettier' ? 'prettier' : null
+  }
+
+  if (config.formatter != null || config.linter != null) {
+    const { settings } = await prompts(
+      {
+        type: 'multiselect',
+        name: 'settings',
+        message: `How would you like to optimize your ${blue('VSCode')}?`,
+        choices: [
+          { title: 'Create configuration file', value: 'settings' },
+          {
+            title: 'Install recommended extensions',
+            value: 'extensions',
+          },
+        ],
+      },
+      {
+        onCancel: () => {
+          console.log(`${red('✖')} Operation cancelled`)
+          process.exit(1)
+        },
+      },
+    )
+
+    if (Array.isArray(settings)) {
+      if (settings.includes('extensions')) config.vscode.extensions = true
+      if (settings.includes('settings')) config.vscode.settings = true
+    }
   }
 
   /**
