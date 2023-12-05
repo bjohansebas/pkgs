@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { Command, Option } from 'commander'
-import { bold, cyan, green, red } from 'picocolors'
+import { blue, bold, cyan, green, magenta, red, yellow } from 'picocolors'
 import prompts from 'prompts'
 
 import packageJson from '../package.json'
@@ -37,6 +37,8 @@ const program = new Command(packageJson.name)
   .action((name) => {
     projectPath = name
   })
+  .addOption(new Option('--ts, --typescript', 'Initialize as a TypeScript project'))
+  .addOption(new Option('--js, --javascript', 'Initialize as a JavaScript project.'))
   .addOption(
     new Option('--formatter <formatter>', 'Select the formatter tool of your preference.').choices([
       'biome',
@@ -126,6 +128,32 @@ async function run(): Promise<void> {
     formatter: program.opts().formatter === 'biome' ? 'biome' : 'prettier',
     linter: program.opts().linter === 'biome' ? 'biome' : 'eslint',
     packageManager: program.opts().packageManager ?? 'npm',
+    language: program.opts().typescript ? 'typescript' : 'javascript',
+  }
+
+  if (
+    (!process.argv.includes('--typescript') && !process.argv.includes('--javascript')) ||
+    (process.argv.includes('--typescript') && process.argv.includes('--javascript'))
+  ) {
+    const styledTypeScript = blue('TypeScript')
+
+    const { typescript } = await prompts(
+      {
+        type: 'toggle',
+        name: 'typescript',
+        message: `Would you like to use ${styledTypeScript}?`,
+        active: 'Yes',
+        inactive: 'No',
+      },
+      {
+        onCancel: () => {
+          console.log(`${red('✖')} Operation cancelled`)
+          process.exit(1)
+        },
+      },
+    )
+
+    config.language = typescript ? 'typescript' : 'javascript'
   }
 
   /**
@@ -140,8 +168,8 @@ async function run(): Promise<void> {
       name: 'linter',
       message: 'Which linter tool would you like to use?',
       choices: [
-        { title: 'Biome', value: 'biome' },
-        { title: 'ESLint', value: 'eslint' },
+        { title: yellow('Biome'), value: 'biome' },
+        { title: magenta('ESLint'), value: 'eslint' },
         { title: 'None of these', value: 'none' },
       ],
     })
@@ -161,8 +189,8 @@ async function run(): Promise<void> {
       name: 'formatter',
       message: 'Which formatter tool would you like to use?',
       choices: [
-        { title: 'Biome', value: 'biome' },
-        { title: 'Prettier', value: 'prettier' },
+        { title: yellow('Biome'), value: 'biome' },
+        { title: green('Prettier'), value: 'prettier' },
         { title: 'None of these', value: 'none' },
       ],
     })
