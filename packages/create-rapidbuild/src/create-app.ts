@@ -7,6 +7,7 @@ import { writeFormatterAndLinterConfig } from './lib/write-formatter-linter-conf
 import { writeGitIgnore } from './lib/write-git-ignore'
 import { writePackageJson } from './lib/write-package-json'
 import { writeTypescriptConfig } from './lib/write-typescript-config'
+import { writeVSCodeConfig } from './lib/write-vscode-config'
 import { ConfigApp } from './types'
 import { isFolderEmpty, isWriteable, makeDir } from './utils'
 import { tryGitInit } from './utils/git'
@@ -14,7 +15,14 @@ import { getOnline } from './utils/online'
 
 export class DownloadError extends Error {}
 
-export async function createApp({ appPath, linter, formatter, packageManager, language }: ConfigApp): Promise<void> {
+export async function createApp({
+  appPath,
+  linter,
+  formatter,
+  packageManager,
+  language,
+  vscode,
+}: ConfigApp): Promise<void> {
   const root = path.resolve(appPath)
 
   const useYarn = packageManager === 'yarn'
@@ -54,6 +62,8 @@ export async function createApp({ appPath, linter, formatter, packageManager, la
     language,
     root,
   })
+
+  await writeVSCodeConfig({ root, formatter, linter, vscode })
 
   const ignorePath = path.join(root, '.gitignore')
 

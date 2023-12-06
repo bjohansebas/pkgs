@@ -1,4 +1,5 @@
 export type FormatterTools = 'biome' | 'prettier' | null
+export type FormatterToolsExtension = 'esbenp.prettier-vscode' | 'biomejs.biome'
 
 export type PackageManager = 'npm' | 'pnpm' | 'yarn' | 'bun'
 
@@ -18,4 +19,13 @@ export interface ConfigApp {
   formatter: FormatterTools
   packageManager: PackageManager
   vscode: VSCodeConfig
+}
+
+export type VSCodeSettings = {
+  'editor.defaultFormatter'?: FormatterToolsExtension
+  'editor.formatOnSave': boolean
+  'editor.codeActionsOnSave'?: {
+    'source.organizeImports.biome'?: boolean
+    'quickfix.biome'?: boolean
+  }
 }
