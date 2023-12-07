@@ -12,6 +12,11 @@ export interface VSCodeConfig {
   settings: boolean
 }
 
+export interface HuskyConfig {
+  commit_lint: boolean
+  code_lint: boolean
+}
+
 export interface ConfigApp {
   appPath: string
   linter: LinterTools
@@ -19,6 +24,7 @@ export interface ConfigApp {
   formatter: FormatterTools
   packageManager: PackageManager
   vscode: VSCodeConfig
+  husky: HuskyConfig
 }
 
 export type VSCodeSettings = {

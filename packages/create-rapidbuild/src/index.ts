@@ -133,6 +133,10 @@ async function run(): Promise<void> {
       extensions: false,
       settings: false,
     },
+    husky: {
+      code_lint: false,
+      commit_lint: false,
+    },
   }
 
   if (
@@ -200,6 +204,42 @@ async function run(): Promise<void> {
     })
 
     config.formatter = formatter === 'biome' ? 'biome' : formatter === 'prettier' ? 'prettier' : null
+  }
+
+  const { husky } = await prompts(
+    {
+      onState: onPromptState,
+      type: 'multiselect',
+      name: 'husky',
+      message: `How would you like to set up ${blue('Husky')}?`,
+      choices: [
+        {
+          title: 'Check your code before each commit (using a linter).',
+          value: 'linter-code',
+          disabled: !Boolean(config.formatter || config.linter),
+        },
+        {
+          title: 'Use a linter for commit messages.',
+          value: 'linter-commit',
+        },
+      ],
+    },
+    {
+      onCancel: () => {
+        console.log(`${red('✖')} Operation cancelled`)
+        process.exit(1)
+      },
+    },
+  )
+
+  if (Array.isArray(husky)) {
+    if (husky.includes('linter-commit')) {
+      config.husky.commit_lint = true
+    }
+
+    if (husky.includes('linter-code')) {
+      config.husky.code_lint = true
+    }
   }
 
   if (config.formatter != null || config.linter != null) {
