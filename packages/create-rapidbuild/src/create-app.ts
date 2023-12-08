@@ -5,12 +5,13 @@ import { green } from 'picocolors'
 
 import { writeFormatterAndLinterConfig } from './lib/write-formatter-linter-config'
 import { writeGitIgnore } from './lib/write-git-ignore'
+import { writeHuskyConfig } from './lib/write-husky-config'
 import { writePackageJson } from './lib/write-package-json'
 import { writeTypescriptConfig } from './lib/write-typescript-config'
 import { writeVSCodeConfig } from './lib/write-vscode-config'
 import { ConfigApp } from './types'
-import { isFolderEmpty, isWriteable, makeDir } from './utils'
-import { tryGitInit } from './utils/git'
+import { installPackages, isFolderEmpty, isWriteable, makeDir } from './utils'
+import { gitInitCommit, tryGitInit } from './utils/git'
 import { getOnline } from './utils/online'
 
 export class DownloadError extends Error {}
@@ -20,6 +21,7 @@ export async function createApp({
   linter,
   formatter,
   packageManager,
+  husky,
   language,
   vscode,
 }: ConfigApp): Promise<void> {
@@ -50,7 +52,16 @@ export async function createApp({
 
   process.chdir(root)
 
-  await writePackageJson({ appName, linter, formatter, root, isOnline, packageManager, language })
+  await writePackageJson({
+    appName,
+    linter,
+    formatter,
+    root,
+    isOnline,
+    packageManager,
+    language,
+    husky,
+  })
 
   if (language === 'typescript') {
     await writeTypescriptConfig({ root })
@@ -65,14 +76,29 @@ export async function createApp({
 
   await writeVSCodeConfig({ root, formatter, linter, vscode })
 
+  await writeHuskyConfig({
+    root,
+    language,
+    formatter,
+    linter,
+    husky,
+  })
+
   const ignorePath = path.join(root, '.gitignore')
 
   if (!fs.existsSync(ignorePath)) {
     await writeGitIgnore({ root })
   }
 
-  if (tryGitInit(root)) {
+  const didGitInit = tryGitInit(root)
+
+  await installPackages(packageManager, isOnline)
+
+  if (didGitInit) {
     console.log('Initialized a git repository.')
+
+    gitInitCommit()
+
     console.log()
   }
 

@@ -41,11 +41,6 @@ export function tryGitInit(root: string): boolean {
       execSync('git checkout -b main', { stdio: 'ignore' })
     }
 
-    execSync('git add -A', { stdio: 'ignore' })
-    execSync('git commit -m "Initial commit from RapidBuild"', {
-      stdio: 'ignore',
-    })
-
     return true
   } catch (e) {
     if (didInit) {
@@ -55,4 +50,13 @@ export function tryGitInit(root: string): boolean {
     }
     return false
   }
+}
+
+export function gitInitCommit() {
+  try {
+    execSync('git add -A', { stdio: 'ignore' })
+    execSync('git commit -m "chore: initial commit from RapidBuild"', {
+      stdio: 'ignore',
+    })
+  } catch (e) {}
 }

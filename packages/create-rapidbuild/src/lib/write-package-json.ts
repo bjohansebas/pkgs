@@ -4,7 +4,7 @@ import fs from 'fs/promises'
 
 import { cyan } from 'picocolors'
 
-import { FormatterTools, Languages, LinterTools, PackageManager } from '../types'
+import { FormatterTools, HuskyConfig, Languages, LinterTools, PackageManager } from '../types'
 import { PackageJsonConfig } from '../types/package'
 import { installPackages } from '../utils/package'
 
@@ -13,6 +13,7 @@ export async function writePackageJson({
   linter,
   language,
   formatter,
+  husky,
   packageManager,
   root,
   isOnline,
@@ -24,6 +25,7 @@ export async function writePackageJson({
   packageManager: PackageManager
   isOnline: boolean
   language: Languages
+  husky: HuskyConfig
 }) {
   const packageJsonConfig: PackageJsonConfig = {
     name: appName,
@@ -39,6 +41,21 @@ export async function writePackageJson({
 
     packageJsonConfig.devDependencies.typescript = '^5'
     packageJsonConfig.devDependencies['@types/node'] = '^20'
+  }
+
+  if (husky.code_lint || husky.commit_lint) {
+    packageJsonConfig.scripts.prepare = 'npx husky install'
+
+    packageJsonConfig.devDependencies.husky = '^8'
+
+    if (husky.code_lint) {
+      packageJsonConfig.devDependencies['lint-staged'] = '^15'
+    }
+
+    if (husky.commit_lint) {
+      packageJsonConfig.devDependencies['@commitlint/cli'] = '^18.4'
+      packageJsonConfig.devDependencies['@commitlint/config-conventional'] = '^18.4'
+    }
   }
 
   if (linter != null) {
@@ -57,7 +74,7 @@ export async function writePackageJson({
 
     if (linter === 'biome') {
       packageJsonConfig.devDependencies['@biomejs/biome'] = '^1'
-      packageJsonConfig.scripts.lint = '@biomejs/biome lint . --apply'
+      packageJsonConfig.scripts.lint = 'biome lint . --apply'
     }
   }
 
@@ -71,7 +88,7 @@ export async function writePackageJson({
 
     if (formatter === 'biome') {
       packageJsonConfig.devDependencies['@biomejs/biome'] = '^1'
-      packageJsonConfig.scripts.format = '@biomejs/biome format . --write'
+      packageJsonConfig.scripts.format = 'biome format . --write'
     }
   }
 
@@ -91,8 +108,6 @@ export async function writePackageJson({
   console.log()
 
   await fs.writeFile(path.join(root, 'package.json'), JSON.stringify(packageJsonConfig, null, 2) + os.EOL)
-
-  await installPackages(packageManager, isOnline)
 
   console.log()
 }

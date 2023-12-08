@@ -52,7 +52,7 @@ export async function installPackages(
     spinner.start()
 
     const child = spawn(packageManager, args, {
-      stdio: 'ignore',
+      stdio: 'inherit',
       env: {
         ...process.env,
         ADBLOCK: '1',
