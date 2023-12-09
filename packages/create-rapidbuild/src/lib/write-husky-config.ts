@@ -1,5 +1,4 @@
 import { execSync } from 'child_process'
-import os from 'os'
 import path from 'path'
 import fs from 'fs/promises'
 import { FormatterTools, HuskyConfig, Languages, LinterTools } from '../types'
@@ -33,52 +32,33 @@ npx lint-staged
 
     const buildLintCommand = () => {
       if (linter === 'eslint') {
-        return "eslint --fix --file ${filenames.join(' ')} "
+        return "eslint --fix"
       }
 
       if (linter === 'biome') {
-        return "biome lint --apply ${filenames.join(' ')} "
+        return "biome lint --apply"
       }
     }
 
     const buildFormatCommand = () => {
       if (formatter === 'prettier') {
-        return "prettier --write --file ${filenames.join(' ')} "
+        return "prettier --write"
       }
 
       if (formatter === 'biome') {
-        return "biome format --write ${filenames.join(' ')} "
+        return "biome format --write"
       }
     }
 
-    const lintstaged = `const path = require('path')
-
-${
-  formatter != null
-    ? ` const buildFormatCommand = (filenames) => {
-  return [\`${buildFormatCommand()}\`, \`git add \${filenames.join(' ')}\`]
-}
-\n`
-    : ''
-}
-${
-  linter != null
-    ? `const buildLintCommand = (filenames) => {
-  return [\`${buildLintCommand()}\`, \`git add \${filenames.join(' ')}\`]
-}
-\n`
-    : ''
-}
-
-module.exports = {
-  "*.{${language === 'javascript' ? 'js' : 'ts,js'}}": [${formatter != null ? 'buildFormatCommand' : ''}, ${
-    linter != null ? 'buildLintCommand' : ''
-  }]
-}
-`
+    const lintstaged = `{
+      "*.{${language === 'javascript' ? 'js' : 'ts,js'}}": [${formatter != null ? `"${buildFormatCommand()}"` : ''}, ${
+        linter != null ? `"${buildLintCommand()}"` : ''
+      }],
+      "*.{json}": [${formatter != null ? `"${buildFormatCommand()}"` : ''}]
+    }`
 
     await fs.writeFile(path.join(root, '.husky/pre-commit'), huskyPreCommitConfig)
-    await fs.writeFile(path.join(root, '.lintstagedrc.js'), lintstaged)
+    await fs.writeFile(path.join(root, '.lintstagedrc.json'),  lintstaged)
   }
 
   if (husky.commit_lint) {
