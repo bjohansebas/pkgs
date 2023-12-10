@@ -4,9 +4,9 @@ import fs from 'fs/promises'
 
 import { cyan } from 'picocolors'
 
+import sortJson from 'sort-json'
 import { FormatterTools, HuskyConfig, Languages, LinterTools, PackageManager } from '../types'
 import { PackageJsonConfig } from '../types/package'
-import { installPackages } from '../utils/package'
 
 export async function writePackageJson({
   appName,
@@ -14,16 +14,12 @@ export async function writePackageJson({
   language,
   formatter,
   husky,
-  packageManager,
   root,
-  isOnline,
 }: {
   appName: string
   linter: LinterTools
   formatter: FormatterTools
   root: string
-  packageManager: PackageManager
-  isOnline: boolean
   language: Languages
   husky: HuskyConfig
 }) {
@@ -91,6 +87,15 @@ export async function writePackageJson({
       packageJsonConfig.scripts.format = 'biome format . --write'
     }
   }
+
+  const sortScripts = sortJson(packageJsonConfig.scripts, {})
+  packageJsonConfig.scripts = sortScripts
+
+  const sortDevDeps = sortJson(packageJsonConfig.devDependencies, {})
+  packageJsonConfig.devDependencies = sortDevDeps
+
+  const sortPackDeps = sortJson(packageJsonConfig.dependencies, {})
+  packageJsonConfig.dependencies = sortPackDeps
 
   const devDeps = Object.keys(packageJsonConfig.devDependencies).length
   const packDeps = Object.keys(packageJsonConfig.dependencies).length

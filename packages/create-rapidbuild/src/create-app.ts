@@ -45,8 +45,6 @@ export async function createApp({
     process.exit(1)
   }
 
-  const originalDirectory = process.cwd()
-
   console.log(`Creating a new App in ${green(root)}.`)
   console.log()
 
@@ -57,8 +55,6 @@ export async function createApp({
     linter,
     formatter,
     root,
-    isOnline,
-    packageManager,
     language,
     husky,
   })
@@ -95,19 +91,13 @@ export async function createApp({
   await installPackages(packageManager, isOnline)
 
   if (didGitInit) {
-    console.log('Initialized a git repository.')
-
     gitInitCommit()
 
     console.log()
-  }
 
-  let cdpath: string
+    console.log('Initialized a git repository.')
 
-  if (path.join(originalDirectory, appName) === appPath) {
-    cdpath = appName
-  } else {
-    cdpath = appPath
+    console.log()
   }
 
   console.log(`${green('Success!')} Created ${appName} at ${appPath}`)
