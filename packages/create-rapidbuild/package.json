@@ -13,7 +13,7 @@
     "build": "pnpm release"
   },
   "bin": {
-    "rapidbuild": "./dist/index.js"
+    "rapidbuild": "dist/index.js"
   },
   "files": ["dist"],
   "devDependencies": {
