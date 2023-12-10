@@ -40,7 +40,7 @@ export async function writePackageJson({
   }
 
   if (husky.code_lint || husky.commit_lint) {
-    packageJsonConfig.scripts.prepare = 'npx husky install'
+    packageJsonConfig.scripts.prepare = 'husky install'
 
     packageJsonConfig.devDependencies.husky = '^8'
 
