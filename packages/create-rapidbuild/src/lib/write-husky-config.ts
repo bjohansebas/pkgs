@@ -32,21 +32,21 @@ npx lint-staged
 
     const buildLintCommand = () => {
       if (linter === 'eslint') {
-        return "eslint --fix"
+        return 'eslint --fix'
       }
 
       if (linter === 'biome') {
-        return "biome lint --apply"
+        return 'biome lint --apply'
       }
     }
 
     const buildFormatCommand = () => {
       if (formatter === 'prettier') {
-        return "prettier --write"
+        return 'prettier --write'
       }
 
       if (formatter === 'biome') {
-        return "biome format --write"
+        return 'biome format --write'
       }
     }
 
@@ -58,11 +58,11 @@ npx lint-staged
     }`
 
     await fs.writeFile(path.join(root, '.husky/pre-commit'), huskyPreCommitConfig)
-    await fs.writeFile(path.join(root, '.lintstagedrc.json'),  lintstaged)
+    await fs.writeFile(path.join(root, '.lintstagedrc.json'), lintstaged)
   }
 
   if (husky.commit_lint) {
-    const commitlintConfig = `module.exports = {
+    const commitlintConfig = `${linter === 'eslint' ? '/* eslint-env node */\n' : ''}module.exports = {
   extends: ['@commitlint/config-conventional'],
   rules: {
     'body-max-length': [0],
