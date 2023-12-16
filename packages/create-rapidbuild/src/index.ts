@@ -37,8 +37,9 @@ const program = new Command(packageJson.name)
   .action((name) => {
     projectPath = name
   })
-  .addOption(new Option('--ts, --typescript', 'Initialize as a TypeScript project'))
+  .addOption(new Option('--ts, --typescript', 'Initialize as a TypeScript project.'))
   .addOption(new Option('--js, --javascript', 'Initialize as a JavaScript project.'))
+  .addOption(new Option('--tailwind', 'Initialize with Tailwind CSS config. (default)'))
   .addOption(
     new Option('--formatter <formatter>', 'Select the formatter tool of your preference.').choices([
       'biome',
@@ -137,8 +138,28 @@ async function run(): Promise<void> {
       code_lint: false,
       commit_lint: false,
     },
+    tailwind: true
   }
 
+  if (
+    !process.argv.includes('--tailwind') &&
+    !process.argv.includes('--no-tailwind')
+  ) {
+    const tw = blue('Tailwind CSS')
+    const { tailwind } = await prompts({
+      onState: onPromptState,
+      type: 'toggle',
+      name: 'tailwind',
+      message: `Would you like to use ${tw}?`,
+      initial: true,
+      active: 'Yes',
+      inactive: 'No',
+    })
+
+    config.tailwind = Boolean(tailwind)
+  }
+
+  // TODO: Do default typescript
   if (
     (!process.argv.includes('--typescript') && !process.argv.includes('--javascript')) ||
     (process.argv.includes('--typescript') && process.argv.includes('--javascript'))

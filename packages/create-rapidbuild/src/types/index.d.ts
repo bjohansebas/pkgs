@@ -25,6 +25,7 @@ export interface ConfigApp {
   packageManager: PackageManager
   vscode: VSCodeConfig
   husky: HuskyConfig
+  tailwind: boolean
 }
 
 export type VSCodeSettings = {
