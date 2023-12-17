@@ -37,7 +37,7 @@ const program = new Command(packageJson.name)
   .action((name) => {
     projectPath = name
   })
-  .addOption(new Option('--ts, --typescript', 'Initialize as a TypeScript project.'))
+  .addOption(new Option('--ts, --typescript', 'Initialize as a TypeScript project. (default)'))
   .addOption(new Option('--js, --javascript', 'Initialize as a JavaScript project.'))
   .addOption(new Option('--tailwind', 'Initialize with Tailwind CSS config. (default)'))
   .addOption(
@@ -129,7 +129,7 @@ async function run(): Promise<void> {
     formatter: program.opts().formatter === 'biome' ? 'biome' : 'prettier',
     linter: program.opts().linter === 'biome' ? 'biome' : 'eslint',
     packageManager: program.opts().packageManager ?? 'npm',
-    language: program.opts().typescript ? 'typescript' : 'javascript',
+    language: program.opts().javascript ? 'javascript' : 'typescript',
     vscode: {
       extensions: false,
       settings: false,
@@ -141,7 +141,6 @@ async function run(): Promise<void> {
     tailwind: Boolean(program.opts().tailwind),
   }
 
-  // TODO: Do default typescript
   if (
     (!process.argv.includes('--typescript') && !process.argv.includes('--javascript')) ||
     (process.argv.includes('--typescript') && process.argv.includes('--javascript'))
@@ -153,6 +152,7 @@ async function run(): Promise<void> {
         type: 'toggle',
         name: 'typescript',
         message: `Would you like to use ${styledTypeScript}?`,
+        initial: true,
         active: 'Yes',
         inactive: 'No',
       },
@@ -164,7 +164,7 @@ async function run(): Promise<void> {
       },
     )
 
-    config.language = typescript ? 'typescript' : 'javascript'
+    config.language = Boolean(typescript) ? 'typescript' : 'javascript'
   }
 
   if (!process.argv.includes('--tailwind') && !process.argv.includes('--no-tailwind')) {
