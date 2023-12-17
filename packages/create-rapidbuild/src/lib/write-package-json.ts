@@ -15,6 +15,7 @@ export async function writePackageJson({
   formatter,
   husky,
   root,
+  tailwind,
 }: {
   appName: string
   linter: LinterTools
@@ -22,6 +23,7 @@ export async function writePackageJson({
   root: string
   language: Languages
   husky: HuskyConfig
+  tailwind: boolean
 }) {
   const packageJsonConfig: PackageJsonConfig = {
     name: appName,
@@ -86,6 +88,12 @@ export async function writePackageJson({
       packageJsonConfig.devDependencies['@biomejs/biome'] = '^1'
       packageJsonConfig.scripts.format = 'biome format . --write'
     }
+  }
+
+  if (tailwind) {
+    packageJsonConfig.devDependencies.tailwindcss = '^3.3.6'
+    packageJsonConfig.devDependencies.postcss = '^8.4.32'
+    packageJsonConfig.devDependencies.autoprefixer = '^10.4.16'
   }
 
   const sortScripts = sortJson(packageJsonConfig.scripts, {})

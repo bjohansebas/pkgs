@@ -7,6 +7,7 @@ import { writeFormatterAndLinterConfig } from './lib/write-formatter-linter-conf
 import { writeGitIgnore } from './lib/write-git-ignore'
 import { writeHuskyConfig } from './lib/write-husky-config'
 import { writePackageJson } from './lib/write-package-json'
+import { writeTailwindCSSConfig } from './lib/write-tailwind-config'
 import { writeTypescriptConfig } from './lib/write-typescript-config'
 import { writeVSCodeConfig } from './lib/write-vscode-config'
 import { ConfigApp } from './types'
@@ -23,6 +24,7 @@ export async function createApp({
   packageManager,
   husky,
   language,
+  tailwind,
   vscode,
 }: ConfigApp): Promise<void> {
   const root = path.resolve(appPath)
@@ -50,6 +52,10 @@ export async function createApp({
 
   process.chdir(root)
 
+  const srcDir = path.resolve(`${root}/src`)
+
+  await makeDir(srcDir)
+
   await writePackageJson({
     appName,
     linter,
@@ -57,10 +63,15 @@ export async function createApp({
     root,
     language,
     husky,
+    tailwind,
   })
 
   if (language === 'typescript') {
     await writeTypescriptConfig({ root })
+  }
+
+  if (tailwind) {
+    await writeTailwindCSSConfig({ root, linter, language })
   }
 
   await writeFormatterAndLinterConfig({
