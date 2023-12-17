@@ -138,25 +138,7 @@ async function run(): Promise<void> {
       code_lint: false,
       commit_lint: false,
     },
-    tailwind: true
-  }
-
-  if (
-    !process.argv.includes('--tailwind') &&
-    !process.argv.includes('--no-tailwind')
-  ) {
-    const tw = blue('Tailwind CSS')
-    const { tailwind } = await prompts({
-      onState: onPromptState,
-      type: 'toggle',
-      name: 'tailwind',
-      message: `Would you like to use ${tw}?`,
-      initial: true,
-      active: 'Yes',
-      inactive: 'No',
-    })
-
-    config.tailwind = Boolean(tailwind)
+    tailwind: Boolean(program.opts().tailwind),
   }
 
   // TODO: Do default typescript
@@ -183,6 +165,20 @@ async function run(): Promise<void> {
     )
 
     config.language = typescript ? 'typescript' : 'javascript'
+  }
+
+  if (!process.argv.includes('--tailwind') && !process.argv.includes('--no-tailwind')) {
+    const { tailwind } = await prompts({
+      onState: onPromptState,
+      type: 'toggle',
+      name: 'tailwind',
+      message: `Would you like to use ${blue('Tailwind CSS')}?`,
+      initial: true,
+      active: 'Yes',
+      inactive: 'No',
+    })
+
+    config.tailwind = Boolean(tailwind)
   }
 
   /**
