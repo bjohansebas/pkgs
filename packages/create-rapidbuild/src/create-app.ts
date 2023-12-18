@@ -23,6 +23,7 @@ export async function createApp({
   formatter,
   packageManager,
   husky,
+  typescript,
   language,
   tailwind,
   vscode,
@@ -67,7 +68,7 @@ export async function createApp({
   })
 
   if (language === 'typescript') {
-    await writeTypescriptConfig({ root })
+    await writeTypescriptConfig({ root, typescript })
   }
 
   if (tailwind) {
