@@ -139,6 +139,9 @@ async function run(): Promise<void> {
       commit_lint: false,
     },
     tailwind: Boolean(program.opts().tailwind),
+    typescript: {
+      importAlias: program.opts().typescript ? '@/*' : null,
+    },
   }
 
   if (
@@ -181,6 +184,31 @@ async function run(): Promise<void> {
     config.tailwind = Boolean(tailwind)
   }
 
+  if (config.language === 'typescript') {
+    const { customizeImportAlias } = await prompts({
+      onState: onPromptState,
+      type: 'toggle',
+      name: 'customizeImportAlias',
+      message: `Would you like to customize the default ${blue('import alias')} (@/*)?`,
+      active: 'Yes',
+      inactive: 'No',
+    })
+
+    if (customizeImportAlias) {
+      const { importAlias } = await prompts({
+        onState: onPromptState,
+        type: 'text',
+        name: 'importAlias',
+        message: `What ${blue('import alias')} would you like configured?`,
+        initial: '@/*',
+        validate: (value) => (/.+\/\*/.test(value) ? true : 'Import alias must follow the pattern <prefix>/*'),
+      })
+
+      config.typescript.importAlias = importAlias
+    } else {
+      config.typescript.importAlias = '@/*'
+    }
+  }
   /**
    * Checks if the `--linter` option is included in the command line arguments.
    * If not included, prompts the user to select a linter tool from a list of choices

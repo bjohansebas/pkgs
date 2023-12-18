@@ -17,6 +17,10 @@ export interface HuskyConfig {
   code_lint: boolean
 }
 
+export interface TypeScriptConfig {
+  importAlias: string | null
+}
+
 export interface ConfigApp {
   appPath: string
   linter: LinterTools
@@ -26,6 +30,7 @@ export interface ConfigApp {
   vscode: VSCodeConfig
   husky: HuskyConfig
   tailwind: boolean
+  typescript: TypeScriptConfig
 }
 
 export type VSCodeSettings = {
