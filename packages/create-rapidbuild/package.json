@@ -1,8 +1,17 @@
 {
   "name": "create-rapidbuild",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Sebastian Beltran <bjohansebas@gmail.com>",
-  "keywords": ["react", "next.js", "config", "build-tools", "zero-configuration", "typescript", "javascript"],
+  "keywords": [
+    "frameworks",
+    "cli",
+    "next.js",
+    "config",
+    "build-tools",
+    "zero-configuration",
+    "typescript",
+    "javascript"
+  ],
   "description": "The fastest and most customizable way to set up a modern web app in seconds.",
   "license": "MPL-2.0",
   "scripts": {
@@ -18,7 +27,7 @@
   "files": ["dist"],
   "devDependencies": {
     "@types/cross-spawn": "6.0.6",
-    "@types/node": "20.10.2",
+    "@types/node": "20.10.5",
     "@types/prompts": "2.4.9",
     "@types/sort-json": "2.0.3",
     "@types/validate-npm-package-name": "4.0.2",
@@ -30,7 +39,7 @@
     "picocolors": "1.0.0",
     "prompts": "2.4.2",
     "sort-json": "2.0.1",
-    "typescript": "5.3.2",
+    "typescript": "5.3.3",
     "validate-npm-package-name": "5.0.0"
   },
   "homepage": "https://github.com/bjohansebas/rapidbuild",
