@@ -1,6 +1,7 @@
 import { async as glob } from 'fast-glob'
 
 import { ignoreFiles } from './constants'
+import { getLanguages } from './helpers/get-languages'
 import { getPackageManager } from './helpers/get-package-manager'
 import { Project } from './types'
 
@@ -23,6 +24,7 @@ export async function generateReport(): Promise<Project> {
   const config: Project = {}
 
   config.package_manager = getPackageManager(files)
+  config.languages = getLanguages(files)
 
   return config
 }

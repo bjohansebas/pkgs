@@ -14,7 +14,7 @@ export interface Monorepo {
 }
 
 export interface Project {
-  // languages: Languages[]
+  languages?: Languages[]
   // css: string[]
   // frameworks: string[]
   // monorepo: null | Monorepo
