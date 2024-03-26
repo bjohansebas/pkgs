@@ -15,6 +15,23 @@ importers:
         specifier: 1.13.0
         version: 1.13.0
 
+  config: {}
+
+  packages/cli:
+    devDependencies:
+      '@rapidbuild/config':
+        specifier: workspace:*
+        version: link:../../config
+      '@vercel/ncc':
+        specifier: 0.38.1
+        version: 0.38.1
+      commander:
+        specifier: 12.0.0
+        version: 12.0.0
+      typescript:
+        specifier: 5.4.3
+        version: 5.4.3
+
 packages:
 
   /@biomejs/biome@1.6.3:
@@ -105,6 +122,16 @@ packages:
     dev: true
     optional: true
 
+  /@vercel/ncc@0.38.1:
+    resolution: {integrity: sha512-IBBb+iI2NLu4VQn3Vwldyi2QwaXt5+hTyh58ggAMoCGE6DJmPvwL3KPBWcJl1m9LYPChBLE980Jw+CS4Wokqxw==}
+    hasBin: true
+    dev: true
+
+  /commander@12.0.0:
+    resolution: {integrity: sha512-MwVNWlYjDTtOjX5PiD7o5pK0UrFU/OYgcJfjjK4RaHZETNtjJqrZa9Y9ds88+A+f+d5lv+561eZ+yCKoS3gbAA==}
+    engines: {node: '>=18'}
+    dev: true
+
   /turbo-darwin-64@1.13.0:
     resolution: {integrity: sha512-ctHeJXtQgBcgxnCXwrJTGiq57HtwF7zWz5NTuSv//5yeU01BtQIt62ArKfjudOhRefWJbX3Z5srn88XTb9hfww==}
     cpu: [x64]
@@ -163,4 +190,10 @@ packages:
       turbo-linux-arm64: 1.13.0
       turbo-windows-64: 1.13.0
       turbo-windows-arm64: 1.13.0
+    dev: true
+
+  /typescript@5.4.3:
+    resolution: {integrity: sha512-KrPd3PKaCLr78MalgiwJnA25Nm8HAmdwN3mYUYZgG/wizIo9EainNVQI9/yDavtVFRN2h3k8uf3GLHuhDMgEHg==}
+    engines: {node: '>=14.17'}
+    hasBin: true
     dev: true

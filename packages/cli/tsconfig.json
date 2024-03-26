@@ -1,0 +1,9 @@
+{
+  "extends": "@rapidbuild/config/tsconfig/base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "resolveJsonModule": true,
+    "skipLibCheck": false
+  },
+  "exclude": ["dist", "node_modules"]
+}
