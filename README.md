@@ -1,30 +1,12 @@
-> [!WARNING]
->  This project is under construction. If you find any issues, please report them.
-
 # RapidBuild
 
-The easiest way to start a new JavaScript project in seconds. This command-line tool enables you to quickly begin building a new JavaScript application, with everything set up for you. Selecting each of the tools dynamically. To get started, use the following command:
+Quickly integrate tools like eslint or husky in a fast manner.
 
-With NPM:
+Features:
+ - [ ] Integrate linters: oxc, biome, eslint
+ - [ ] Integrate formatters: biome, prettier
+ - [ ] Integrate husky: pre-commit, commit-msg
+ - [ ] Integrate monorepo
+ - [ ] Integrate visual studio config
+ - [ ] Integrate typescript
 
-```bash
-npm create rapidbuild@latest
-```
-
-With Yarn:
-
-```bash
-yarn create rapidbuild
-```
-
-With PNPM:
-
-```bash
-pnpm create rapidbuild
-```
-
-With Bun:
-
-```bash
-bunx create-rapidbuild
-```
