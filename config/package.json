@@ -1,0 +1,6 @@
+{
+  "name": "@rapidbuild/config",
+  "private": true,
+  "license": "MPL-2.0",
+  "files": ["./**"]
+}
