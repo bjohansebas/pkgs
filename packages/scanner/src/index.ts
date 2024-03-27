@@ -3,7 +3,7 @@ import { async as glob } from 'fast-glob'
 import { ignoreFiles } from './constants'
 import { getLanguages } from './helpers/get-languages'
 import { getPackageManager } from './helpers/get-package-manager'
-import { Project } from './types'
+import type { Project } from './types'
 
 export async function scanFolder(root: string): Promise<string[]> {
   const ignore = ignoreFiles

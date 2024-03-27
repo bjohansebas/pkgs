@@ -1,4 +1,4 @@
-import { PackageManager } from '../types'
+import type { PackageManager } from '../types'
 
 export function getPackageManager(files: string[]): PackageManager | undefined {
   if (files.includes('pnpm-lock.yaml')) return 'pnpm'

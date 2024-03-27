@@ -1,4 +1,4 @@
-import { Languages } from '../types'
+import type { Languages } from '../types'
 
 const javascriptRegex = /\.(js)$/
 const typescriptRegex = /\.(ts)$/
