@@ -1,4 +1,4 @@
-export type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun'
+export type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun' | 'deno'
 
 export type Languages = 'javascript' | 'typescript'
 
@@ -15,6 +15,7 @@ export interface Monorepo {
 
 export interface Project {
   languages: Record<Languages, boolean> | null
+  package_manager: PackageManager[] | null
   // css: string[]
   // frameworks: string[]
   // monorepo: null | Monorepo
@@ -22,6 +23,5 @@ export interface Project {
   // database: string
   // lint: string[]
   // formatter: string[]
-  package_manager?: PackageManager
   // ci: string
 }

@@ -21,9 +21,8 @@ export async function scanFolder(root: string): Promise<string[]> {
 export function generateReport({ files }: { files: string[] }): Project {
   const config: Project = {
     languages: getLanguages(files),
+    package_manager: getPackageManager(files),
   }
-
-  config.package_manager = getPackageManager(files)
 
   return config
 }
