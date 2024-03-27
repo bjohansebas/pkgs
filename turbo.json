@@ -13,6 +13,10 @@
     "clean": {
       "cache": false
     },
-    "lint": {}
+    "lint": {},
+    "test": {},
+    "test:watch": {
+      "cache": false
+    }
   }
 }

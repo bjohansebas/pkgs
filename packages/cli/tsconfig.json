@@ -3,7 +3,8 @@
   "compilerOptions": {
     "target": "ES2022",
     "resolveJsonModule": true,
-    "skipLibCheck": false
+    "skipLibCheck": false,
+    "noImplicitThis": false
   },
   "exclude": ["dist", "node_modules"]
 }
