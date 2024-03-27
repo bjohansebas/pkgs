@@ -1,6 +1,6 @@
 {
   "name": "@rapidbuild/scanner",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Sebastian Beltran <bjohansebas@gmail.com>",
   "keywords": ["frameworks", "cli", "scanner", "files"],
   "license": "MPL-2.0",
@@ -16,11 +16,11 @@
   },
   "files": ["dist"],
   "devDependencies": {
-    "@types/node": "20.10.5",
+    "@types/node": "20.11.30",
     "@vercel/ncc": "0.38.1",
     "fast-glob": "^3.3.2",
-    "ora": "7.0.1",
-    "typescript": "5.3.3"
+    "ora": "8.0.1",
+    "typescript": "5.4.3"
   },
   "homepage": "https://github.com/bjohansebas/rapidbuild",
   "repository": {
@@ -32,6 +32,6 @@
     "url": "https://github.com/bjohansebas/rapidbuild/issues"
   },
   "engines": {
-    "node": ">=18.17.0"
+    "node": "18.x || 20.x"
   }
 }
