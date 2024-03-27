@@ -40,6 +40,9 @@ importers:
 
   packages/scanner:
     devDependencies:
+      '@rapidbuild/config':
+        specifier: workspace:*
+        version: link:../../config
       '@types/node':
         specifier: 20.11.30
         version: 20.11.30

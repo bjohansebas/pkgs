@@ -16,6 +16,7 @@
   },
   "files": ["dist"],
   "devDependencies": {
+    "@rapidbuild/config": "workspace:*",
     "@types/node": "20.11.30",
     "@vercel/ncc": "0.38.1",
     "fast-glob": "^3.3.2",
