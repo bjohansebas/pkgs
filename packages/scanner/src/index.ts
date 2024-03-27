@@ -18,15 +18,12 @@ export async function scanFolder(root: string): Promise<string[]> {
   return files
 }
 
-export async function generateReport(): Promise<Project> {
-  const files = await scanFolder('./')
-
-  const config: Project = {}
+export function generateReport({ files }: { files: string[] }): Project {
+  const config: Project = {
+    languages: getLanguages(files),
+  }
 
   config.package_manager = getPackageManager(files)
-  config.languages = getLanguages(files)
 
   return config
 }
-
-console.log(await generateReport())

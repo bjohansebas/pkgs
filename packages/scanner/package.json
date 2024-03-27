@@ -9,6 +9,7 @@
     "prerelease": "node ./src/scripts/rm.mjs dist",
     "release": "ncc build ./src/index.ts -o ./dist/ --minify --no-cache --no-source-map-register",
     "prepublishOnly": "cd ../../ && turbo run build",
+    "test": "vitest",
     "build": "pnpm release"
   },
   "bin": {
@@ -19,9 +20,9 @@
     "@rapidbuild/config": "workspace:*",
     "@types/node": "20.11.30",
     "@vercel/ncc": "0.38.1",
-    "fast-glob": "^3.3.2",
-    "ora": "8.0.1",
-    "typescript": "5.4.3"
+    "fast-glob": "3.3.2",
+    "typescript": "5.4.3",
+    "vitest": "1.4.0"
   },
   "homepage": "https://github.com/bjohansebas/rapidbuild",
   "repository": {
