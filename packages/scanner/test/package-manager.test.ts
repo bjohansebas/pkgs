@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { generateReport } from '../src'
+import { generateReport } from '../src/helpers/generate-report'
 
 describe('report package managers', () => {
   it('report only pnpm', () => {
