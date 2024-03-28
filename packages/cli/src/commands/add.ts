@@ -9,9 +9,9 @@ export function addCommand(name: string) {
     console.log(
       `\nPlease specify the project directory:\n  ${cyan(program.name())} ${cyan('add')} ${green(
         '<project-directory>',
-      )}\nFor example:\n  ${cyan(program.name())} ${cyan('add')} ${green('website')}\n\nRun ${cyan(
-        `${program.name()} help`,
-      )} ${green('add')} to see all options.`,
+      )} ${cyan('[tools]')}\nFor example:\n  ${cyan(program.name())} ${cyan('add')} ${green('website')} ${cyan(
+        '--linter eslint',
+      )}\n\nRun ${cyan(`${program.name()} help add`)} to see all options.`,
     )
 
     process.exit(1)
@@ -19,7 +19,15 @@ export function addCommand(name: string) {
 
   // TODO: Show a prompt to select the tool to add
   if (Object.keys(options).length === 0) {
-    return
+    console.log(
+      `\nPlease specify the tool to add:\n  ${cyan(program.name())} ${cyan('add <project-directory>')} ${green(
+        '[tools]',
+      )}\nFor example:\n  ${cyan(program.name())} ${cyan('add website')} ${green(
+        '--linter eslint --formatter prettier',
+      )}\n\nRun ${cyan(`${program.name()} help add`)} to see all options.`,
+    )
+
+    process.exit(1)
   }
 
   if (options.L != null && options.L !== true) {
