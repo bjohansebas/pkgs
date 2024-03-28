@@ -3,15 +3,17 @@
   "version": "0.0.1",
   "author": "Sebastian Beltran <bjohansebas@gmail.com>",
   "description": "Simple scan the technologies used in a TypeScript/JavaScript project.",
-  "keywords": ["cli", "frameworks", "scanner", "files", "projects"],
+  "keywords": ["frameworks", "scanner", "files", "projects"],
   "license": "MPL-2.0",
   "main": "dist/helpers.js",
   "module": "dist/helpers.mjs",
   "types": "dist/helpers.d.ts",
   "files": ["dist"],
   "scripts": {
+    "clean": "node ../../scripts/rm.mjs dist",
     "dev": "tsup --watch",
     "build": "tsup",
+    "prepublishOnly": "cd ../../ && turbo run build",
     "test": "vitest"
   },
   "devDependencies": {

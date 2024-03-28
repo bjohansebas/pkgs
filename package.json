@@ -3,6 +3,7 @@
   "license": "MPL-2.0",
   "scripts": {
     "build": "turbo build",
+    "clean": "turbo clean",
     "dev": "turbo dev",
     "test": "turbo test",
     "lint": "biome check . && turbo lint"
