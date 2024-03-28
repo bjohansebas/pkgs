@@ -22,6 +22,9 @@ importers:
       '@rapidbuild/config':
         specifier: workspace:*
         version: link:../../config
+      '@rapidbuild/scanner':
+        specifier: workspace:*
+        version: link:../scanner
       '@types/node':
         specifier: 20.11.30
         version: 20.11.30
@@ -31,6 +34,9 @@ importers:
       commander:
         specifier: 12.0.0
         version: 12.0.0
+      picocolors:
+        specifier: 1.0.0
+        version: 1.0.0
       typescript:
         specifier: 5.4.3
         version: 5.4.3
@@ -46,18 +52,9 @@ importers:
       '@types/node':
         specifier: 20.11.30
         version: 20.11.30
-      '@vercel/ncc':
-        specifier: 0.38.1
-        version: 0.38.1
-      commander:
-        specifier: 12.0.0
-        version: 12.0.0
       fast-glob:
         specifier: 3.3.2
         version: 3.3.2
-      picocolors:
-        specifier: 1.0.0
-        version: 1.0.0
       tsup:
         specifier: 8.0.2
         version: 8.0.2(typescript@5.4.3)

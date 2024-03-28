@@ -13,11 +13,13 @@
   },
   "devDependencies": {
     "@rapidbuild/config": "workspace:*",
+    "@rapidbuild/scanner": "workspace:*",
     "@types/node": "20.11.30",
     "@vercel/ncc": "0.38.1",
     "commander": "12.0.0",
-    "vitest": "1.4.0",
-    "typescript": "5.4.3"
+    "picocolors": "1.0.0",
+    "typescript": "5.4.3",
+    "vitest": "1.4.0"
   },
   "repository": {
     "type": "git",
