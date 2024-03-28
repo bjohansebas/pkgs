@@ -13,12 +13,13 @@ export const program = new Command(packageJson.name)
 
 program
   .command('add')
+  .argument('[project-directory]')
   .addOption(new Option('--formatter, -f [tool]').choices(['biome', 'prettier']))
   .addOption(new Option('--linter, -l [tool]').choices(['eslint', 'oxc', 'biome']))
   .addOption(new Option('--git-hooks, -gh [tool]').choices(['husky', 'lefthook']))
   .action(addCommand)
   .allowUnknownOption()
 
-program.command('scan').argument('<project-directory>').action(scannerCommand).allowUnknownOption()
+program.command('scan').argument('[project-directory]').action(scannerCommand).allowUnknownOption()
 
 program.parse(process.argv)

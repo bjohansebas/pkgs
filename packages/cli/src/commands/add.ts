@@ -1,5 +1,21 @@
-export function addCommand() {
+import { cyan, green } from 'picocolors'
+import { program } from '../'
+
+export function addCommand(name: string) {
+  const projectPath = name
   const options = this.opts()
+
+  if (!projectPath) {
+    console.log(
+      `\nPlease specify the project directory:\n  ${cyan(program.name())} ${cyan('add')} ${green(
+        '<project-directory>',
+      )}\nFor example:\n  ${cyan(program.name())} ${cyan('add')} ${green('website')}\n\nRun ${cyan(
+        `${program.name()} help`,
+      )} ${green('add')} to see all options.`,
+    )
+
+    process.exit(1)
+  }
 
   // TODO: Show a prompt to select the tool to add
   if (Object.keys(options).length === 0) {

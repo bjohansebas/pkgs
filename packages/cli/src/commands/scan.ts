@@ -8,11 +8,11 @@ export const scannerCommand = async (name: string) => {
 
   if (!projectPath) {
     console.log(
-      `\nPlease specify the project directory:\n  ${cyan(program.name())} ${green(
+      `\nPlease specify the project directory:\n  ${cyan(program.name())} ${cyan('scan')} ${green(
         '<project-directory>',
-      )}\nFor example:\n  ${cyan(program.name())} ${green('website')}\n\nRun ${cyan(
-        `${program.name()} --help`,
-      )} to see all options.`,
+      )}\nFor example:\n  ${cyan(program.name())} ${cyan('scan')} ${green('website')}\n\nRun ${cyan(
+        `${program.name()} help`,
+      )} ${green('scan')} to see all options.`,
     )
     process.exit(1)
   }
