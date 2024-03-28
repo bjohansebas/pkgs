@@ -1,7 +1,7 @@
 import type { Languages } from '../types'
 
-const javascriptRegex = /\.(js)$/
-const typescriptRegex = /\.(ts)$/
+const javascriptRegex = /\.(jsx|cjs|mjs|js)$/
+const typescriptRegex = /\.(tsx|cts|mts|ts)$/
 
 export function getLanguages(files: string[]): Record<Languages, boolean> | null {
   const results: Record<Languages, boolean> = { javascript: false, typescript: false }
