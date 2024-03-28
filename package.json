@@ -5,11 +5,14 @@
     "build": "turbo build",
     "clean": "turbo clean",
     "dev": "turbo dev",
-    "test": "turbo test",
-    "lint": "biome check . && turbo lint"
+    "lint": "biome check . && turbo lint",
+    "prepare": "husky",
+    "test": "turbo test"
   },
   "devDependencies": {
     "@biomejs/biome": "1.6.3",
+    "husky": "9.0.11",
+    "lint-staged": "15.2.2",
     "turbo": "1.13.0"
   },
   "packageManager": "pnpm@8.15.1",
