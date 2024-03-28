@@ -1,6 +1,6 @@
-import type { Project } from '../types'
-import { getLanguages } from './get-languages'
-import { getPackageManager } from './get-package-manager'
+import { getLanguages } from './helpers'
+import { getPackageManager } from './helpers'
+import type { Project } from './types'
 
 export function generateReport({ files }: { files: string[] }): Project {
   const config: Project = {
@@ -10,3 +10,5 @@ export function generateReport({ files }: { files: string[] }): Project {
 
   return config
 }
+
+export * from './helpers'

@@ -5,9 +5,21 @@
   "description": "Simple scan the technologies used in a TypeScript/JavaScript project.",
   "keywords": ["frameworks", "scanner", "files", "projects"],
   "license": "MPL-2.0",
-  "main": "dist/helpers.js",
-  "module": "dist/helpers.mjs",
-  "types": "dist/helpers.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    },
+    "./helpers": {
+      "types": "./dist/helpers.d.ts",
+      "import": "./dist/helpers.mjs",
+      "default": "./dist/helpers.js"
+    }
+  },
+  "sideEffects": false,
   "files": ["dist"],
   "scripts": {
     "clean": "node ../../scripts/rm.mjs dist",

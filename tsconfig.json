@@ -1,0 +1,3 @@
+{
+  "extends": "@rapidbuild/config/tsconfig/base.json"
+}

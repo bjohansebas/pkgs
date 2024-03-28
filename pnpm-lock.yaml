@@ -11,6 +11,9 @@ importers:
       '@biomejs/biome':
         specifier: 1.6.3
         version: 1.6.3
+      '@rapidbuild/config':
+        specifier: workspace:*
+        version: link:config
       husky:
         specifier: 9.0.11
         version: 9.0.11
