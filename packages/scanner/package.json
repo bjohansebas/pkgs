@@ -2,25 +2,26 @@
   "name": "@rapidbuild/scanner",
   "version": "0.0.1",
   "author": "Sebastian Beltran <bjohansebas@gmail.com>",
-  "keywords": ["frameworks", "cli", "scanner", "files"],
+  "keywords": ["cli", "frameworks", "scanner", "files", "projects"],
   "license": "MPL-2.0",
-  "scripts": {
-    "dev": "ncc build ./src/index.ts -w -o dist/",
-    "prerelease": "node ./src/scripts/rm.mjs dist",
-    "release": "ncc build ./src/index.ts -o ./dist/ --minify --no-cache --no-source-map-register",
-    "prepublishOnly": "cd ../../ && turbo run build",
-    "test": "vitest",
-    "build": "pnpm release"
-  },
-  "bin": {
-    "rapidbuild": "dist/index.js"
-  },
+  "main": "dist/helpers.js",
+  "module": "dist/helpers.mjs",
+  "types": "dist/helpers.d.ts",
+  "bin": "dist/index.js",
   "files": ["dist"],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "test": "vitest"
+  },
   "devDependencies": {
     "@rapidbuild/config": "workspace:*",
     "@types/node": "20.11.30",
     "@vercel/ncc": "0.38.1",
+    "commander": "12.0.0",
     "fast-glob": "3.3.2",
+    "picocolors": "1.0.0",
+    "tsup": "8.0.2",
     "typescript": "5.4.3",
     "vitest": "1.4.0"
   },
