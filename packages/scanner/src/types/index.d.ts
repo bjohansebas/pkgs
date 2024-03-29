@@ -3,6 +3,7 @@ export type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun' | 'deno'
 export type Languages = 'javascript' | 'typescript'
 
 export type Linters = 'biome' | 'eslint' | 'oxc'
+export type Formatters = 'biome' | 'prettier'
 
 export interface Css {
   preprocessor: 'sass' | 'less' | 'stylus' | 'postcss'
@@ -19,11 +20,11 @@ export interface Project {
   languages: Record<Languages, boolean> | null
   package_manager: PackageManager[] | null
   linters: Linters[] | null
+  formatter: Formatters[] | null
   // css: string[]
   // frameworks: string[]
   // monorepo: null | Monorepo
   // git_hooks: string
   // database: string
-  // formatter: string[]
   // ci: string
 }

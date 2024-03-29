@@ -22,3 +22,18 @@ export const eslintFiles = [
   'eslint.config.mjs',
   'eslint.config.cjs',
 ]
+
+export const prettierFiles = [
+  '.prettierrc',
+  '.prettierrc.json',
+  '.prettierrc.yml',
+  '.prettierrc.yaml',
+  '.prettierrc.json5',
+  '.prettierrc.js',
+  'prettier.config.js',
+  '.prettierrc.mjs',
+  'prettier.config.mjs',
+  '.prettierrc.cjs',
+  'prettier.config.cjs',
+  '.prettierrc.toml',
+]
