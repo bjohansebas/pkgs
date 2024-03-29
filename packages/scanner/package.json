@@ -47,5 +47,8 @@
   },
   "engines": {
     "node": "18.x || 20.x"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
