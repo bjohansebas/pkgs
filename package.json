@@ -15,7 +15,6 @@
   "devDependencies": {
     "@biomejs/biome": "1.6.3",
     "@changesets/cli": "2.27.1",
-    "@rapidbuild/config": "workspace:*",
     "husky": "9.0.11",
     "lint-staged": "15.2.2",
     "turbo": "1.13.0"
