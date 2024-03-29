@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { generateReport } from '../src'
-import { biomeFiles, eslintFiles } from '../src/helpers/get-linter'
+import { biomeFiles, eslintFiles } from '../src/constants'
 
 describe('report linters', () => {
   it("do not display any linter if there isn't any", () => {

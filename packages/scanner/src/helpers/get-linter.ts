@@ -1,16 +1,5 @@
+import { biomeFiles, eslintFiles } from '../constants'
 import type { Linters } from '../types'
-
-export const biomeFiles = ['biome.json', 'biome.jsonc']
-export const eslintFiles = [
-  '.eslintrc.js',
-  '.eslintrc.cjs',
-  '.eslintrc.yaml',
-  '.eslintrc.yml',
-  '.eslintrc.json',
-  'eslint.config.js',
-  'eslint.config.mjs',
-  'eslint.config.cjs',
-]
 
 export function getLinters(files: string[]): Linters[] | null {
   const result: Linters[] = []
