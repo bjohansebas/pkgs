@@ -9,6 +9,7 @@ export function getLinters(files: string[]): Linters[] | null {
     return splitValue[splitValue.length - 1]
   })
 
+  // TODO: check if linter is active
   const hasBiomeConfig = biomeFiles.find((value) => filesSplit.includes(value))
 
   if (hasBiomeConfig) result.push('biome')
