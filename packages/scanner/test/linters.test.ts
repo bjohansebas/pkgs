@@ -22,19 +22,18 @@ describe('report linters', () => {
     expect(report.linters).toHaveLength(1)
     expect(report.linters).toContain('biome')
     expect(report.linters).not.toContain('eslint')
+
+    const report2 = generateReport({ files: [`packages/config/${file}`, 'index.ts'] })
+
+    expect(report2.linters).toHaveLength(1)
+    expect(report2.linters).toContain('biome')
+    expect(report2.linters).not.toContain('eslint')
   })
 
   it("do not report biome when it's in a subfolder and the file is improperly named", () => {
     const report = generateReport({ files: ['src/lbiome.json', 'index.ts'] })
 
     expect(report.linters).toBe(null)
-  })
-
-  it('report ESLint when it is in a subfolder', () => {
-    const report = generateReport({ files: ['src/.eslintrc.js', 'index.ts'] })
-
-    expect(report.linters).toHaveLength(1)
-    expect(report.linters).toContain('eslint')
   })
 
   it("do not report eslint when it's in a subfolder and the file is improperly named", () => {
@@ -44,11 +43,17 @@ describe('report linters', () => {
   })
 
   it.each(eslintFiles)('report %s when it is in a subfolder', (file) => {
-    const report = generateReport({ files: ['package.json', 'index.ts', `packages/config/${file}`] })
+    const report = generateReport({ files: ['package.json', 'index.ts', `src/${file}`] })
 
     expect(report.linters).toHaveLength(1)
     expect(report.linters).toContain('eslint')
     expect(report.linters).not.toContain('biome')
+
+    const report2 = generateReport({ files: ['package.json', 'index.ts', `packages/config/${file}`] })
+
+    expect(report2.linters).toHaveLength(1)
+    expect(report2.linters).toContain('eslint')
+    expect(report2.linters).not.toContain('biome')
   })
 
   it.each(eslintFiles)('report eslint when using "%s"', (file) => {
