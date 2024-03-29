@@ -4,7 +4,7 @@
   "license": "MPL-2.0",
   "author": "Sebastian Beltran <bjohansebas@gmail.com>",
   "bin": {
-    "rapidbuild": "./dist/index.js"
+    "rapidbuild": "dist/index.js"
   },
   "files": ["dist"],
   "scripts": {
@@ -23,9 +23,10 @@
     "typescript": "5.4.3",
     "vitest": "1.4.0"
   },
+  "homepage": "https://github.com/bjohansebas/rapidbuild",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bjohansebas/rapidbuild",
+    "url": "git+https://github.com/bjohansebas/rapidbuild.git",
     "directory": "packages/cli"
   },
   "bugs": {
