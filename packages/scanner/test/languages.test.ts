@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { generateReport } from '../src/helpers/generate-report'
+import { generateReport } from '../src'
 
 describe('report languages of projects', () => {
   it('do not report TypeScript or JavaScript if there are no files with their extensions', () => {
