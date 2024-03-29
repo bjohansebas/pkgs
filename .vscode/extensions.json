@@ -1,3 +1,10 @@
 {
-  "recommendations": ["biomejs.biome"]
+  "recommendations": [
+    // Linting / Formatting
+    "biomejs.biome",
+    "usernamehw.errorlens",
+
+    // Showing todo comments
+    "gruntfuggly.todo-tree"
+  ]
 }
