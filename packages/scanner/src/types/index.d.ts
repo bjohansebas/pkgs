@@ -17,7 +17,7 @@ export interface Monorepo {
 }
 
 export interface Project {
-  languages: Record<Languages, boolean> | null
+  languages: Languages[] | null
   package_manager: PackageManager[] | null
   linters: Linters[] | null
   formatter: Formatters[] | null

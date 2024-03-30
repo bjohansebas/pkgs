@@ -11,8 +11,8 @@ describe('report languages of projects', () => {
   it('report only TypeScript when there are only TypeScript files', () => {
     const report = generateReport(['index.ts', 'test.ts', 'types.ts'])
 
-    expect(report.languages?.javascript).toBe(false)
-    expect(report.languages?.typescript).toBe(true)
+    expect(report.languages).toContain('typescript')
+    expect(report.languages).not.toContain('javascript')
   })
 
   it('report only JavaScript when there are only JavaScript files', () => {
@@ -20,64 +20,45 @@ describe('report languages of projects', () => {
 
     expect(report.languages).not.toBe(null)
 
-    expect(report.languages?.javascript).toBe(true)
-    expect(report.languages?.typescript).toBe(false)
+    expect(report.languages).toContain('javascript')
+    expect(report.languages).not.toContain('typescript')
   })
 
-  it('report JavaScript if there is a ".mjs" file', () => {
-    const report = generateReport(['data.json', 'package.json', 'cli.mjs', 'src/index.mjs'])
+  it.each(['js', 'cjs', 'mjs', 'jsx'])('report javascript if there is a "%s" file', (extension) => {
+    const reportWithSubfolders = generateReport(['data.json', 'package.json', `src/index.${extension}`])
+
+    expect(reportWithSubfolders.languages).not.toBe(null)
+
+    expect(reportWithSubfolders.languages).toContain('javascript')
+    expect(reportWithSubfolders.languages).not.toContain('typescript')
+
+    const report = generateReport(['data.json', 'package.json', `index.${extension}`])
 
     expect(report.languages).not.toBe(null)
 
-    expect(report.languages?.javascript).toBe(true)
-    expect(report.languages?.typescript).toBe(false)
+    expect(report.languages).toContain('javascript')
+    expect(report.languages).not.toContain('typescript')
   })
 
-  it('report JavaScript if there is a ".cjs" file', () => {
-    const report = generateReport(['data.json', 'package.json', 'cli.cjs', 'src/index.cjs'])
+  it.each(['ts', 'mts', 'tsx', 'd.ts', 'd.mts'])('report typescript if there is a "%s" file', (extension) => {
+    const reportWithSubfolders = generateReport(['data.json', 'package.json', `src/index.${extension}`])
+
+    expect(reportWithSubfolders.languages).not.toBe(null)
+
+    expect(reportWithSubfolders.languages).not.toContain('javascript')
+    expect(reportWithSubfolders.languages).toContain('typescript')
+
+    const report = generateReport(['data.json', 'package.json', `index.${extension}`])
 
     expect(report.languages).not.toBe(null)
 
-    expect(report.languages?.javascript).toBe(true)
-    expect(report.languages?.typescript).toBe(false)
-  })
-
-  it('report JavaScript if there is a ".jsx" file', () => {
-    const report = generateReport(['data.json', 'package.json', 'src/cli.jsx', 'src/index.jsx'])
-
-    expect(report.languages).not.toBe(null)
-
-    expect(report.languages?.javascript).toBe(true)
-    expect(report.languages?.typescript).toBe(false)
-  })
-
-  it('report TypeScript if there is a ".tsx" file', () => {
-    const report = generateReport(['data.json', 'package.json', 'src/cli.tsx', 'src/index.tsx'])
-
-    expect(report.languages).not.toBe(null)
-
-    expect(report.languages?.javascript).toBe(false)
-    expect(report.languages?.typescript).toBe(true)
-  })
-
-  it('report Typescript if there is a ".d.mts" file', () => {
-    const report = generateReport(['data.json', 'package.json', 'cli.d.mts', 'index.d.mts'])
-
-    expect(report.languages).not.toBe(null)
-
-    expect(report.languages?.javascript).toBe(false)
-    expect(report.languages?.typescript).toBe(true)
+    expect(report.languages).not.toContain('javascript')
+    expect(report.languages).toContain('typescript')
   })
 
   it('report TypeScript if the tsconfig file exists', () => {
     const report = generateReport(['data.js', 'package.json', 'tsconfig.json'])
 
-    expect(report.languages?.typescript).toBe(true)
-  })
-
-  it('report TypeScript if there are DTS(.d.ts) files.', () => {
-    const report = generateReport(['data.d.ts', 'package.json', 'dist', 'index.js'])
-
-    expect(report.languages?.typescript).toBe(true)
+    expect(report.languages).toContain('typescript')
   })
 })
