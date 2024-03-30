@@ -3,7 +3,7 @@ import { generateReport } from '../src'
 
 describe('report package managers', () => {
   it('report only pnpm', () => {
-    const report = generateReport(['data.json', 'package.json', 'pnpm-lock.yaml'])
+    const report = generateReport(['data.json', 'data.ts', 'pnpm-lock.yaml'])
 
     expect(report.package_manager).toHaveLength(1)
     expect(report.package_manager).toContain('pnpm')
@@ -17,7 +17,7 @@ describe('report package managers', () => {
   })
 
   it('report only npm', () => {
-    const report = generateReport(['data.json', 'package.json', 'package-lock.json'])
+    const report = generateReport(['data.json', 'data.ts', 'package-lock.json'])
 
     expect(report.package_manager).toHaveLength(1)
     expect(report.package_manager).toContain('npm')
@@ -31,7 +31,7 @@ describe('report package managers', () => {
   })
 
   it('report only yarn', () => {
-    const report = generateReport(['data.json', 'package.json', 'yarn.lock'])
+    const report = generateReport(['data.json', 'data.ts', 'yarn.lock'])
 
     expect(report.package_manager).toHaveLength(1)
     expect(report.package_manager).toContain('yarn')
@@ -45,7 +45,7 @@ describe('report package managers', () => {
   })
 
   it('report only bun', () => {
-    const report = generateReport(['data.json', 'package.json', 'bun.lockb'])
+    const report = generateReport(['data.json', 'data.ts', 'bun.lockb'])
 
     expect(report.package_manager).toHaveLength(1)
     expect(report.package_manager).toContain('bun')
@@ -59,7 +59,7 @@ describe('report package managers', () => {
   })
 
   it('report only deno', () => {
-    const report = generateReport(['data.json', 'package.json', 'deno.lock'])
+    const report = generateReport(['data.json', 'data.ts', 'deno.lock'])
 
     expect(report.package_manager).toHaveLength(1)
     expect(report.package_manager).toContain('deno')
@@ -73,13 +73,13 @@ describe('report package managers', () => {
   })
 
   it('do not report any package manager', () => {
-    const report = generateReport(['data.json', 'package.json'])
+    const report = generateReport(['data.json', 'data.ts'])
 
     expect(report.package_manager).toBe(null)
   })
 
   it('report if there are multiple package managers', () => {
-    const report = generateReport(['data.json', 'package.json', 'pnpm-lock.yaml', 'bun.lockb', 'package-lock.json'])
+    const report = generateReport(['data.json', 'data.ts', 'pnpm-lock.yaml', 'bun.lockb', 'package-lock.json'])
 
     expect(report.package_manager).toContain('pnpm')
     expect(report.package_manager).toContain('bun')

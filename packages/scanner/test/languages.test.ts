@@ -3,7 +3,7 @@ import { generateReport } from '../src'
 
 describe('report languages of projects', () => {
   it('do not report TypeScript or JavaScript if there are no files with their extensions', () => {
-    const report = generateReport(['data.json', 'package.json'])
+    const report = generateReport(['data.json', 'data2.json'])
 
     expect(report.languages).toBe(null)
   })
@@ -16,7 +16,7 @@ describe('report languages of projects', () => {
   })
 
   it('report only JavaScript when there are only JavaScript files', () => {
-    const report = generateReport(['data.json', 'package.json', 'src/index.js', 'bin.mjs'])
+    const report = generateReport(['data.json', 'data.js', 'src/index.js', 'bin.mjs'])
 
     expect(report.languages).not.toBe(null)
 
@@ -25,14 +25,14 @@ describe('report languages of projects', () => {
   })
 
   it.each(['js', 'cjs', 'mjs', 'jsx'])('report javascript if there is a "%s" file', (extension) => {
-    const reportWithSubfolders = generateReport(['data.json', 'package.json', `src/index.${extension}`])
+    const reportWithSubfolders = generateReport(['data.json', 'data.js', `src/index.${extension}`])
 
     expect(reportWithSubfolders.languages).not.toBe(null)
 
     expect(reportWithSubfolders.languages).toContain('javascript')
     expect(reportWithSubfolders.languages).not.toContain('typescript')
 
-    const report = generateReport(['data.json', 'package.json', `index.${extension}`])
+    const report = generateReport(['data.json', 'data.js', `index.${extension}`])
 
     expect(report.languages).not.toBe(null)
 
@@ -41,14 +41,14 @@ describe('report languages of projects', () => {
   })
 
   it.each(['ts', 'mts', 'tsx', 'd.ts', 'd.mts'])('report typescript if there is a "%s" file', (extension) => {
-    const reportWithSubfolders = generateReport(['data.json', 'package.json', `src/index.${extension}`])
+    const reportWithSubfolders = generateReport(['data.json', 'data.ts', `src/index.${extension}`])
 
     expect(reportWithSubfolders.languages).not.toBe(null)
 
     expect(reportWithSubfolders.languages).not.toContain('javascript')
     expect(reportWithSubfolders.languages).toContain('typescript')
 
-    const report = generateReport(['data.json', 'package.json', `index.${extension}`])
+    const report = generateReport(['data.json', 'data.ts', `index.${extension}`])
 
     expect(report.languages).not.toBe(null)
 
@@ -57,7 +57,7 @@ describe('report languages of projects', () => {
   })
 
   it('report TypeScript if the tsconfig file exists', () => {
-    const report = generateReport(['data.js', 'package.json', 'tsconfig.json'])
+    const report = generateReport(['data.js', 'data.json', 'tsconfig.json'])
 
     expect(report.languages).toContain('typescript')
   })

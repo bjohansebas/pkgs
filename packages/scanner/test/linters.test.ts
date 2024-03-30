@@ -4,12 +4,12 @@ import { biomeFiles, eslintFiles } from '../src/constants'
 
 describe('report linters', () => {
   it("do not display any linter if there isn't any", () => {
-    const report = generateReport(['src/index.ts', 'index.ts', 'package.json', 'index.test.ts'])
+    const report = generateReport(['src/index.ts', 'index.ts', 'data.json', 'index.test.ts'])
 
     expect(report.linters).toBe(null)
   })
   it.each(biomeFiles)("report biome when using '%s'", (file) => {
-    const report = generateReport([file, 'package.json'])
+    const report = generateReport([file, 'data.json'])
 
     expect(report.linters).toHaveLength(1)
     expect(report.linters).toContain('biome')
@@ -43,13 +43,13 @@ describe('report linters', () => {
   })
 
   it.each(eslintFiles)('report %s when it is in a subfolder', (file) => {
-    const report = generateReport(['package.json', 'index.ts', `src/${file}`])
+    const report = generateReport(['data.json', 'index.ts', `src/${file}`])
 
     expect(report.linters).toHaveLength(1)
     expect(report.linters).toContain('eslint')
     expect(report.linters).not.toContain('biome')
 
-    const report2 = generateReport(['package.json', 'index.ts', `packages/config/${file}`])
+    const report2 = generateReport(['data.json', 'index.ts', `packages/config/${file}`])
 
     expect(report2.linters).toHaveLength(1)
     expect(report2.linters).toContain('eslint')
@@ -57,7 +57,7 @@ describe('report linters', () => {
   })
 
   it.each(eslintFiles)('report eslint when using "%s"', (file) => {
-    const report = generateReport(['package.json', 'index.ts', file])
+    const report = generateReport(['data.json', 'index.ts', file])
 
     expect(report.linters).toHaveLength(1)
     expect(report.linters).toContain('eslint')
