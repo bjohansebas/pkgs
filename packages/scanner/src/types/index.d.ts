@@ -1,3 +1,5 @@
+import type { PathLike } from 'node:fs'
+
 export type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun' | 'deno'
 
 export type Languages = 'javascript' | 'typescript'
@@ -16,15 +18,29 @@ export interface Monorepo {
   name: 'turborepo' | 'nx'
 }
 
-export interface Project {
-  languages: Languages[] | null
+export interface Project extends Package {
+  packages?: Package[]
   package_manager: PackageManager[] | null
+  // monorepo: null | Monorepo
+  // ci: string
+  // git_hooks: string
+}
+
+export interface Package {
+  languages: Languages[] | null
   linters: Linters[] | null
   formatter: Formatters[] | null
   // css: string[]
   // frameworks: string[]
-  // monorepo: null | Monorepo
-  // git_hooks: string
   // database: string
-  // ci: string
+}
+
+export interface PackageJson {
+  path: PathLike
+  name?: string
+  scripts?: Record<string, string>
+  dependencies?: Record<string, string>
+  devDependencies?: Record<string, string>
+  prettier?: object
+  eslintConfig?: object
 }
