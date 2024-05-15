@@ -15,3 +15,23 @@ npm i -g rapidbuild
 ```bash
 rapidbuild scan <project-directory>
 ```
+
+### Output
+
+```json
+[
+    "name": "project-name",
+    "packages": [
+        {
+            "name":"package-name",
+            "languages": ["typescript","javascript"],
+            "linters": ["eslint"],
+            "formatter": ["prettier"],
+        }
+    ],
+    "languages": ["typescript","javascript"],
+    "package_manager": "pnpm",
+    "linters": ["biome"],
+    "formatter": ["biome"],
+]
+```
