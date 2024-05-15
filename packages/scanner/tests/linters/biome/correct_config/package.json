@@ -1,0 +1,6 @@
+{
+  "name": "biome_test",
+  "devDependencies": {
+    "@biomejs/biome": "1.6.3"
+  }
+}
