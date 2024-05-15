@@ -30,11 +30,11 @@
   },
   "devDependencies": {
     "@rapidbuild/config": "workspace:*",
-    "@types/node": "20.12.7",
+    "@types/node": "20.12.12",
     "fast-glob": "3.3.2",
     "tsup": "8.0.2",
     "typescript": "5.4.5",
-    "vitest": "1.5.0"
+    "vitest": "1.6.0"
   },
   "homepage": "https://github.com/bjohansebas/rapidbuild",
   "repository": {
@@ -46,8 +46,9 @@
     "url": "https://github.com/bjohansebas/rapidbuild/issues"
   },
   "engines": {
-    "node": "18.x || 20.x"
+    "node": "18.x || 20.x || 22.x"
   },
+  "packageManager": "pnpm@9.1.1",
   "publishConfig": {
     "access": "public"
   }
