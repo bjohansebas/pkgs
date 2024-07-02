@@ -19,7 +19,7 @@ export interface Monorepo {
 }
 
 export interface Project extends Package {
-  packages?: Package[]
+  packages?: Package[] | null
   package_manager: PackageManager[] | null
   // monorepo: null | Monorepo
   // ci: string
