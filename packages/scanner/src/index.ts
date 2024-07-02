@@ -1,24 +1,14 @@
-import path from 'node:path'
-
-import { getLanguages, readPackageJson } from './helpers'
+import { findPackageJson, getLanguages } from './helpers'
 import { getPackageManager } from './helpers'
+import { generatePackages } from './helpers/generate-packages'
 import { getFormatters } from './helpers/get-formatter'
 import { getLinters } from './helpers/get-linter'
 import type { Project } from './types'
-import { getFileOfPath, splitPath } from './utils/splitPath'
+import { getFileOfPath } from './utils/splitPath'
 
-export function generateReport(files: string[]): Project {
-  const packageJsons = files
-    .filter((file) => {
-      const splitFile = splitPath(file)
-
-      if (splitFile[splitFile.length - 1] === 'package.json') return true
-    })
-    .map((file) => {
-      const resolvedPath = path.resolve(file)
-
-      return readPackageJson(resolvedPath)
-    })
+export async function generateReport(files: string[]): Promise<Project> {
+  const packages = await findPackageJson(files)
+  const packagesWthFiles = generatePackages(packages, files)
 
   const fileOfPath = getFileOfPath(files)
 

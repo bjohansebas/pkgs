@@ -31,6 +31,8 @@
   "devDependencies": {
     "@rapidbuild/config": "workspace:*",
     "@types/node": "20.14.9",
+    "@types/object.groupby": "1.0.4",
+    "object.groupby": "1.0.3",
     "fast-glob": "3.3.2",
     "tsup": "8.1.0",
     "typescript": "5.5.3",
