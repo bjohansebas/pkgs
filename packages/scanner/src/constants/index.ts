@@ -3,6 +3,7 @@ export const ignoreFiles = [
   '.husky/_/**',
   '**/node_modules',
   '**/.next',
+  '**/.vercel',
   '**/.turbo',
   '**/dist',
   '**/build',
