@@ -5,6 +5,9 @@
     "usernamehw.errorlens",
 
     // Showing todo comments
-    "gruntfuggly.todo-tree"
+    "gruntfuggly.todo-tree",
+
+    // languages
+    "astro-build.astro-vscode"
   ]
 }

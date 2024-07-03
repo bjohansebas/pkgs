@@ -21,6 +21,9 @@ coverage
 # Vercel
 .vercel
 
+# generated types
+.astro
+
 # Build Outputs
 .next/
 out/
