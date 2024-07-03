@@ -20,6 +20,7 @@ program
   .action(addCommand)
   .allowUnknownOption()
 
+//TODO: add option --output -o support csv, json yaml html table
 program.command('scan').argument('[project-directory]').action(scannerCommand).allowUnknownOption()
 
 program.parse(process.argv)

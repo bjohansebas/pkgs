@@ -4,6 +4,7 @@ import { async as glob } from 'fast-glob'
 import { ignoreFiles } from '../constants'
 import { splitPath } from '../utils/splitPath'
 
+// TODO: Use .gitignore
 export async function scanFolder(root: string): Promise<string[]> {
   const ignore = ignoreFiles
 

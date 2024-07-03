@@ -19,6 +19,7 @@ export async function generateReport(files: string[]): Promise<Project> {
     packagesProject = subpackages.map((value) => {
       const pathOfFiles = getFileOfPath(value.files)
 
+      // TODO: show name of package
       return {
         languages: getLanguages(pathOfFiles),
         linters: getLinters(pathOfFiles),
