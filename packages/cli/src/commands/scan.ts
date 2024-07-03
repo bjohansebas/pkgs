@@ -23,5 +23,8 @@ export const scannerCommand = async (name: string) => {
 
   const report = await generateReport(files)
 
-  console.log(report)
+  console.dir(report, {
+    depth: null,
+    colors: true,
+  })
 }
