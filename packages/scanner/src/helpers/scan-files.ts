@@ -1,12 +1,26 @@
+import { existsSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import path from 'node:path'
-import { async as glob } from 'fast-glob'
 
-import { ignoreFiles } from '../constants'
+import { async as glob } from 'fast-glob'
+import { parse } from 'parse-gitignore'
+
+import { defaultIgnoreFiles } from '../constants'
 import { splitPath } from '../utils/splitPath'
 
-// TODO: Use .gitignore
 export async function scanFolder(root: string): Promise<string[]> {
-  const ignore = ignoreFiles
+  const gitignoreFiles = await readGitIgnore(root)
+
+  const ignore = [
+    ...defaultIgnoreFiles,
+    ...gitignoreFiles.map((text) => {
+      if (text.startsWith('**/')) {
+        return text
+      }
+
+      return `**/${text}`
+    }),
+  ]
 
   const files = await glob('**/*', {
     cwd: root,
@@ -16,6 +30,18 @@ export async function scanFolder(root: string): Promise<string[]> {
   })
 
   return files
+}
+
+export async function readGitIgnore(root: string) {
+  const pathFile = path.join(root, '.gitignore')
+
+  if (!existsSync(pathFile)) {
+    return []
+  }
+
+  const contentFile = await readFile(pathFile, 'utf8')
+
+  return parse(contentFile).patterns
 }
 
 export async function findPackageJson(files: string[]) {

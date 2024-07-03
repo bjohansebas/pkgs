@@ -50,6 +50,24 @@ importers:
         specifier: 1.6.0
         version: 1.6.0(@types/node@20.14.9)
 
+  packages/gitignore:
+    devDependencies:
+      '@rapidbuild/config':
+        specifier: workspace:*
+        version: link:../../config
+      '@types/node':
+        specifier: 20.14.9
+        version: 20.14.9
+      tsup:
+        specifier: 8.1.0
+        version: 8.1.0(postcss@8.4.38)(typescript@5.5.3)
+      typescript:
+        specifier: 5.5.3
+        version: 5.5.3
+      vitest:
+        specifier: 1.6.0
+        version: 1.6.0(@types/node@20.14.9)
+
   packages/scanner:
     devDependencies:
       '@rapidbuild/config':
@@ -61,12 +79,18 @@ importers:
       '@types/object.groupby':
         specifier: 1.0.4
         version: 1.0.4
+      '@types/parse-gitignore':
+        specifier: 1.0.2
+        version: 1.0.2
       fast-glob:
         specifier: 3.3.2
         version: 3.3.2
       object.groupby:
         specifier: 1.0.3
         version: 1.0.3
+      parse-gitignore:
+        specifier: 2.0.0
+        version: 2.0.0
       tsup:
         specifier: 8.1.0
         version: 8.1.0(postcss@8.4.38)(typescript@5.5.3)
@@ -526,6 +550,9 @@ packages:
 
   '@types/object.groupby@1.0.4':
     resolution: {integrity: sha512-n5gXvoz1nuDLLLMgTl82b5VCkSlqt2zfBkSWxoCmMS/j+hN6W7BuPlpOm68B/RRluy2bYo67KOtMQ28cySqeYw==}
+
+  '@types/parse-gitignore@1.0.2':
+    resolution: {integrity: sha512-AQwj+lNTWI7y1kkMe8qLByiToXoXs/du70qGFIHJZaJUVrF5jB8QzvWmLyR1VWYqRagpY8ABrqAjs7uHsJnVBQ==}
 
   '@vercel/ncc@0.38.1':
     resolution: {integrity: sha512-IBBb+iI2NLu4VQn3Vwldyi2QwaXt5+hTyh58ggAMoCGE6DJmPvwL3KPBWcJl1m9LYPChBLE980Jw+CS4Wokqxw==}
@@ -1146,6 +1173,10 @@ packages:
   p-limit@5.0.0:
     resolution: {integrity: sha512-/Eaoq+QyLSiXQ4lyYV23f14mZRQcXnxfHrN0vCai+ak9G0pp9iEQukIIZq5NccEvwRB8PUnZT0KsOoDCINS1qQ==}
     engines: {node: '>=18'}
+
+  parse-gitignore@2.0.0:
+    resolution: {integrity: sha512-RmVuCHWsfu0QPNW+mraxh/xjQVw/lhUCUru8Zni3Ctq3AoMhpDTq0OVdKS6iesd6Kqb7viCV3isAL43dciOSog==}
+    engines: {node: '>=14'}
 
   path-key@3.1.1:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
@@ -1857,6 +1888,10 @@ snapshots:
       undici-types: 5.26.5
 
   '@types/object.groupby@1.0.4': {}
+
+  '@types/parse-gitignore@1.0.2':
+    dependencies:
+      '@types/node': 20.14.9
 
   '@vercel/ncc@0.38.1': {}
 
@@ -2587,6 +2622,8 @@ snapshots:
   p-limit@5.0.0:
     dependencies:
       yocto-queue: 1.0.0
+
+  parse-gitignore@2.0.0: {}
 
   path-key@3.1.1: {}
 

@@ -1,6 +1,6 @@
-export const ignoreFiles = [
-  '.git',
-  '.husky/_/**',
+export const defaultIgnoreFiles = [
+  '**/.git',
+  '**/.husky/_/**',
   '**/node_modules',
   '**/.next',
   '**/.vercel',

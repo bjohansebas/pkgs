@@ -32,8 +32,10 @@
     "@rapidbuild/config": "workspace:*",
     "@types/node": "20.14.9",
     "@types/object.groupby": "1.0.4",
-    "object.groupby": "1.0.3",
+    "@types/parse-gitignore": "1.0.2",
     "fast-glob": "3.3.2",
+    "object.groupby": "1.0.3",
+    "parse-gitignore": "2.0.0",
     "tsup": "8.1.0",
     "typescript": "5.5.3",
     "vitest": "1.6.0"
