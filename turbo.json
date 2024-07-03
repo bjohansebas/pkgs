@@ -14,9 +14,7 @@
       "cache": false
     },
     "lint": {},
-    "test": {},
-    "test:watch": {
-      "cache": false
-    }
-  }
+    "test": {}
+  },
+  "ui": "tui"
 }
