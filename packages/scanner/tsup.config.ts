@@ -5,9 +5,10 @@ export default defineConfig((options: Options) => ({
     index: 'src/index.ts',
     helpers: 'src/helpers/index.ts',
   },
-  minify: true,
+  minify: !options.watch,
   format: ['cjs', 'esm'],
   dts: true,
+  shims: true,
   clean: true,
   ...options,
 }))
