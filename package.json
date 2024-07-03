@@ -3,9 +3,6 @@
   "private": true,
   "license": "MPL-2.0",
   "scripts": {
-    "changeset": "changeset",
-    "publish:packages": "changeset publish",
-    "version:packages": "turbo build && changeset version",
     "build": "turbo build",
     "clean": "turbo clean",
     "dev": "turbo dev",
@@ -15,7 +12,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
-    "@changesets/cli": "2.27.7",
     "husky": "9.0.11",
     "lint-staged": "15.2.7",
     "turbo": "2.0.6"
