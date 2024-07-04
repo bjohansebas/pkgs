@@ -15,7 +15,7 @@ export async function resolveBiomeConfig(files: string[], config: ConfigReport):
   const pathConfig = files.find((file) => {
     const splitPath = file.split('/')
 
-    return biomeFiles.find((biomeFile) => splitPath[splitPath.length - 1].includes(biomeFile))
+    return biomeFiles.find((biomeFile) => splitPath[splitPath.length - 1] === biomeFile)
   })
 
   if (!pathConfig) return null
