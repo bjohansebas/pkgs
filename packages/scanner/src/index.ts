@@ -12,13 +12,18 @@ export interface ConfigReport {
   checkDepedencies?: boolean
 }
 
+// TODO: speed with promise
 export async function generateReport(files: string[], config?: ConfigReport): Promise<Project> {
   let parseConfig: ConfigReport
 
   if (!config) {
-    parseConfig = { root: process.cwd() }
+    parseConfig = { root: process.cwd(), checkDepedencies: true }
   } else {
     parseConfig = config
+
+    if (config.checkDepedencies === undefined) {
+      parseConfig.checkDepedencies = true
+    }
   }
 
   const packages = await findPackageJson(files)
@@ -33,11 +38,15 @@ export async function generateReport(files: string[], config?: ConfigReport): Pr
     const resolvePackages = await Promise.all(
       subpackages.map(async (value) => {
         const pathOfFiles = getFileOfPath(value.files)
-        const formatter = await getFormatters(value.files, parseConfig)
+        const [formatter, linters] = await Promise.all([
+          getFormatters(value.files, parseConfig),
+          getLinters(value.files, parseConfig),
+        ])
+
         // TODO: show name of package
         return {
           languages: getLanguages(pathOfFiles),
-          linters: getLinters(pathOfFiles),
+          linters,
           formatter,
         }
       }),
@@ -48,13 +57,16 @@ export async function generateReport(files: string[], config?: ConfigReport): Pr
 
   const fileOfPath = getFileOfPath(mainPackage[0].files)
 
-  const formatter = await getFormatters(mainPackage[0].files, parseConfig)
+  const [formatter, linters] = await Promise.all([
+    getFormatters(mainPackage[0].files, parseConfig),
+    getLinters(mainPackage[0].files, parseConfig),
+  ])
 
   const configProject: Project = {
     // TODO: return languages of all packages
     languages: getLanguages(fileOfPath),
     package_manager: getPackageManager(fileOfPath),
-    linters: getLinters(fileOfPath),
+    linters,
     formatter,
     packages: packagesProject,
   }

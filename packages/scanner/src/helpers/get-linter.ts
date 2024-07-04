@@ -1,18 +1,20 @@
-import { biomeFiles, eslintFiles } from '../constants'
+import { resolveBiomeConfig } from '@/utils/biome'
+import { getFileOfPath } from '@/utils/splitPath'
+import type { ConfigReport } from '..'
+import { eslintFiles } from '../constants'
 import type { Linters } from '../types'
 
-export function getLinters(files: string[]): Linters[] | null {
+export async function getLinters(files: string[], configProject: ConfigReport): Promise<Linters[] | null> {
   const result: Linters[] = []
 
-  // TODO: check if linter is active
-  const hasBiomeConfig = biomeFiles.find((value) => files.includes(value))
+  const [biomeConfig] = await Promise.all([resolveBiomeConfig(files, configProject)])
 
-  if (hasBiomeConfig) result.push('biome')
+  if (biomeConfig != null && biomeConfig.linter === true) result.push('biome')
 
   // TODO: verify if oxc is installed in package.json
   // TODO: verify if exist eslintConfig in package.json
-
-  const hasEslintConfig = eslintFiles.find((value) => files.includes(value))
+  const parsePaths = getFileOfPath(files)
+  const hasEslintConfig = eslintFiles.find((value) => parsePaths.includes(value))
 
   if (hasEslintConfig) {
     result.push('eslint')
