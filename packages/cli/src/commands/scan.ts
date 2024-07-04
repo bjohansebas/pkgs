@@ -21,7 +21,10 @@ export const scannerCommand = async (name: string) => {
 
   const files = await scanFolder(resolvedProjectPath)
 
-  const report = await generateReport(files)
+  const report = await generateReport(files, {
+    root: resolvedProjectPath,
+    checkContent: true,
+  })
 
   console.dir(report, {
     depth: null,

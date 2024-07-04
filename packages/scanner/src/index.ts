@@ -6,7 +6,21 @@ import { getLinters } from './helpers/get-linter'
 import type { Package, Project } from './types'
 import { getFileOfPath } from './utils/splitPath'
 
-export async function generateReport(files: string[]): Promise<Project> {
+export interface ConfigReport {
+  root: string
+  checkContent?: boolean
+  checkDepedencies?: boolean
+}
+
+export async function generateReport(files: string[], config?: ConfigReport): Promise<Project> {
+  let parseConfig: ConfigReport
+
+  if (!config) {
+    parseConfig = { root: process.cwd() }
+  } else {
+    parseConfig = config
+  }
+
   const packages = await findPackageJson(files)
   const packagesWithFiles = generatePackages(packages, files)
 
@@ -16,29 +30,36 @@ export async function generateReport(files: string[]): Promise<Project> {
   let packagesProject: Package[] | null = null
 
   if (subpackages.length > 0) {
-    packagesProject = subpackages.map((value) => {
-      const pathOfFiles = getFileOfPath(value.files)
+    const resolvePackages = await Promise.all(
+      subpackages.map(async (value) => {
+        const pathOfFiles = getFileOfPath(value.files)
+        const formatter = await getFormatters(value.files, parseConfig)
+        // TODO: show name of package
+        return {
+          languages: getLanguages(pathOfFiles),
+          linters: getLinters(pathOfFiles),
+          formatter,
+        }
+      }),
+    )
 
-      // TODO: show name of package
-      return {
-        languages: getLanguages(pathOfFiles),
-        linters: getLinters(pathOfFiles),
-        formatter: getFormatters(pathOfFiles),
-      }
-    })
+    packagesProject = resolvePackages
   }
 
   const fileOfPath = getFileOfPath(mainPackage[0].files)
 
-  const config: Project = {
+  const formatter = await getFormatters(mainPackage[0].files, parseConfig)
+
+  const configProject: Project = {
+    // TODO: return languages of all packages
     languages: getLanguages(fileOfPath),
     package_manager: getPackageManager(fileOfPath),
     linters: getLinters(fileOfPath),
-    formatter: getFormatters(fileOfPath),
+    formatter,
     packages: packagesProject,
   }
 
-  return config
+  return configProject
 }
 
 export * from './helpers'
