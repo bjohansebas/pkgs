@@ -4,11 +4,7 @@ import type { PrettierConfig } from '@/types/configs'
 import { findDependencie } from './package'
 
 // TODO: support plugins
-export async function resolvePrettier(
-  files: string[],
-  config: ConfigReport,
-  content?: { packageJson?: PackageJson | null },
-) {
+export function resolvePrettier(files: string[], config: ConfigReport, content?: { packageJson?: PackageJson | null }) {
   const pathConfig = files.find((file) => {
     const splitPath = file.split('/')
 
