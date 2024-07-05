@@ -2,13 +2,7 @@ import { findPackageJson } from './helpers'
 import { generatePackages } from './helpers/generate-packages'
 import { transpileMainPackage, transpilePackages } from './helpers/transpile-packages'
 
-import type { Project } from './types'
-
-export interface ConfigReport {
-  root: string
-  checkContent?: boolean
-  checkDepedencies?: boolean
-}
+import type { ConfigReport, Project } from './types'
 
 export async function generateReport(files: string[], config?: ConfigReport): Promise<Project> {
   let parseConfig: ConfigReport

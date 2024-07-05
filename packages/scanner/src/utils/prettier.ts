@@ -1,16 +1,41 @@
 import { prettierFiles } from '@/constants'
-import type { ConfigReport } from '..'
+import type { ConfigReport, PackageJson } from '@/types'
+import type { PrettierConfig } from '@/types/configs'
+import { findDependencie } from './package'
 
-export async function resolvePrettier(files: string[], config: ConfigReport) {
+// TODO: support plugins
+export async function resolvePrettier(
+  files: string[],
+  config: ConfigReport,
+  content?: { packageJson?: PackageJson | null },
+) {
   const pathConfig = files.find((file) => {
     const splitPath = file.split('/')
 
     return prettierFiles.find((prettierFile) => splitPath[splitPath.length - 1] === prettierFile)
   })
 
-  if (!pathConfig) return false
+  const prettierConfig: PrettierConfig = {}
 
-  // TODO: verify if exist prettier key in package.json
+  if (pathConfig) {
+    prettierConfig.config = true
+    prettierConfig.path = pathConfig
+  }
 
-  return true
+  if (!pathConfig) {
+    if (content?.packageJson == null) return null
+
+    if (content.packageJson.prettier != null) {
+      prettierConfig.path = content.packageJson.path
+      prettierConfig.config
+    }
+  }
+
+  if (config.checkDepedencies && content?.packageJson != null) {
+    const installed = findDependencie(content.packageJson, 'prettier')
+
+    prettierConfig.installed = installed
+  }
+
+  return prettierConfig
 }

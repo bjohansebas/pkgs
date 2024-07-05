@@ -2,16 +2,18 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
 import { biomeFiles } from '@/constants'
-import type { ConfigReport } from '..'
+import type { ConfigReport, PackageJson } from '@/types'
+import type { BiomeConfig } from '@/types/configs'
+import { findDependencie } from './package'
 
-interface BiomeConfig {
-  path?: string
-  formatter?: boolean
-  linter?: boolean
-  installed?: boolean
-}
-
-export async function resolveBiomeConfig(files: string[], config: ConfigReport): Promise<BiomeConfig | null> {
+export async function resolveBiomeConfig(
+  files: string[],
+  config: ConfigReport,
+  content?: {
+    packageJson?: PackageJson | null
+    biomeContent?: string
+  },
+): Promise<BiomeConfig | null> {
   const pathConfig = files.find((file) => {
     const splitPath = file.split('/')
 
@@ -21,13 +23,14 @@ export async function resolveBiomeConfig(files: string[], config: ConfigReport):
   if (!pathConfig) return null
 
   const biomeConfig: BiomeConfig = {
-    path: pathConfig,
+    path: path.join(config.root, pathConfig),
     formatter: true,
     linter: true,
+    installed: false,
   }
 
   if (config?.checkContent) {
-    const contentConfig = await readFile(path.join(config.root, pathConfig), 'utf8')
+    const contentConfig = content?.biomeContent ?? (await readFile(path.join(config.root, pathConfig), 'utf8'))
 
     const { formatter, linter } = readBiomeConfig(contentConfig)
 
@@ -35,7 +38,11 @@ export async function resolveBiomeConfig(files: string[], config: ConfigReport):
     biomeConfig.linter = linter
   }
 
-  // TODO: check if exists such as dependencie
+  if (config.checkDepedencies && content?.packageJson != null) {
+    const installed = findDependencie(content.packageJson, '@biomejs/biome')
+
+    biomeConfig.installed = installed
+  }
 
   return biomeConfig
 }

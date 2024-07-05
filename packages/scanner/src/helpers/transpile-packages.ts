@@ -1,14 +1,15 @@
-import type { Project } from '@/types'
+import type { ConfigReport, Project } from '@/types'
 import { getFileOfPath } from '@/utils/splitPath'
 
 import { getLanguages, getPackageManager } from '..'
-import type { ConfigReport } from '..'
-
 import { getFormatters } from './get-formatter'
 import { getLinters } from './get-linter'
+import { resolveFiles } from './resolve-files'
 
 export const transpileMainPackage = async (files: string[], config: ConfigReport) => {
-  const [formatter, linters] = await Promise.all([getFormatters(files, config), getLinters(files, config)])
+  const { biome, prettier } = await resolveFiles(files, config)
+
+  const linters = await getLinters(files, config)
   const fileOfPath = getFileOfPath(files)
 
   const configProject: Project = {
@@ -16,7 +17,7 @@ export const transpileMainPackage = async (files: string[], config: ConfigReport
     languages: getLanguages(fileOfPath),
     package_manager: getPackageManager(fileOfPath),
     linters,
-    formatter,
+    formatter: getFormatters({ biome, prettier }),
   }
 
   return configProject
@@ -26,16 +27,16 @@ export const transpilePackages = async (packages: { files: string[] }[], config:
   return await Promise.all(
     packages.map(async (value) => {
       const pathOfFiles = getFileOfPath(value.files)
-      const [formatter, linters] = await Promise.all([
-        getFormatters(value.files, config),
-        getLinters(value.files, config),
-      ])
+
+      const { biome, prettier } = await resolveFiles(value.files, config)
+
+      const linters = await getLinters(value.files, config)
 
       // TODO: show name of package
       return {
         languages: getLanguages(pathOfFiles),
         linters,
-        formatter,
+        formatter: getFormatters({ biome, prettier }),
       }
     }),
   )

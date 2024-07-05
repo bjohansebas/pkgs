@@ -1,8 +1,7 @@
 import { resolveBiomeConfig } from '@/utils/biome'
 import { getFileOfPath } from '@/utils/splitPath'
-import type { ConfigReport } from '..'
 import { eslintFiles } from '../constants'
-import type { Linters } from '../types'
+import type { ConfigReport, Linters } from '../types'
 
 export async function getLinters(files: string[], configProject: ConfigReport): Promise<Linters[] | null> {
   const result: Linters[] = []

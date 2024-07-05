@@ -1,26 +1,17 @@
-import { resolveBiomeConfig } from '@/utils/biome'
-import { resolvePrettier } from '@/utils/prettier'
-
-import type { ConfigReport } from '..'
+import type { BiomeConfig, PrettierConfig } from '@/types/configs'
 import type { Formatters } from '../types'
 
-export async function getFormatters(files: string[], configProject: ConfigReport): Promise<Formatters[] | null> {
+export function getFormatters({
+  biome,
+  prettier,
+}: { biome: BiomeConfig | null; prettier: PrettierConfig | null }): Formatters[] | null {
   const result: Formatters[] = []
 
-  try {
-    const [biomeConfig, prettierConfig] = await Promise.all([
-      resolveBiomeConfig(files, configProject),
-      resolvePrettier(files, configProject),
-    ])
+  if (biome != null && biome.formatter === true) result.push('biome')
 
-    if (biomeConfig != null && biomeConfig.formatter === true) result.push('biome')
+  if (prettier) result.push('prettier')
 
-    if (prettierConfig) result.push('prettier')
+  if (result.length === 0) return null
 
-    if (result.length === 0) return null
-
-    return result
-  } catch {
-    return null
-  }
+  return result
 }

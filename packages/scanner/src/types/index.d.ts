@@ -1,5 +1,3 @@
-import type { PathLike } from 'node:fs'
-
 export type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun' | 'deno'
 
 export type Languages = 'javascript' | 'typescript'
@@ -36,11 +34,17 @@ export interface Package {
 }
 
 export interface PackageJson {
-  path: PathLike
+  path: string
   name?: string
   scripts?: Record<string, string>
   dependencies?: Record<string, string>
   devDependencies?: Record<string, string>
   prettier?: object
   eslintConfig?: object
+}
+
+export interface ConfigReport {
+  root: string
+  checkContent?: boolean
+  checkDepedencies?: boolean
 }
