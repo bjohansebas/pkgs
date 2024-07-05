@@ -24,7 +24,7 @@ export async function generateReport(files: string[], config?: ConfigReport): Pr
   }
 
   const packages = await findPackageJson(files)
-  const packagesWithFiles = generatePackages(packages, files)
+  const packagesWithFiles = generatePackages(packages, files, parseConfig.root)
 
   const mainPackage = packagesWithFiles.filter((packageData) => packageData.path === '.')
   const subpackages = packagesWithFiles.filter((packageData) => packageData.path !== '.')

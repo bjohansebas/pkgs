@@ -1,8 +1,8 @@
 import groupBy from 'object.groupby'
 
-export function generatePackages(packages: string[], files: string[]) {
-  // FIXME: use the path of cli
-  const cwd = process.cwd().replace('/', '').split('/')
+export function generatePackages(packages: string[], files: string[], root: string) {
+  const cwd = root.replace('/', '').split('/')
+
   const namePackages = packages.map((name) => {
     return name.replace('/', '').split('/').slice(cwd.length).join('/')
   })
