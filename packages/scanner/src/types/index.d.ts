@@ -25,6 +25,7 @@ export interface Project extends Package {
 }
 
 export interface Package {
+  name?: string
   languages: Languages[] | null
   linters: Linters[] | null
   formatter: Formatters[] | null
