@@ -10,3 +10,8 @@ export interface PrettierConfig {
   config?: boolean
   installed?: boolean
 }
+export interface ESLintConfig {
+  path?: string | null
+  config?: boolean
+  installed?: boolean
+}
