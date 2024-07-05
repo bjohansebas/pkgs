@@ -9,6 +9,6 @@ export default defineConfig((options: Options) => ({
   format: ['cjs', 'esm'],
   dts: true,
   shims: true,
-  clean: true,
+  clean: !options.watch,
   ...options,
 }))
