@@ -9,7 +9,7 @@ export function getFormatters({
 
   if (biome != null && biome.formatter === true) result.push('biome')
 
-  if (prettier) result.push('prettier')
+  if (prettier != null && prettier.installed === true) result.push('prettier')
 
   if (result.length === 0) return null
 

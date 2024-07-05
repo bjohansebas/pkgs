@@ -27,7 +27,7 @@ export async function resolvePrettier(
 
     if (content.packageJson.prettier != null) {
       prettierConfig.path = content.packageJson.path
-      prettierConfig.config
+      prettierConfig.config = true
     }
   }
 
