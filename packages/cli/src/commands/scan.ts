@@ -1,9 +1,16 @@
 import path from 'node:path'
+
 import { generateReport, scanFolder } from '@rapidbuild/scanner'
+import ora from 'ora'
 import { cyan, green } from 'picocolors'
+
 import { program } from '../'
 
 export const scannerCommand = async (name: string) => {
+  const spinner = ora('Scanning project')
+  spinner.color = 'green'
+  spinner.start()
+
   const projectPath = name
 
   if (!projectPath) {
@@ -17,17 +24,23 @@ export const scannerCommand = async (name: string) => {
     process.exit(1)
   }
 
-  const resolvedProjectPath = path.resolve(projectPath)
+  try {
+    const resolvedProjectPath = path.resolve(projectPath)
 
-  const files = await scanFolder(resolvedProjectPath)
+    const files = await scanFolder(resolvedProjectPath)
 
-  const report = await generateReport(files, {
-    root: resolvedProjectPath,
-    checkContent: true,
-  })
+    const report = await generateReport(files, {
+      root: resolvedProjectPath,
+      checkContent: true,
+    })
 
-  console.dir(report, {
-    depth: null,
-    colors: true,
-  })
+    spinner.stop()
+
+    console.dir(report, {
+      depth: null,
+      colors: true,
+    })
+  } catch {
+    spinner.fail()
+  }
 }

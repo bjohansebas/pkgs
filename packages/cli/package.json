@@ -19,6 +19,7 @@
     "@types/node": "20.14.9",
     "@vercel/ncc": "0.38.1",
     "commander": "12.1.0",
+    "ora": "8.0.1",
     "picocolors": "1.0.1",
     "typescript": "5.5.3",
     "vitest": "1.6.0"
@@ -34,7 +35,7 @@
   },
   "packageManager": "pnpm@9.4.0",
   "engines": {
-    "node": "18.x || 20.x || 22.x"
+    "node": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public"
