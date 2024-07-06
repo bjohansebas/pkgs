@@ -11,7 +11,9 @@ export function resolvePrettier(files: string[], config: ConfigReport, content?:
     return prettierFiles.find((prettierFile) => splitPath[splitPath.length - 1] === prettierFile)
   })
 
-  const prettierConfig: PrettierConfig = {}
+  const prettierConfig: PrettierConfig = {
+    installed: config.checkDepedencies,
+  }
 
   if (pathConfig) {
     prettierConfig.config = true

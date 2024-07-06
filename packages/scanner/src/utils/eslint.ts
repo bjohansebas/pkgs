@@ -11,7 +11,9 @@ export function resolveESLint(files: string[], config: ConfigReport, content?: {
     return eslintFiles.find((eslintFile) => splitPath[splitPath.length - 1] === eslintFile)
   })
 
-  const eslintConfig: ESLintConfig = {}
+  const eslintConfig: ESLintConfig = {
+    installed: !config.checkDepedencies,
+  }
 
   if (pathConfig) {
     eslintConfig.config = true

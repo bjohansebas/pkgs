@@ -26,7 +26,7 @@ export async function resolveBiomeConfig(
     path: path.join(config.root, pathConfig),
     formatter: true,
     linter: true,
-    installed: false,
+    installed: !config.checkDepedencies,
   }
 
   if (config?.checkContent) {
