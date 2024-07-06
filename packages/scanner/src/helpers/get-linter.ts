@@ -1,16 +1,18 @@
 import type { BiomeConfig, ESLintConfig } from '@/types/configs'
-import type { Linters } from '../types'
+import type { ConfigReport, Linters } from '../types'
 
 export function getLinters({
   biome,
   eslint,
-}: { biome: BiomeConfig | null; eslint: ESLintConfig | null }): Linters[] | null {
+  config,
+}: { biome: BiomeConfig | null; eslint: ESLintConfig | null; config: ConfigReport }): Linters[] | null {
   const result: Linters[] = []
 
-  if (biome != null && biome.linter === true) result.push('biome')
+  if (biome?.installed && biome.linter === true) result.push('biome')
 
   // TODO: verify if oxc is installed in package.json
-  if (eslint?.installed) result.push('eslint')
+  if ((config.checkDepedencies && eslint?.installed) || (!config.checkDepedencies && eslint?.config))
+    result.push('eslint')
 
   if (result.length === 0) return null
 

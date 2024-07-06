@@ -16,8 +16,8 @@ export const transpileMainPackage = async (files: string[], config: ConfigReport
     name: packageJson?.name || packageJson?.path || undefined,
     languages: getLanguages(fileOfPath),
     package_manager: getPackageManager(fileOfPath),
-    linters: getLinters({ eslint, biome }),
-    formatter: getFormatters({ biome, prettier }),
+    linters: getLinters({ eslint, biome, config }),
+    formatter: getFormatters({ biome, prettier, config }),
   }
 
   return configProject
@@ -33,8 +33,8 @@ export const transpilePackages = async (packages: { files: string[] }[], config:
       return {
         name: packageJson?.name || packageJson?.path || undefined,
         languages: getLanguages(pathOfFiles),
-        linters: getLinters({ eslint, biome }),
-        formatter: getFormatters({ biome, prettier }),
+        linters: getLinters({ eslint, biome, config }),
+        formatter: getFormatters({ biome, prettier, config }),
       }
     }),
   )

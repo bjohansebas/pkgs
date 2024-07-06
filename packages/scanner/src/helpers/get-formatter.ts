@@ -1,15 +1,18 @@
 import type { BiomeConfig, PrettierConfig } from '@/types/configs'
-import type { Formatters } from '../types'
+import type { ConfigReport, Formatters } from '../types'
 
 export function getFormatters({
   biome,
   prettier,
-}: { biome: BiomeConfig | null; prettier: PrettierConfig | null }): Formatters[] | null {
+  config,
+}: { biome: BiomeConfig | null; prettier: PrettierConfig | null; config: ConfigReport }): Formatters[] | null {
   const result: Formatters[] = []
 
-  if (biome != null && biome.formatter === true) result.push('biome')
+  if (biome?.installed && biome.formatter === true) result.push('biome')
 
-  if (prettier != null && prettier.installed === true) result.push('prettier')
+  if ((config.checkDepedencies && prettier?.installed === true) || (!config.checkDepedencies && prettier?.config)) {
+    result.push('prettier')
+  }
 
   if (result.length === 0) return null
 
