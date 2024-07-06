@@ -1,5 +1,4 @@
 import { TEST_MODE } from './constants'
-import { findPackageJson } from './helpers'
 import { generatePackages } from './helpers/generate-packages'
 import { transpileMainPackage, transpilePackages } from './helpers/transpile-packages'
 
@@ -18,11 +17,10 @@ export async function generateReport(files: string[], config?: ConfigReport): Pr
     }
   }
 
-  const packages = await findPackageJson(files)
-  const packagesWithFiles = generatePackages(packages, files, parseConfig.root)
+  const packages = generatePackages(files, parseConfig.root)
 
-  const mainPackage = packagesWithFiles.filter((packageData) => packageData.path === '.')[0]
-  const subpackages = packagesWithFiles.filter((packageData) => packageData.path !== '.')
+  const mainPackage = packages.find((packageData) => packageData.path === '.') || { files: [] }
+  const subpackages = packages.filter((packageData) => packageData.path !== '.')
 
   const [project, packagesProject] = await Promise.all([
     transpileMainPackage(mainPackage.files, parseConfig),

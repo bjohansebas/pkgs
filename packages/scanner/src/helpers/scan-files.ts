@@ -44,7 +44,7 @@ export async function readGitIgnore(root: string) {
   return parse(contentFile).patterns
 }
 
-export async function findPackageJson(files: string[]) {
+export function findPackageJson(files: string[]) {
   const packages = files
     .filter((file) => {
       const splitFile = splitPath(file)
