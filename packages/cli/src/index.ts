@@ -1,26 +1,27 @@
 #!/usr/bin/env node
 
-import { Command, Option } from 'commander'
+import { Command } from 'commander'
 import { green } from 'picocolors'
 
 import packageJson from '../package.json'
-import { addCommand } from './commands/add'
 import { scannerCommand } from './commands/scan'
 
 export const program = new Command(packageJson.name)
   .version(packageJson.version)
   .usage(`${green('[command]')} ${green('[options]')}`)
 
-program
-  .command('add')
-  .argument('[project-directory]')
-  .addOption(new Option('--formatter, -f [tool]').choices(['biome', 'prettier']))
-  .addOption(new Option('--linter, -l [tool]').choices(['eslint', 'oxc', 'biome']))
-  .addOption(new Option('--git-hooks, -gh [tool]').choices(['husky', 'lefthook']))
-  .action(addCommand)
-  .allowUnknownOption()
+// program
+//   .command('add')
+//   .argument('[project-directory]')
+//   .addOption(new Option('--formatter, -f [tool]').choices(['biome', 'prettier']))
+//   // TODO: support oxc
+//   .addOption(new Option('--linter, -l [tool]').choices(['eslint', 'oxc', 'biome']))
+//   // TODO: support git hooks
+//   .action(addCommand)
+//   .allowUnknownOption()
 
 //TODO: add option --output -o support csv, json yaml html table
+//TODO: add option --verbose --quite
 program.command('scan').argument('[project-directory]').action(scannerCommand).allowUnknownOption()
 
 program.parse(process.argv)
