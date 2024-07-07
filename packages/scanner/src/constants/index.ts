@@ -38,5 +38,3 @@ export const prettierFiles = [
   'prettier.config.cjs',
   '.prettierrc.toml',
 ]
-
-export const TEST_MODE = process.env.NODE_ENV === 'test'

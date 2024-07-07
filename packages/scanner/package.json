@@ -26,7 +26,7 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "prepublishOnly": "cd ../../ && turbo run build",
-    "test": "NODE_ENV=test vitest"
+    "test": "vitest"
   },
   "devDependencies": {
     "@rapidbuild/config": "workspace:*",

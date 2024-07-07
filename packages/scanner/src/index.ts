@@ -1,4 +1,4 @@
-import { TEST_MODE } from './constants'
+import { TEST_MODE } from './constants/env'
 import { generatePackages } from './helpers/generate-packages'
 import { transpileMainPackage, transpilePackages } from './helpers/transpile-packages'
 

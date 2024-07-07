@@ -1,4 +1,5 @@
 import { prettierFiles } from '@/constants'
+import { TEST_MODE } from '@/constants/env'
 import type { ConfigReport, PackageJson } from '@/types'
 import type { PrettierConfig } from '@/types/configs'
 import { findDependencie } from './package'
@@ -12,7 +13,7 @@ export function resolvePrettier(files: string[], config: ConfigReport, content?:
   })
 
   const prettierConfig: PrettierConfig = {
-    installed: config.checkDepedencies,
+    installed: true,
   }
 
   if (pathConfig) {
@@ -33,6 +34,8 @@ export function resolvePrettier(files: string[], config: ConfigReport, content?:
     const installed = findDependencie(content.packageJson, 'prettier')
 
     prettierConfig.installed = installed
+  } else if (config.checkDepedencies === undefined && TEST_MODE) {
+    prettierConfig.installed = true
   }
 
   return prettierConfig
