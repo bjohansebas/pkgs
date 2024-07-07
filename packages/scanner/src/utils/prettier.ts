@@ -1,10 +1,11 @@
+import path from 'node:path'
 import { prettierFiles } from '@/constants'
-import { TEST_MODE } from '@/constants/env'
+import { checkDepedencies } from '@/helpers/check-dependencie'
 import type { ConfigReport, PackageJson } from '@/types'
 import type { PrettierConfig } from '@/types/configs'
-import { findDependencie } from './package'
 
 // TODO: support plugins
+// TODO: Check priority to obtain the configuration
 export function resolvePrettier(files: string[], config: ConfigReport, content?: { packageJson?: PackageJson | null }) {
   const pathConfig = files.find((file) => {
     const splitPath = file.split('/')
@@ -12,17 +13,23 @@ export function resolvePrettier(files: string[], config: ConfigReport, content?:
     return prettierFiles.find((prettierFile) => splitPath[splitPath.length - 1] === prettierFile)
   })
 
-  const prettierConfig: PrettierConfig = {
-    installed: true,
-  }
+  const prettierConfig: PrettierConfig = {}
 
   if (pathConfig) {
     prettierConfig.config = true
-    prettierConfig.path = pathConfig
+    prettierConfig.path = path.join(config.root, pathConfig)
   }
 
   if (!pathConfig) {
-    if (content?.packageJson == null) return null
+    if (
+      content?.packageJson == null ||
+      (config.checkDepedencies === true &&
+        content?.packageJson?.dependencies == null &&
+        content?.packageJson?.devDependencies == null &&
+        content?.packageJson?.prettier == null)
+    ) {
+      return null
+    }
 
     if (content.packageJson.prettier != null) {
       prettierConfig.path = content.packageJson.path
@@ -30,13 +37,7 @@ export function resolvePrettier(files: string[], config: ConfigReport, content?:
     }
   }
 
-  if (config.checkDepedencies && content?.packageJson != null) {
-    const installed = findDependencie(content.packageJson, 'prettier')
-
-    prettierConfig.installed = installed
-  } else if (config.checkDepedencies === undefined && TEST_MODE) {
-    prettierConfig.installed = true
-  }
+  prettierConfig.installed = checkDepedencies(config.checkDepedencies, content?.packageJson, 'prettier')
 
   return prettierConfig
 }
