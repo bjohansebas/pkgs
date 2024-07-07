@@ -2,9 +2,9 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
 import { biomeFiles } from '@/constants'
+import { checkDepedencies } from '@/helpers/check-dependencie'
 import type { ConfigReport, PackageJson } from '@/types'
 import type { BiomeConfig } from '@/types/configs'
-import { findDependencie } from './package'
 
 export async function resolveBiomeConfig(
   files: string[],
@@ -37,17 +37,7 @@ export async function resolveBiomeConfig(
     biomeConfig.linter = linter
   }
 
-  if (config.checkDepedencies && content?.packageJson != null) {
-    const installed = findDependencie(content.packageJson, '@biomejs/biome')
-
-    biomeConfig.installed = installed
-  } else if (config.checkDepedencies === false) {
-    biomeConfig.installed = false
-  } else if (config.checkDepedencies === undefined && process.env.NODE_ENV === 'test') {
-    biomeConfig.installed = true
-  } else if (config.checkDepedencies === undefined) {
-    biomeConfig.installed = false
-  }
+  biomeConfig.installed = checkDepedencies(config.checkDepedencies, content?.packageJson, '@biomejs/biome')
 
   return biomeConfig
 }
