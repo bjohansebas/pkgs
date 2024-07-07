@@ -8,7 +8,8 @@ export function getLinters({
 }: { biome: BiomeConfig | null; eslint: ESLintConfig | null; config: ConfigReport }): Linters[] | null {
   const result: Linters[] = []
 
-  if (biome?.installed && biome.linter === true) result.push('biome')
+  if ((config.checkDepedencies && biome?.installed) || (!config.checkDepedencies && biome?.linter === true))
+    result.push('biome')
 
   // TODO: verify if oxc is installed in package.json
   if ((config.checkDepedencies && eslint?.installed) || (!config.checkDepedencies && eslint?.config))

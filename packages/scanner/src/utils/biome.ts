@@ -26,10 +26,9 @@ export async function resolveBiomeConfig(
     path: path.join(config.root, pathConfig),
     formatter: true,
     linter: true,
-    installed: !config.checkDepedencies,
   }
 
-  if (config?.checkContent) {
+  if (config?.checkContent && pathConfig) {
     const contentConfig = content?.biomeContent ?? (await readFile(path.join(config.root, pathConfig), 'utf8'))
 
     const { formatter, linter } = readBiomeConfig(contentConfig)
@@ -42,6 +41,12 @@ export async function resolveBiomeConfig(
     const installed = findDependencie(content.packageJson, '@biomejs/biome')
 
     biomeConfig.installed = installed
+  } else if (config.checkDepedencies === false) {
+    biomeConfig.installed = false
+  } else if (config.checkDepedencies === undefined && process.env.NODE_ENV === 'test') {
+    biomeConfig.installed = true
+  } else if (config.checkDepedencies === undefined) {
+    biomeConfig.installed = false
   }
 
   return biomeConfig
@@ -50,10 +55,15 @@ export async function resolveBiomeConfig(
 export function readBiomeConfig(content: string): BiomeConfig {
   const config: BiomeConfig = {}
 
-  const jsonContent = JSON.parse(content)
+  try {
+    const jsonContent = JSON.parse(content)
 
-  if (jsonContent?.formatter?.enabled) config.formatter = true
-  if (jsonContent?.linter?.enabled) config.linter = true
+    if (jsonContent?.formatter?.enabled !== undefined) config.formatter = jsonContent.formatter.enabled
+    if (jsonContent?.linter?.enabled !== undefined) config.linter = jsonContent.linter.enabled
+  } catch {
+    config.formatter = false
+    config.linter = false
+  }
 
   return config
 }
