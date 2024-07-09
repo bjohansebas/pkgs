@@ -9,12 +9,14 @@ export function getFormatters({
   const result: Formatters[] = []
 
   // TODO: support not config but is installed
-  // TODO: verify formatter is active
-  if (
-    (config.checkDepedencies && biome?.installed === true) ||
-    (!config.checkDepedencies && biome?.formatter === true)
-  ) {
-    result.push('biome')
+  if (biome?.path != null) {
+    if (
+      (!config.checkContent && !config.checkDepedencies) ||
+      (config.checkDepedencies && biome.installed) ||
+      (config.checkContent && biome.formatter)
+    ) {
+      result.push('biome')
+    }
   }
 
   if ((config.checkDepedencies && prettier?.installed === true) || (!config.checkDepedencies && prettier?.config)) {
