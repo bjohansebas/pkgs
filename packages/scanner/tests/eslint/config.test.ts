@@ -32,7 +32,7 @@ describe('resolve eslint config', () => {
 
   it('should set installed to true when eslint is found in dependencies', () => {
     const files = ['package.json']
-    const config = { root: '/root', checkDepedencies: true }
+    const config = { root: '/root', checkDependencies: true }
 
     const content = { packageJson: { eslintConfig: {}, path: '/root/package.json', dependencies: { eslint: '9.0.0' } } }
 
@@ -47,7 +47,7 @@ describe('resolve eslint config', () => {
 
   it('should set installed to false when eslint is not found in dependencies', () => {
     const files = ['package.json']
-    const config = { root: '/root', checkDepedencies: true }
+    const config = { root: '/root', checkDependencies: true }
 
     const content = { packageJson: { path: '/root/package.json', dependencies: { '@biomejs/biome': '9.0.0' } } }
 
@@ -69,7 +69,7 @@ describe('resolve eslint config', () => {
   })
 
   it('should return null when files array is empty', () => {
-    const config = { root: '/root', checkDepedencies: true }
+    const config = { root: '/root', checkDependencies: true }
     const result = resolveESLint([], config)
 
     expect(result).toBe(null)
@@ -77,7 +77,7 @@ describe('resolve eslint config', () => {
 
   it('should return config with path and installed false when packageJson is missing and prettier config is found', () => {
     const files = ['src/.eslintrc.json']
-    const config = { root: '/root', checkDepedencies: true }
+    const config = { root: '/root', checkDependencies: true }
     const result = resolveESLint(files, config)
 
     expect(result).toEqual({
@@ -89,7 +89,7 @@ describe('resolve eslint config', () => {
 
   it('should return config with path when eslint config file is found in packageJson', () => {
     const files = ['src/index.js', 'package.json']
-    const config = { root: '/root', checkDepedencies: false }
+    const config = { root: '/root', checkDependencies: false }
     const content = {
       packageJson: {
         path: 'root/package.json',
@@ -108,14 +108,14 @@ describe('resolve eslint config', () => {
 
   it('should return null when packageJson has no eslintConfig field and dependencies field and eslint config is not found', () => {
     const files = ['src/index.js', 'package.json']
-    const config = { root: '/root', checkDepedencies: true }
+    const config = { root: '/root', checkDependencies: true }
     const content = { packageJson: { path: 'package.json' } }
     const result = resolveESLint(files, config, content)
 
     expect(result).toBeNull()
   })
 
-  it('NODE_ENV=test should return installed true when checkDepedencies is missing', () => {
+  it('NODE_ENV=test should return installed true when checkDependencies is missing', () => {
     const files = ['src/file1.ts', 'src/file2.ts', '.eslintrc.json']
     const config = { root: '/root' }
 
@@ -128,7 +128,7 @@ describe('resolve eslint config', () => {
     })
   })
 
-  it('NODE_ENV=development should return installed false when checkDepedencies is missing', () => {
+  it('NODE_ENV=development should return installed false when checkDependencies is missing', () => {
     vi.stubEnv('NODE_ENV', 'development')
 
     const files = ['src/file1.ts', 'src/file2.ts', '.eslintrc.json']
@@ -145,7 +145,7 @@ describe('resolve eslint config', () => {
 
   it('should return config with path when both dependencies and devDependencies are present in package.json', () => {
     const files = ['src/index.js', 'package.json']
-    const config = { root: '/project', checkDepedencies: true }
+    const config = { root: '/project', checkDependencies: true }
     const content = {
       packageJson: {
         path: '/project/package.json',

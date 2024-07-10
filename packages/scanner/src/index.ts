@@ -8,12 +8,12 @@ export async function generateReport(files: string[], config?: ConfigReport): Pr
   let parseConfig: ConfigReport
 
   if (!config) {
-    parseConfig = { root: process.cwd(), checkDepedencies: !TEST_MODE }
+    parseConfig = { root: process.cwd(), checkDependencies: !TEST_MODE }
   } else {
     parseConfig = config
 
-    if (config.checkDepedencies === undefined) {
-      parseConfig.checkDepedencies = !TEST_MODE
+    if (config.checkDependencies === undefined) {
+      parseConfig.checkDependencies = !TEST_MODE
     }
   }
 

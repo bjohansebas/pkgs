@@ -11,8 +11,8 @@ export function getFormatters({
   // TODO: support not config but is installed
   if (
     biome?.path != null &&
-    ((!config.checkContent && !config.checkDepedencies) ||
-      (config.checkDepedencies && biome.installed) ||
+    ((!config.checkContent && !config.checkDependencies) ||
+      (config.checkDependencies && biome.installed) ||
       (config.checkContent && biome.formatter))
   ) {
     result.push('biome')
@@ -22,7 +22,7 @@ export function getFormatters({
     }
   }
 
-  if ((config.checkDepedencies && prettier?.installed === true) || (!config.checkDepedencies && prettier?.config)) {
+  if ((config.checkDependencies && prettier?.installed === true) || (!config.checkDependencies && prettier?.config)) {
     result.push('prettier')
   }
 

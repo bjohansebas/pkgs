@@ -46,7 +46,7 @@ describe('resolve prettier config', () => {
   })
 
   it('should return null when files array is empty', () => {
-    const config = { root: '/root', checkDepedencies: true }
+    const config = { root: '/root', checkDependencies: true }
     const result = resolvePrettier([], config)
 
     expect(result).toBe(null)
@@ -54,7 +54,7 @@ describe('resolve prettier config', () => {
 
   it('should return config with path and installed false when packageJson is missing and prettier config is found', () => {
     const files = ['src/.prettierrc']
-    const config = { root: '/root', checkDepedencies: true }
+    const config = { root: '/root', checkDependencies: true }
     const result = resolvePrettier(files, config)
 
     expect(result).toEqual({
@@ -66,7 +66,7 @@ describe('resolve prettier config', () => {
 
   it('should return config with path when prettier config file is found in packageJson', () => {
     const files = ['src/index.js', 'package.json']
-    const config = { root: '/root', checkDepedencies: false }
+    const config = { root: '/root', checkDependencies: false }
     const content = {
       packageJson: {
         path: 'root/package.json',
@@ -85,14 +85,14 @@ describe('resolve prettier config', () => {
 
   it('should return null when packageJson has no prettier field and dependencies field and prettier config is not found', () => {
     const files = ['src/index.js', 'package.json']
-    const config = { root: '/root', checkDepedencies: true }
+    const config = { root: '/root', checkDependencies: true }
     const content = { packageJson: { path: 'package.json' } }
     const result = resolvePrettier(files, config, content)
 
     expect(result).toBeNull()
   })
 
-  it('NODE_ENV=test should return installed true when checkDepedencies is missing', () => {
+  it('NODE_ENV=test should return installed true when checkDependencies is missing', () => {
     const files = ['src/file1.ts', 'src/file2.ts', '.prettierrc']
     const config = { root: '/root' }
 
@@ -105,7 +105,7 @@ describe('resolve prettier config', () => {
     })
   })
 
-  it('NODE_ENV=development should return installed false when checkDepedencies is missing', () => {
+  it('NODE_ENV=development should return installed false when checkDependencies is missing', () => {
     vi.stubEnv('NODE_ENV', 'development')
 
     const files = ['src/file1.ts', 'src/file2.ts', '.prettierrc']
@@ -122,7 +122,7 @@ describe('resolve prettier config', () => {
 
   it('should return config with installed flag set to true if prettier is a dependency', () => {
     const files = ['src/index.js', 'package.json']
-    const config = { root: '/project', checkDepedencies: true }
+    const config = { root: '/project', checkDependencies: true }
     const content = {
       packageJson: {
         dependencies: { prettier: '^2.0.0' },
@@ -139,7 +139,7 @@ describe('resolve prettier config', () => {
 
   it('should return config with installed flag set to false if prettier is not a dependency', () => {
     const files = ['src/index.js', 'package.json']
-    const config = { root: '/project', checkDepedencies: true }
+    const config = { root: '/project', checkDependencies: true }
 
     const content = {
       packageJson: {
@@ -157,7 +157,7 @@ describe('resolve prettier config', () => {
 
   it('should return config with path when both dependencies and devDependencies are present in package.json', () => {
     const files = ['src/index.js', 'package.json']
-    const config = { root: '/project', checkDepedencies: true }
+    const config = { root: '/project', checkDependencies: true }
     const content = {
       packageJson: {
         path: '/project/package.json',

@@ -1,7 +1,7 @@
 import path from 'node:path'
 
 import { eslintFiles } from '@/constants'
-import { checkDepedencies } from '@/helpers/check-dependencie'
+import { checkDependencies } from '@/helpers/check-dependencie'
 import type { ConfigReport, PackageJson } from '@/types'
 import type { ESLintConfig } from '@/types/configs'
 
@@ -24,7 +24,7 @@ export function resolveESLint(files: string[], config: ConfigReport, content?: {
   if (!pathConfig) {
     if (
       content?.packageJson == null ||
-      (config.checkDepedencies === true &&
+      (config.checkDependencies === true &&
         content?.packageJson?.dependencies == null &&
         content?.packageJson?.devDependencies == null &&
         content?.packageJson?.prettier == null)
@@ -37,7 +37,7 @@ export function resolveESLint(files: string[], config: ConfigReport, content?: {
     }
   }
 
-  eslintConfig.installed = checkDepedencies(config.checkDepedencies, content?.packageJson, 'eslint')
+  eslintConfig.installed = checkDependencies(config.checkDependencies, content?.packageJson, 'eslint')
 
   return eslintConfig
 }

@@ -1,22 +1,22 @@
 import type { PackageJson } from '@/types'
 import { findDependencie } from '@/utils/package'
 
-export function checkDepedencies(
-  checkDepedencies: boolean | undefined,
+export function checkDependencies(
+  checkDependencies: boolean | undefined,
   packageJson: PackageJson | null | undefined,
   dependecie: string,
 ) {
   let installed = false
 
-  if (checkDepedencies && packageJson != null) {
+  if (checkDependencies && packageJson != null) {
     const installedDependencie = findDependencie(packageJson, dependecie)
 
     installed = installedDependencie
-  } else if (checkDepedencies === false) {
+  } else if (checkDependencies === false) {
     installed = false
-  } else if (checkDepedencies === undefined && process.env.NODE_ENV === 'test') {
+  } else if (checkDependencies === undefined && process.env.NODE_ENV === 'test') {
     installed = true
-  } else if (checkDepedencies === undefined) {
+  } else if (checkDependencies === undefined) {
     installed = false
   }
 

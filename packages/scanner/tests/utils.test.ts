@@ -1,4 +1,4 @@
-import { checkDepedencies } from '@/helpers/check-dependencie'
+import { checkDependencies } from '@/helpers/check-dependencie'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('checkDependencies()', () => {
@@ -7,54 +7,54 @@ describe('checkDependencies()', () => {
 
     vi.stubEnv('NODE_ENV', 'test')
   })
-  it('should return true when checkDepedencies is true and dependecie is found in packageJson', () => {
+  it('should return true when checkDependencies is true and dependecie is found in packageJson', () => {
     const packageJson = { path: '', dependencies: { 'some-dependecie': '1.0.0' } }
-    const result = checkDepedencies(true, packageJson, 'some-dependecie')
+    const result = checkDependencies(true, packageJson, 'some-dependecie')
     expect(result).toBe(true)
   })
 
-  it('should return false when checkDepedencies is undefined and NODE_ENV is not "test"', () => {
+  it('should return false when checkDependencies is undefined and NODE_ENV is not "test"', () => {
     vi.stubEnv('NODE_ENV', 'production')
 
-    const result = checkDepedencies(undefined, null, 'some-dependecie')
+    const result = checkDependencies(undefined, null, 'some-dependecie')
 
     expect(result).toBe(false)
   })
 
-  it('should return false when checkDepedencies is false regardless of packageJson content', () => {
-    const result = checkDepedencies(false, null, 'some-dependecie')
+  it('should return false when checkDependencies is false regardless of packageJson content', () => {
+    const result = checkDependencies(false, null, 'some-dependecie')
 
     expect(result).toBe(false)
   })
 
-  it('should return false when checkDepedencies is true and packageJson is null or undefined', () => {
-    const result = checkDepedencies(true, null, 'some-dependecie')
+  it('should return false when checkDependencies is true and packageJson is null or undefined', () => {
+    const result = checkDependencies(true, null, 'some-dependecie')
 
     expect(result).toBe(false)
   })
 
-  it('should return true when checkDepedencies is undefined and NODE_ENV is test', () => {
+  it('should return true when checkDependencies is undefined and NODE_ENV is test', () => {
     vi.stubEnv('NODE_ENV', 'test')
 
-    const result = checkDepedencies(undefined, null, 'some-dependecie')
+    const result = checkDependencies(undefined, null, 'some-dependecie')
 
     expect(result).toBe(true)
   })
 
-  it('should return false when checkDepedencies is true and packageJson is an empty object', () => {
+  it('should return false when checkDependencies is true and packageJson is an empty object', () => {
     const packageJson = { path: '' }
-    const result = checkDepedencies(true, packageJson, 'some-dependecie')
+    const result = checkDependencies(true, packageJson, 'some-dependecie')
     expect(result).toBe(false)
   })
 
-  it('should return false when checkDepedencies is true and dependecie is not found in packageJson', () => {
+  it('should return false when checkDependencies is true and dependecie is not found in packageJson', () => {
     const packageJson = { path: '', dependencies: { 'some-other-dependecie': '1.0.0' } }
 
-    const result = checkDepedencies(true, packageJson, 'some-dependecie')
+    const result = checkDependencies(true, packageJson, 'some-dependecie')
     expect(result).toBe(false)
   })
 
-  it('should return false when checkDepedencies is true and dependecie is found in nested dependencies of packageJson', () => {
+  it('should return false when checkDependencies is true and dependecie is found in nested dependencies of packageJson', () => {
     const packageJson = {
       path: 'd',
       dependencies: {
@@ -66,7 +66,7 @@ describe('checkDependencies()', () => {
     }
 
     // @ts-expect-error
-    const result = checkDepedencies(true, packageJson, 'nested-dependencie')
+    const result = checkDependencies(true, packageJson, 'nested-dependencie')
     expect(result).toBe(false)
   })
 })

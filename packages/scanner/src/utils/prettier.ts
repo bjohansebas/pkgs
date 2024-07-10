@@ -1,6 +1,6 @@
 import path from 'node:path'
 import { prettierFiles } from '@/constants'
-import { checkDepedencies } from '@/helpers/check-dependencie'
+import { checkDependencies } from '@/helpers/check-dependencie'
 import type { ConfigReport, PackageJson } from '@/types'
 import type { PrettierConfig } from '@/types/configs'
 
@@ -23,7 +23,7 @@ export function resolvePrettier(files: string[], config: ConfigReport, content?:
   if (!pathConfig) {
     if (
       content?.packageJson == null ||
-      (config.checkDepedencies === true &&
+      (config.checkDependencies === true &&
         content?.packageJson?.dependencies == null &&
         content?.packageJson?.devDependencies == null &&
         content?.packageJson?.prettier == null)
@@ -37,7 +37,7 @@ export function resolvePrettier(files: string[], config: ConfigReport, content?:
     }
   }
 
-  prettierConfig.installed = checkDepedencies(config.checkDepedencies, content?.packageJson, 'prettier')
+  prettierConfig.installed = checkDependencies(config.checkDependencies, content?.packageJson, 'prettier')
 
   return prettierConfig
 }

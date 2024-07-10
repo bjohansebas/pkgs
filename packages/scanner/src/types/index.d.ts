@@ -47,5 +47,5 @@ export interface PackageJson {
 export interface ConfigReport {
   root: string
   checkContent?: boolean
-  checkDepedencies?: boolean
+  checkDependencies?: boolean
 }
