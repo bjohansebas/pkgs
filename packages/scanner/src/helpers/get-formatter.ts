@@ -9,13 +9,16 @@ export function getFormatters({
   const result: Formatters[] = []
 
   // TODO: support not config but is installed
-  if (biome?.path != null) {
-    if (
-      (!config.checkContent && !config.checkDepedencies) ||
+  if (
+    biome?.path != null &&
+    ((!config.checkContent && !config.checkDepedencies) ||
       (config.checkDepedencies && biome.installed) ||
-      (config.checkContent && biome.formatter)
-    ) {
-      result.push('biome')
+      (config.checkContent && biome.formatter))
+  ) {
+    result.push('biome')
+
+    if (config.checkContent && biome.formatter === false && result.includes('biome')) {
+      result.pop()
     }
   }
 
