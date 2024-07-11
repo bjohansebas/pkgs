@@ -38,17 +38,20 @@ Scanned project path
 
 ##### config.root
 
-Type: `string`
+Type: `string`\
+Default: `process.cwd()`
 
 ##### config.checkContent (optional)
 
-Type: `boolean` (optional)
+Type: `boolean` (optional)\
+Default: `false`
 
 Check the contents of the files to determine each configuration
 
 ##### config.checkDependencies (optional)
 
-Type: `boolean` (optional)
+Type: `boolean` (optional)\
+Default: `true`
 
 Check if it is listed as a dependency in the package.json
 
