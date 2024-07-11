@@ -5,10 +5,14 @@ import { green } from 'picocolors'
 
 import packageJson from '../package.json'
 import { scannerCommand } from './commands/scan'
+import { checkUpdates } from './utils/checkUpdates'
 
 export const program = new Command(packageJson.name)
   .version(packageJson.version)
   .usage(`${green('[command]')} ${green('[options]')}`)
+  .hook('postAction', async () => {
+    await checkUpdates()
+  })
 
 // program
 //   .command('add')
