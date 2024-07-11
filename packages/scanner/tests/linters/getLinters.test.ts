@@ -1,4 +1,4 @@
-import { getLinters } from '@/index'
+import { getLinters } from '@/helpers'
 import { describe, expect, it, vi } from 'vitest'
 
 vi.stubEnv('NODE_ENV', 'production')
