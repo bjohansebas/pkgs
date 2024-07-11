@@ -1,6 +1,6 @@
 {
   "name": "@rapidbuild/scanner",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Sebastian Beltran <bjohansebas@gmail.com>",
   "description": "Simple scan the technologies used in a TypeScript/JavaScript project.",
   "keywords": ["frameworks", "scanner", "files", "projects"],
