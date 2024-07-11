@@ -1,6 +1,8 @@
 import path from 'node:path'
 
-import { generateReport, scanFolder } from '@rapidbuild/scanner'
+import { generateReport } from '@rapidbuild/scanner'
+import { scanFolder } from '@rapidbuild/scanner/helpers'
+
 import ora from 'ora'
 import { cyan, green } from 'picocolors'
 

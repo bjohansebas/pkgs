@@ -34,5 +34,3 @@ export async function generateReport(files: string[], config?: ConfigReport): Pr
 
   return configProject
 }
-
-export * from './helpers'

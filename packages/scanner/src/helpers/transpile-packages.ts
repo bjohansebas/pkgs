@@ -1,9 +1,10 @@
 import type { ConfigReport, Project } from '@/types'
 import { getFileOfPath } from '@/utils/splitPath'
 
-import { getLanguages, getPackageManager } from '..'
 import { getFormatters } from './get-formatter'
+import { getLanguages } from './get-languages'
 import { getLinters } from './get-linter'
+import { getPackageManager } from './get-package-manager'
 import { resolveFiles } from './resolve-files'
 
 export const transpileMainPackage = async (files: string[], config: ConfigReport) => {
