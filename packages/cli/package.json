@@ -2,7 +2,12 @@
   "name": "rapidbuild",
   "version": "0.0.1",
   "license": "MPL-2.0",
-  "author": "Sebastian Beltran <bjohansebas@gmail.com>",
+  "description": "The fastest and most customizable way to set up a modern web app in seconds.",
+  "author": {
+    "email": "bjohansebas@gmail.com",
+    "name": "Sebastian Beltran"
+  },
+  "keywords": ["cli", "frameworks", "set up", "rapidbuild", "tools"],
   "bin": {
     "rapidbuild": "dist/index.js"
   },
@@ -11,7 +16,8 @@
     "clean": "node ../../scripts/rm.mjs dist",
     "dev": "ncc build ./src/index.ts -w -o dist/",
     "build": "pnpm clean && ncc build ./src/index.ts -o ./dist/ --minify --no-cache --no-source-map-register",
-    "prepublishOnly": "cd ../../ && turbo run build"
+    "prepublishOnly": "cd ../../ && turbo run build",
+    "generate-docs": "node ../../scripts/generate-help-docs.mjs ."
   },
   "devDependencies": {
     "@rapidbuild/config": "workspace:*",
@@ -32,6 +38,10 @@
   },
   "bugs": {
     "url": "https://github.com/bjohansebas/rapidbuild/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/bjohansebas"
   },
   "packageManager": "pnpm@9.4.0",
   "engines": {
