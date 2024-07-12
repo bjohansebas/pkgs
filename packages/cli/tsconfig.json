@@ -1,5 +1,5 @@
 {
-  "extends": "@rapidbuild/config/tsconfig/base.json",
+  "extends": "@rapidapp/config/tsconfig/base.json",
   "compilerOptions": {
     "target": "ES2022",
     "resolveJsonModule": true,

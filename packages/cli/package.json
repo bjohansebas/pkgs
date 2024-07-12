@@ -1,5 +1,5 @@
 {
-  "name": "rapidbuild",
+  "name": "rapidapp",
   "version": "0.0.1",
   "license": "MPL-2.0",
   "description": "The fastest and most customizable way to set up a modern web app in seconds.",
@@ -7,9 +7,9 @@
     "email": "bjohansebas@gmail.com",
     "name": "Sebastian Beltran"
   },
-  "keywords": ["cli", "frameworks", "set up", "rapidbuild", "tools"],
+  "keywords": ["cli", "frameworks", "set up", "rapidapp", "tools"],
   "bin": {
-    "rapidbuild": "dist/index.js"
+    "rapidapp": "dist/index.js"
   },
   "files": ["dist"],
   "scripts": {
@@ -20,8 +20,8 @@
     "generate-docs": "node ../../scripts/generate-help-docs.mjs ."
   },
   "devDependencies": {
-    "@rapidbuild/config": "workspace:*",
-    "@rapidbuild/scanner": "workspace:*",
+    "@rapidapp/config": "workspace:*",
+    "@rapidapp/scanner": "workspace:*",
     "@types/node": "20.14.9",
     "@vercel/ncc": "0.38.1",
     "commander": "12.1.0",
@@ -31,14 +31,14 @@
     "update-check": "1.5.4",
     "vitest": "1.6.0"
   },
-  "homepage": "https://github.com/bjohansebas/rapidbuild",
+  "homepage": "https://github.com/bjohansebas/rapidapp",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bjohansebas/rapidbuild.git",
+    "url": "git+https://github.com/bjohansebas/rapidapp.git",
     "directory": "packages/cli"
   },
   "bugs": {
-    "url": "https://github.com/bjohansebas/rapidbuild/issues"
+    "url": "https://github.com/bjohansebas/rapidapp/issues"
   },
   "funding": {
     "type": "github",

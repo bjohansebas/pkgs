@@ -20,15 +20,15 @@ export async function checkUpdates(): Promise<void> {
     if (res?.latest) {
       const updateMessage =
         packageManager === 'yarn'
-          ? 'yarn global add rapidbuild'
+          ? 'yarn global add rapidapp'
           : packageManager === 'pnpm'
-            ? 'pnpm add -g rapidbuild'
+            ? 'pnpm add -g rapidapp'
             : packageManager === 'bun'
-              ? 'bun add -g rapidbuild'
-              : 'npm i -g rapidbuild'
+              ? 'bun add -g rapidapp'
+              : 'npm i -g rapidapp'
 
       console.log(
-        `\n${yellow(bold('A new version of `rapidbuild` is available!'))}\n\nYou can update by running: ${cyan(updateMessage)}\n`,
+        `\n${yellow(bold('A new version of `rapidapp` is available!'))}\n\nYou can update by running: ${cyan(updateMessage)}\n`,
       )
     }
 

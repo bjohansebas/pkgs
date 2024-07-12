@@ -1,5 +1,5 @@
 {
-  "name": "@rapidbuild/scanner",
+  "name": "@rapidapp/scanner",
   "version": "0.1.0",
   "author": "Sebastian Beltran <bjohansebas@gmail.com>",
   "description": "Simple scan the technologies used in a TypeScript/JavaScript project.",
@@ -29,7 +29,7 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@rapidbuild/config": "workspace:*",
+    "@rapidapp/config": "workspace:*",
     "@types/node": "20.14.9",
     "@types/object.groupby": "1.0.4",
     "@types/parse-gitignore": "1.0.2",
@@ -40,14 +40,14 @@
     "typescript": "5.5.3",
     "vitest": "1.6.0"
   },
-  "homepage": "https://github.com/bjohansebas/rapidbuild",
+  "homepage": "https://github.com/bjohansebas/rapidapp",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bjohansebas/rapidbuild.git",
+    "url": "git+https://github.com/bjohansebas/rapidapp.git",
     "directory": "packages/scanner"
   },
   "bugs": {
-    "url": "https://github.com/bjohansebas/rapidbuild/issues"
+    "url": "https://github.com/bjohansebas/rapidapp/issues"
   },
   "engines": {
     "node": ">=18.0.0"

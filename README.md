@@ -1,4 +1,4 @@
-# RapidBuild
+# RapidApp
 
 Quickly integrate tools like eslint or husky in a fast manner.
 

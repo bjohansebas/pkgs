@@ -1,5 +1,5 @@
 {
-  "name": "@rapidbuild/config",
+  "name": "@rapidapp/config",
   "private": true,
   "license": "MPL-2.0",
   "files": ["./**"]

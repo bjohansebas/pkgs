@@ -1,4 +1,4 @@
-# @rapidbuild/scanner
+# @rapidapp/scanner
 
 > A simple scan the technologies used in a TypeScript/JavaScript project
 
@@ -12,8 +12,8 @@ npm install ora
 
 
 ```js
-import { generateReport } from '@rapidbuild/scanner'
-import { scanFolder } from '@rapidbuild/scanner/helpers'
+import { generateReport } from '@rapidapp/scanner'
+import { scanFolder } from '@rapidapp/scanner/helpers'
 
 const files = await scanFolder(process.cwd())
 
@@ -68,13 +68,13 @@ Path where it will start searching for all files
 ### Installation
 
 ```bash
-npm i -g rapidbuild
+npm i -g rapidapp
 ```
 
 ### Usage
 
 ```bash
-rapidbuild scan <project-directory>
+rapidapp scan <project-directory>
 ```
 
 ### Output
@@ -99,4 +99,4 @@ rapidbuild scan <project-directory>
 
 ## License
 
-[Mozilla Public License Version 2.0](https://github.com/bjohansebas/rapidbuild/blob/main/LICENSE)
+[Mozilla Public License Version 2.0](https://github.com/bjohansebas/rapidapp/blob/main/LICENSE)

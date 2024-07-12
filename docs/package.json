@@ -1,5 +1,5 @@
 {
-  "name": "@rapidbuild/docs",
+  "name": "@rapidapp/docs",
   "private": true,
   "type": "module",
   "scripts": {

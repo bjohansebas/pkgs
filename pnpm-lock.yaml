@@ -40,10 +40,10 @@ importers:
 
   packages/cli:
     devDependencies:
-      '@rapidbuild/config':
+      '@rapidapp/config':
         specifier: workspace:*
         version: link:../../config
-      '@rapidbuild/scanner':
+      '@rapidapp/scanner':
         specifier: workspace:*
         version: link:../scanner
       '@types/node':
@@ -73,7 +73,7 @@ importers:
 
   packages/scanner:
     devDependencies:
-      '@rapidbuild/config':
+      '@rapidapp/config':
         specifier: workspace:*
         version: link:../../config
       '@types/node':
