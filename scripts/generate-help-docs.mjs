@@ -1,5 +1,5 @@
 import { execSync } from 'node:child_process'
-import { readFile } from 'node:fs/promises'
+import { readFile, writeFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 
 const args = process.argv.slice(2)
@@ -25,5 +25,5 @@ for (const arg of args) {
     output,
   )
 
-  await fs.writeFile(readmePath, updatedReadme, 'utf-8')
+  await writeFile(readmePath, updatedReadme, 'utf-8')
 }
