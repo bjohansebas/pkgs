@@ -8,7 +8,6 @@
     "name": "Sebastian Beltran"
   },
   "keywords": ["cli", "frameworks", "set up", "rapidapp", "tools"],
-  "type": "module",
   "bin": {
     "rapidapp": "dist/index.js"
   },
@@ -26,6 +25,7 @@
     "@types/node": "20.14.10",
     "@vercel/ncc": "0.38.1",
     "commander": "12.1.0",
+    "conf": "13.0.1",
     "ora": "8.0.1",
     "picocolors": "1.0.1",
     "typescript": "5.5.3",

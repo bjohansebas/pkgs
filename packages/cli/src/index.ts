@@ -10,6 +10,7 @@ import { checkUpdates } from './utils/checkUpdates'
 export const program = new Command(packageJson.name)
   .version(packageJson.version)
   .usage(`${green('[command]')} ${green('[options]')}`)
+  .option('--reset-preferences', 'explicitly tell the CLI to reset any stored preferences')
   .hook('postAction', async () => {
     await checkUpdates()
   })
@@ -26,6 +27,15 @@ export const program = new Command(packageJson.name)
 
 //TODO: add option --output -o support csv, json yaml html table
 //TODO: add option --verbose --quite
-program.command('scan').argument('[project-directory]').action(scannerCommand).allowUnknownOption()
+program
+  .command('scan')
+  .argument('[project-directory]')
+  .option('-m, --mode <arg>', 'select the mode in which the information will be printed.')
+  .option('--no-check-content')
+  .option('--check-content')
+  .option('--check-dependencies')
+  .option('--no-check-dependencies')
+  .action(scannerCommand)
+  .allowUnknownOption()
 
 program.parse(process.argv)
