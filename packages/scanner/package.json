@@ -5,6 +5,7 @@
   "description": "Simple scan the technologies used in a TypeScript/JavaScript project.",
   "keywords": ["frameworks", "scanner", "files", "projects"],
   "license": "MPL-2.0",
+  "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -30,7 +31,7 @@
   },
   "devDependencies": {
     "@rapidapp/config": "workspace:*",
-    "@types/node": "20.14.9",
+    "@types/node": "20.14.10",
     "@types/object.groupby": "1.0.4",
     "@types/parse-gitignore": "1.0.2",
     "fast-glob": "3.3.2",
@@ -38,7 +39,7 @@
     "parse-gitignore": "2.0.0",
     "tsup": "8.1.0",
     "typescript": "5.5.3",
-    "vitest": "1.6.0"
+    "vitest": "2.0.2"
   },
   "homepage": "https://github.com/bjohansebas/rapidapp",
   "repository": {

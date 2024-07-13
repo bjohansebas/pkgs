@@ -8,6 +8,7 @@
     "name": "Sebastian Beltran"
   },
   "keywords": ["cli", "frameworks", "set up", "rapidapp", "tools"],
+  "type": "module",
   "bin": {
     "rapidapp": "dist/index.js"
   },
@@ -22,14 +23,14 @@
   "devDependencies": {
     "@rapidapp/config": "workspace:*",
     "@rapidapp/scanner": "workspace:*",
-    "@types/node": "20.14.9",
+    "@types/node": "20.14.10",
     "@vercel/ncc": "0.38.1",
     "commander": "12.1.0",
     "ora": "8.0.1",
     "picocolors": "1.0.1",
     "typescript": "5.5.3",
     "update-check": "1.5.4",
-    "vitest": "1.6.0"
+    "vitest": "2.0.2"
   },
   "homepage": "https://github.com/bjohansebas/rapidapp",
   "repository": {
