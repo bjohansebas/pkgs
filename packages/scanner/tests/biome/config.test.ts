@@ -51,6 +51,16 @@ describe('resolve biome config', () => {
     expect(result).toBeNull()
   })
 
+  it('should return null when no pathConfig is found and packageJson is null', async () => {
+    const files = ['path/to/other.config.js']
+    const config = { root: '/project', checkDependencies: true, checkContent: false }
+    const content = { packageJson: null, biomeContent: '' }
+
+    const result = await resolveBiomeConfig(files, config, content)
+
+    expect(result).toBeNull()
+  })
+
   it('should return biomeConfig with formatter and linter enabled when checkContent is true', async () => {
     const files = ['path/to/biome.json']
 
@@ -209,5 +219,42 @@ describe('resolve biome config', () => {
       linter: false,
       installed: true,
     })
+  })
+
+  it('should update biome configuration path when a valid pathConfig is found', async () => {
+    const files = ['path/to/biome.json']
+    const config = { root: '/project', checkDependencies: false, checkContent: false }
+    const content = { packageJson: null, biomeContent: '' }
+
+    const result = await resolveBiomeConfig(files, config, content)
+
+    expect(result).toEqual({
+      formatter: true,
+      linter: true,
+      path: '/project/path/to/biome.json',
+      installed: false,
+    })
+  })
+
+  it("should return biomeConfig when biome config isn't found and exists such as dependencie", async () => {
+    const config = { root: '/project', checkDependencies: true, checkContent: false }
+    const content = { packageJson: { path: '', devDependencies: { '@biomejs/biome': '12.0.0' } } }
+
+    const result = await resolveBiomeConfig([], config, content)
+
+    expect(result).toEqual({
+      formatter: true,
+      linter: true,
+      installed: true,
+    })
+  })
+
+  it("should return biomeConfig when biome config isn't found and not exists such as dependencie", async () => {
+    const config = { root: '/project', checkDependencies: true, checkContent: false }
+    const content = { packageJson: { path: '' } }
+
+    const result = await resolveBiomeConfig([], config, content)
+
+    expect(result).toBeNull()
   })
 })

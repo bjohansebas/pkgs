@@ -8,17 +8,23 @@ export function getFormatters({
 }: { biome: BiomeConfig | null; prettier: PrettierConfig | null; config: ConfigReport }): Formatters[] | null {
   const result: Formatters[] = []
 
-  // TODO: support not config but is installed
-  if (
-    biome?.path != null &&
-    ((!config.checkContent && !config.checkDependencies) ||
-      (config.checkDependencies && biome.installed) ||
-      (config.checkContent && biome.formatter))
-  ) {
-    result.push('biome')
+  if (biome !== null) {
+    if (biome.path == null && config.checkDependencies && biome.installed) {
+      result.push('biome')
+    }
 
-    if (config.checkContent && biome.formatter === false && result.includes('biome')) {
-      result.pop()
+    if (
+      biome.path != null &&
+      ((!config.checkContent && !config.checkDependencies) ||
+        (config.checkDependencies && biome.installed) ||
+        (config.checkContent && biome.formatter)) &&
+      !result.includes('biome')
+    ) {
+      result.push('biome')
+
+      if (config.checkContent && biome.formatter === false && result.includes('biome')) {
+        result.pop()
+      }
     }
   }
 

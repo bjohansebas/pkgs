@@ -38,6 +38,17 @@ describe('getLinters()', () => {
       expect(report).not.toContain('eslint')
     })
 
+    it("should return ['biome'] when biome is installed and path not found, checkDependencies(true)", () => {
+      const report = getLinters({
+        biome: { formatter: false, installed: true },
+        eslint: null,
+        config: { root: '/projects/project', checkDependencies: true },
+      })
+
+      expect(report).toContain('biome')
+      expect(report).not.toContain('eslint')
+    })
+
     it('should return null when biome is installed and linter is disbled, checkDependencies(true) and checkContent(true)', () => {
       const report = getLinters({
         biome: { linter: false, installed: true, path: '/projects/project' },
@@ -58,10 +69,10 @@ describe('getLinters()', () => {
       expect(result).toBeNull()
     })
 
-    it('should return null when biome path is null', () => {
+    it('should return null when biome path is null and checkDependencies(false)', () => {
       const biome = { installed: true, linter: true }
       const eslint = null
-      const config = { root: '/root', checkContent: false, checkDependencies: true }
+      const config = { root: '/root', checkContent: false, checkDependencies: false }
 
       const result = getLinters({ biome, eslint, config })
 

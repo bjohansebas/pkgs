@@ -38,6 +38,17 @@ describe('getFormatters()', () => {
       expect(report).not.toContain('prettier')
     })
 
+    it("should return ['biome'] when biome is installed and path not found, checkDependencies(true)", () => {
+      const report = getFormatters({
+        biome: { formatter: false, installed: true },
+        prettier: null,
+        config: { root: '/projects/project', checkDependencies: true },
+      })
+
+      expect(report).toContain('biome')
+      expect(report).not.toContain('prettier')
+    })
+
     it('should return null when biome is installed and formatter is disbled, checkDependencies(true) and checkContent(true)', () => {
       const report = getFormatters({
         biome: { formatter: false, installed: true, path: '/projects/project' },
@@ -58,10 +69,10 @@ describe('getFormatters()', () => {
       expect(result).toBeNull()
     })
 
-    it('should return null when biome path is null', () => {
+    it('should return null when biome path is null and checkDependencies(false)', () => {
       const biome = { installed: true, formatter: true }
       const prettier = null
-      const config = { root: '/root', checkContent: false, checkDependencies: true }
+      const config = { root: '/root', checkContent: false, checkDependencies: false }
 
       const result = getFormatters({ biome, prettier, config })
 

@@ -20,12 +20,24 @@ export async function resolveBiomeConfig(
     return biomeFiles.find((biomeFile) => splitPath[splitPath.length - 1] === biomeFile)
   })
 
-  if (!pathConfig) return null
-
   const biomeConfig: BiomeConfig = {
-    path: path.join(config.root, pathConfig),
     formatter: true,
     linter: true,
+  }
+
+  if (!pathConfig) {
+    if (
+      content?.packageJson == null ||
+      (config.checkDependencies === true &&
+        content?.packageJson?.dependencies == null &&
+        content?.packageJson?.devDependencies == null)
+    ) {
+      return null
+    }
+  }
+
+  if (pathConfig) {
+    biomeConfig.path = path.join(config.root, pathConfig)
   }
 
   if (config?.checkContent && pathConfig) {

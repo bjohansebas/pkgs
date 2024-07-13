@@ -9,16 +9,23 @@ export function getLinters({
 }: { biome: BiomeConfig | null; eslint: ESLintConfig | null; config: ConfigReport }): Linters[] | null {
   const result: Linters[] = []
 
-  if (
-    biome?.path != null &&
-    ((!config.checkContent && !config.checkDependencies) ||
-      (config.checkDependencies && biome.installed) ||
-      (config.checkContent && biome.linter))
-  ) {
-    result.push('biome')
+  if (biome !== null) {
+    if (biome.path == null && config.checkDependencies && biome.installed) {
+      result.push('biome')
+    }
 
-    if (config.checkContent && biome.linter === false && result.includes('biome')) {
-      result.pop()
+    if (
+      biome.path != null &&
+      ((!config.checkContent && !config.checkDependencies) ||
+        (config.checkDependencies && biome.installed) ||
+        (config.checkContent && biome.linter)) &&
+      !result.includes('biome')
+    ) {
+      result.push('biome')
+
+      if (config.checkContent && biome.linter === false && result.includes('biome')) {
+        result.pop()
+      }
     }
   }
 
