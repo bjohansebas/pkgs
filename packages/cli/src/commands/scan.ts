@@ -2,30 +2,20 @@ import path from 'node:path'
 
 import { generateReport } from '@rapidapp/scanner'
 import { scanFolder } from '@rapidapp/scanner/helpers'
-import Conf from 'conf'
-
 import ora from 'ora'
 import { cyan, green } from 'picocolors'
 
-import { program } from '../'
+import { conf, program } from '../'
 
 export const scannerCommand = async (
   name: string,
   options: { checkContent?: boolean; checkDependencies?: boolean },
 ) => {
-  const conf = new Conf({ projectName: 'rapidapp' })
-
-  if (program.opts().resetPreferences) {
-    conf.clear()
-    console.log('Preferences reset successfully')
-    return
-  }
-
   const spinner = ora('Scanning project')
   spinner.color = 'green'
   spinner.start()
 
-  const preferences = (conf.get('preferences') || {}) as { checkContent?: boolean; checkDependencies?: boolean }
+  const preferences = (conf.get('scanner') || {}) as { checkContent?: boolean; checkDependencies?: boolean }
 
   const projectPath = name || process.cwd()
 
@@ -41,11 +31,11 @@ export const scannerCommand = async (
   }
 
   if (process.argv.includes('--check-content') || process.argv.includes('--no-check-content')) {
-    preferences.checkContent = options.checkContent ?? true
+    preferences.checkContent = options.checkContent
   }
 
   if (process.argv.includes('--check-dependencies') || process.argv.includes('--no-check-dependencies')) {
-    preferences.checkDependencies = options.checkDependencies ?? true
+    preferences.checkDependencies = options.checkDependencies
   }
 
   try {
@@ -68,6 +58,6 @@ export const scannerCommand = async (
   } catch {
     spinner.fail()
   } finally {
-    conf.set('preferences', preferences)
+    conf.set('scanner', preferences)
   }
 }

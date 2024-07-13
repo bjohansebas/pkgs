@@ -1,19 +1,37 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander'
+import { Argument, Command } from 'commander'
+import Conf from 'conf'
 import { green } from 'picocolors'
 
 import packageJson from '../package.json'
+import { configCommand } from './commands/config'
 import { scannerCommand } from './commands/scan'
 import { checkUpdates } from './utils/checkUpdates'
+
+export const conf = new Conf({
+  projectName: 'rapidapp',
+  schema: {
+    scanner: {
+      type: 'object',
+      default: { checkDependencies: true, checkContent: true },
+    },
+  },
+})
 
 export const program = new Command(packageJson.name)
   .version(packageJson.version)
   .usage(`${green('[command]')} ${green('[options]')}`)
-  .option('--reset-preferences', 'explicitly tell the CLI to reset any stored preferences')
   .hook('postAction', async () => {
     await checkUpdates()
   })
+
+program
+  .command('config')
+  // TODO: support all option
+  .addArgument(new Argument('[command]', 'get global options for commands').choices(['scanner', 'all']))
+  .option('--reset', 'explicitly tell the CLI to reset any stored preferences')
+  .action(configCommand)
 
 // program
 //   .command('add')
