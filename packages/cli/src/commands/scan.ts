@@ -47,7 +47,7 @@ export const scannerCommand = async (
   if (process.argv.includes('--check-dependencies') || process.argv.includes('--no-check-dependencies')) {
     preferences.checkDependencies = options.checkDependencies ?? true
   }
-  console.log(preferences.checkDependencies)
+
   try {
     const resolvedProjectPath = path.resolve(projectPath)
 

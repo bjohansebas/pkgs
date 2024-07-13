@@ -2,7 +2,10 @@ import path from 'node:path'
 
 import { findPackageJson } from '@/helpers'
 import { generatePackages } from '@/helpers/generate-packages'
+import { readPackageJson } from '@/utils/package'
 import { describe, expect, it } from 'vitest'
+
+const root = `${process.cwd()}/tests/packages`
 
 describe('find package json', () => {
   it('contain many packages without package.json', async () => {
@@ -155,5 +158,85 @@ describe('generate packages with files', () => {
     expect(result[0].files.length).toBe(2)
     expect(result[4999].path).toBe('package9998')
     expect(result[4999].files.length).toBe(2)
+  })
+})
+
+describe('read package.json', async () => {
+  it('should return null when no package.json is found in files array', async () => {
+    const files = ['src/index.js', 'README.md']
+    const result = await readPackageJson(files, root)
+
+    expect(result).toBeNull()
+  })
+
+  it('should return a PackageJson object with dependencies when package.json is found', async () => {
+    const files = ['src/index.js', 'package.json', 'README.md']
+    const result = await readPackageJson(files, root)
+
+    expect(result?.dependencies).not.toBeUndefined()
+    expect(result?.dependencies).toEqual({
+      'fast-glob': '3.3.2',
+      'object.groupby': '1.0.3',
+      'parse-gitignore': '2.0.0',
+    })
+  })
+
+  it('should return a PackageJson object with devDependencies when package.json is found', async () => {
+    const files = ['src/index.js', 'package.json', 'README.md']
+    const result = await readPackageJson(files, root)
+
+    expect(result?.devDependencies).not.toBeUndefined()
+    expect(result?.devDependencies).toEqual({
+      '@rapidapp/config': 'workspace:*',
+      '@types/node': '20.14.10',
+      '@types/object.groupby': '1.0.4',
+      '@types/parse-gitignore': '1.0.2',
+      tsup: '8.1.0',
+      typescript: '5.5.3',
+      vitest: '2.0.2',
+    })
+  })
+
+  it('should return a PackageJson object with prettier when package.json is found', async () => {
+    const files = ['src/index.js', 'package.json', 'README.md']
+    const result = await readPackageJson(files, root)
+
+    expect(result?.prettier).not.toBeUndefined()
+    expect(result?.prettier).toEqual({
+      endOfLine: 'auto',
+    })
+  })
+
+  it('should return a PackageJson object with eslintConfig when package.json is found', async () => {
+    const files = ['src/index.js', 'package.json', 'README.md']
+    const result = await readPackageJson(files, root)
+
+    expect(result?.eslintConfig).not.toBeUndefined()
+    expect(result?.eslintConfig).toEqual({
+      env: { browser: true },
+    })
+  })
+
+  it('should return a PackageJson object with scripts when package.json is found', async () => {
+    const files = ['src/index.js', 'package.json', 'README.md']
+    const result = await readPackageJson(files, root)
+
+    expect(result?.scripts).not.toBeUndefined()
+    expect(result?.scripts).toEqual({
+      clean: 'node ../../scripts/rm.mjs dist',
+      dev: 'tsup --watch',
+      build: 'tsup',
+      prepublishOnly: 'cd ../../ && turbo run build',
+      test: 'vitest',
+    })
+  })
+
+  it('should return a PackageJson object with only path when package.json is found without optional fields', async () => {
+    const files = ['src/index.js', 'optionalFields/package.json', 'README.md']
+
+    const result = await readPackageJson(files, root)
+    expect(result).toEqual({
+      path: 'optionalFields/package.json',
+    })
   })
 })

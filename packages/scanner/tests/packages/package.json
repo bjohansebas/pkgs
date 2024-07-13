@@ -1,0 +1,63 @@
+{
+  "name": "test-package",
+  "version": "0.1.0",
+  "author": "Sebastian Beltran <bjohansebas@gmail.com>",
+  "description": "Simple scan the technologies used in a TypeScript/JavaScript project.",
+  "keywords": ["frameworks", "scanner", "files", "projects"],
+  "license": "MPL-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    },
+    "./helpers": {
+      "types": "./dist/helpers.d.ts",
+      "import": "./dist/helpers.mjs",
+      "default": "./dist/helpers.js"
+    }
+  },
+  "sideEffects": false,
+  "prettier": { "endOfLine": "auto" },
+  "eslintConfig": { "env": { "browser": true } },
+  "files": ["dist"],
+  "scripts": {
+    "clean": "node ../../scripts/rm.mjs dist",
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "prepublishOnly": "cd ../../ && turbo run build",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "fast-glob": "3.3.2",
+    "object.groupby": "1.0.3",
+    "parse-gitignore": "2.0.0"
+  },
+  "devDependencies": {
+    "@rapidapp/config": "workspace:*",
+    "@types/node": "20.14.10",
+    "@types/object.groupby": "1.0.4",
+    "@types/parse-gitignore": "1.0.2",
+    "tsup": "8.1.0",
+    "typescript": "5.5.3",
+    "vitest": "2.0.2"
+  },
+  "homepage": "https://github.com/bjohansebas/rapidapp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bjohansebas/rapidapp.git",
+    "directory": "packages/scanner"
+  },
+  "bugs": {
+    "url": "https://github.com/bjohansebas/rapidapp/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "pnpm@9.5.0",
+  "publishConfig": {
+    "access": "public"
+  }
+}

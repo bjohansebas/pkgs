@@ -1,11 +1,11 @@
 import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 
 import type { PackageJson } from '@/types'
 
 // TODO: support .yaml https://github.com/pnpm/pnpm/pull/1799
 // TODO: support .json5 https://github.com/pnpm/pnpm/pull/1799
-
-export async function readPackageJson(files: string[]): Promise<PackageJson | null> {
+export async function readPackageJson(files: string[], root: string): Promise<PackageJson | null> {
   const pathPackage = files.find((file) => {
     const splitPath = file.split('/')
 
@@ -19,7 +19,7 @@ export async function readPackageJson(files: string[]): Promise<PackageJson | nu
   }
 
   try {
-    const file = JSON.parse(await readFile(pathPackage, 'utf-8'))
+    const file = JSON.parse(await readFile(path.join(root, pathPackage), 'utf-8'))
 
     if (file.dependencies != null) packageJson.dependencies = file.dependencies
     if (file.devDependencies != null) packageJson.devDependencies = file.devDependencies

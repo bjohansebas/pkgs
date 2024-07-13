@@ -6,7 +6,7 @@ import type { ConfigReport } from '@/types'
 import { resolveESLint } from '@/utils/eslint'
 
 export async function resolveFiles(files: string[], config: ConfigReport) {
-  const contentPackageJson = await readPackageJson(files)
+  const contentPackageJson = await readPackageJson(files, config.root)
 
   const [biomeConfig, prettierConfig, eslintConfig] = await Promise.all([
     resolveBiomeConfig(files, config, {
