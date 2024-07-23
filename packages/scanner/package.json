@@ -30,15 +30,15 @@
   },
   "devDependencies": {
     "@rapidapp/config": "workspace:*",
-    "@types/node": "20.14.10",
+    "@types/node": "20.14.11",
     "@types/object.groupby": "1.0.4",
     "@types/parse-gitignore": "1.0.2",
     "fast-glob": "3.3.2",
     "object.groupby": "1.0.3",
     "parse-gitignore": "2.0.0",
-    "tsup": "8.1.0",
-    "typescript": "5.5.3",
-    "vitest": "2.0.2"
+    "tsup": "8.2.2",
+    "typescript": "5.5.4",
+    "vitest": "2.0.4"
   },
   "homepage": "https://github.com/bjohansebas/rapidapp",
   "repository": {
@@ -52,7 +52,7 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "pnpm@9.5.0",
+  "packageManager": "pnpm@9.6.0",
   "publishConfig": {
     "access": "public"
   }
