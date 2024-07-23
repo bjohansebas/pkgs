@@ -38,23 +38,23 @@ export const program = new Command(packageJson.name)
     await checkUpdates()
   })
 
+// TODO: add description
 program
   .command('config')
   .addArgument(new Argument('[command]', 'get global options for commands').choices(['general', 'scanner', 'all']))
   .option('--reset', 'explicitly tell the CLI to reset any stored preferences')
   .action(configCommand)
 
+// TODO: support git hooks
+// TODO: support oxc
+// TODO: add description
 // program
 //   .command('add')
-//   .argument('[project-directory]')
-//   .addOption(new Option('--formatter, -f [tool]').choices(['biome', 'prettier']))
-//   // TODO: support oxc
-//   .addOption(new Option('--linter, -l [tool]').choices(['eslint', 'oxc', 'biome']))
-//   // TODO: support git hooks
+//   .addArgument(new Argument('[tools...]').choices(['biome', 'prettier', 'eslint']))
 //   .action(addCommand)
-//   .allowUnknownOption()
 
-//TODO: add option --output -o support csv, json yaml html table
+// TODO: add option --output -o support csv, json yaml html table
+// TODO: add description
 program
   .command('scan')
   .argument('[project-directory]')
@@ -64,5 +64,7 @@ program
   .option('--no-check-dependencies')
   .action(scannerCommand)
   .allowUnknownOption()
+
+export const generalOpts = program.opts()
 
 program.parse(process.argv)

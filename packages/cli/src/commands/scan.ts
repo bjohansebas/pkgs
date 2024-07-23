@@ -5,7 +5,7 @@ import { scanFolder } from '@rapidapp/scanner/helpers'
 import ora from 'ora'
 import { cyan, green } from 'picocolors'
 
-import { conf, program } from '../'
+import { conf, generalOpts, program } from '../'
 
 export const scannerCommand = async (
   name: string,
@@ -31,8 +31,8 @@ export const scannerCommand = async (
     process.exit(1)
   }
 
-  if (program.opts().mode) {
-    preferencesGeneral.mode = program.opts().mode
+  if (generalOpts.mode) {
+    preferencesGeneral.mode = generalOpts.mode
   }
 
   if (process.argv.includes('--check-content') || process.argv.includes('--no-check-content')) {
