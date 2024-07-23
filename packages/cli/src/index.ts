@@ -5,8 +5,7 @@ import Conf from 'conf'
 import { green } from 'picocolors'
 
 import packageJson from '../package.json'
-import { configCommand } from './commands/config'
-import { scannerCommand } from './commands/scan'
+import { addCommand, configCommand, scannerCommand } from './commands'
 import { checkUpdates } from './utils/checkUpdates'
 
 export const conf = new Conf({
@@ -48,10 +47,10 @@ program
 // TODO: support git hooks
 // TODO: support oxc
 // TODO: add description
-// program
-//   .command('add')
-//   .addArgument(new Argument('[tools...]').choices(['biome', 'prettier', 'eslint']))
-//   .action(addCommand)
+program
+  .command('add')
+  .addArgument(new Argument('[tools...]').choices(['biome', 'prettier', 'eslint']))
+  .action(addCommand)
 
 // TODO: add option --output -o support csv, json yaml html table
 // TODO: add description

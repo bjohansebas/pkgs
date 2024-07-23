@@ -1,44 +1,54 @@
-import { cyan, green } from 'picocolors'
-import { program } from '../'
+import prompts from 'prompts'
 
-export function addCommand(name: string) {
-  const projectPath = name
-  const options = this.opts()
+export async function addCommand(tools: string[]) {
+  const projectPath = process.cwd()
 
-  if (!projectPath) {
-    console.log(
-      `\nPlease specify the project directory:\n  ${cyan(program.name())} ${cyan('add')} ${green(
-        '<project-directory>',
-      )} ${cyan('[tools]')}\nFor example:\n  ${cyan(program.name())} ${cyan('add')} ${green('website')} ${cyan(
-        '--linter eslint',
-      )}\n\nRun ${cyan(`${program.name()} help add`)} to see all options.`,
-    )
+  if (tools.length === 0) {
+    const { type } = await prompts([
+      {
+        type: 'multiselect',
+        name: 'type',
+        message: 'Select type of tools to add',
+        choices: [
+          { title: 'Linter', value: 'linter' },
+          { title: 'Formatter', value: 'formatter' },
+        ],
+      },
+    ])
 
-    process.exit(1)
-  }
+    if (!Array.isArray(type)) {
+      return
+    }
 
-  // TODO: Show a prompt to select the tool to add
-  if (Object.keys(options).length === 0) {
-    console.log(
-      `\nPlease specify the tool to add:\n  ${cyan(program.name())} ${cyan('add <project-directory>')} ${green(
-        '[tools]',
-      )}\nFor example:\n  ${cyan(program.name())} ${cyan('add website')} ${green(
-        '--linter eslint --formatter prettier',
-      )}\n\nRun ${cyan(`${program.name()} help add`)} to see all options.`,
-    )
+    // TODO: if select biome, ask if want to formatter
+    if (type.includes('linter')) {
+      const { linter } = await prompts([
+        {
+          type: 'select',
+          name: 'linter',
+          message: 'Select linter to add',
+          choices: [
+            { title: 'Biome', value: 'biome' },
+            { title: 'ESLint', value: 'eslint' },
+          ],
+        },
+      ])
+    }
 
-    process.exit(1)
-  }
+    if (type.includes('formatter')) {
+      const { formatter } = await prompts([
+        {
+          type: 'select',
+          name: 'formatter',
+          message: 'Select linter to add',
+          choices: [
+            { title: 'Biome', value: 'biome' },
+            { title: 'Prettier', value: 'prettier' },
+          ],
+        },
+      ])
+    }
 
-  if (options.L != null && options.L !== true) {
-    console.log(options.L)
-  }
-
-  if (options.F != null && options.F !== true) {
-    console.log(options.F)
-  }
-
-  if (options.Gh != null && options.Gh !== true) {
-    console.log(options.Gh)
+    return
   }
 }
