@@ -1,3 +1,5 @@
+import type { BiomeConfig, ESLintConfig, PrettierConfig } from './configs'
+
 export type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun' | 'deno'
 
 export type Languages = 'javascript' | 'typescript'
@@ -27,8 +29,8 @@ export interface Project extends Package {
 export interface Package {
   name?: string
   languages: Languages[] | null
-  linters: Linters[] | null
-  formatter: Formatters[] | null
+  linters: Linters[] | null | { biome: BiomeConfig | null; eslint: ESLintConfig | null }
+  formatter: Formatters[] | null | { biome: BiomeConfig | null; prettier: PrettierConfig | null }
   // css: string[]
   // frameworks: string[]
   // database: string
@@ -46,6 +48,7 @@ export interface PackageJson {
 
 export interface ConfigReport {
   root: string
+  mode?: 'verbose' | 'quite'
   checkContent?: boolean
   checkDependencies?: boolean
 }

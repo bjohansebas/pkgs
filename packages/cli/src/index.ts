@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { Argument, Command } from 'commander'
+import { Argument, Command, Option } from 'commander'
 import Conf from 'conf'
 import { green } from 'picocolors'
 
@@ -16,20 +16,31 @@ export const conf = new Conf({
       type: 'object',
       default: { checkDependencies: true, checkContent: true },
     },
+    general: {
+      type: 'object',
+      default: {
+        mode: 'quite',
+      },
+    },
   },
 })
 
 export const program = new Command(packageJson.name)
   .version(packageJson.version)
   .usage(`${green('[command]')} ${green('[options]')}`)
+  .addOption(
+    new Option('-m, --mode <arg>', 'select the mode in which the information will be printed.').choices([
+      'quite',
+      'verbose',
+    ]),
+  )
   .hook('postAction', async () => {
     await checkUpdates()
   })
 
 program
   .command('config')
-  // TODO: support all option
-  .addArgument(new Argument('[command]', 'get global options for commands').choices(['scanner', 'all']))
+  .addArgument(new Argument('[command]', 'get global options for commands').choices(['general', 'scanner', 'all']))
   .option('--reset', 'explicitly tell the CLI to reset any stored preferences')
   .action(configCommand)
 
@@ -44,11 +55,9 @@ program
 //   .allowUnknownOption()
 
 //TODO: add option --output -o support csv, json yaml html table
-//TODO: add option --verbose --quite
 program
   .command('scan')
   .argument('[project-directory]')
-  .option('-m, --mode <arg>', 'select the mode in which the information will be printed.')
   .option('--no-check-content')
   .option('--check-content')
   .option('--check-dependencies')

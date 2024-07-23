@@ -1,9 +1,10 @@
 import { getLinters } from '@/helpers'
+import type { ConfigReport } from '@/types'
 import { describe, expect, it, vi } from 'vitest'
 
 vi.stubEnv('NODE_ENV', 'production')
 
-describe('getLinters()', () => {
+describe('mode: quite', () => {
   describe('biome', () => {
     it('should return ["biome"] when biome is installed and linter is enabled and checkDependencies(true)', () => {
       const report = getLinters({
@@ -158,6 +159,27 @@ describe('getLinters()', () => {
     const biome = { installed: false, formatter: false }
     const eslint = { path: null, installed: false, config: false }
     const config = { root: '/some/path', checkContent: true, checkDependencies: true }
+
+    const result = getLinters({ biome, eslint, config })
+
+    expect(result).toBeNull()
+  })
+})
+describe('mode: verbose', () => {
+  it('should return both eslint and biome when config.mode is "verbose"', () => {
+    const biome = { path: '/path/to/biome', installed: true, linter: true }
+    const eslint = { config: false, installed: true }
+    const config: ConfigReport = { mode: 'verbose', checkDependencies: true, checkContent: true, root: './project' }
+
+    const result = getLinters({ biome, eslint, config })
+
+    expect(result).toEqual({ eslint, biome })
+  })
+
+  it('should return null when no linters meet criteria and config.mode is not "verbose"', () => {
+    const biome = { installed: true, linter: false }
+    const eslint = { config: false, installed: false }
+    const config: ConfigReport = { mode: 'quite', checkDependencies: false, checkContent: false, root: 'project' }
 
     const result = getLinters({ biome, eslint, config })
 

@@ -5,7 +5,11 @@ export function getFormatters({
   biome,
   prettier,
   config,
-}: { biome: BiomeConfig | null; prettier: PrettierConfig | null; config: ConfigReport }): Formatters[] | null {
+}: { biome: BiomeConfig | null; prettier: PrettierConfig | null; config: ConfigReport }) {
+  if (config.mode === 'verbose') {
+    return { prettier, biome }
+  }
+
   const result: Formatters[] = []
 
   if (biome !== null) {

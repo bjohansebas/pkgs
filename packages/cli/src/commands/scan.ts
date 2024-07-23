@@ -15,7 +15,8 @@ export const scannerCommand = async (
   spinner.color = 'green'
   spinner.start()
 
-  const preferences = (conf.get('scanner') || {}) as { checkContent?: boolean; checkDependencies?: boolean }
+  const preferencesScanner = (conf.get('scanner') || {}) as { checkContent?: boolean; checkDependencies?: boolean }
+  const preferencesGeneral = (conf.get('general') || {}) as { mode?: 'verbose' | 'quite' }
 
   const projectPath = name || process.cwd()
 
@@ -30,12 +31,16 @@ export const scannerCommand = async (
     process.exit(1)
   }
 
+  if (program.opts().mode) {
+    preferencesGeneral.mode = program.opts().mode
+  }
+
   if (process.argv.includes('--check-content') || process.argv.includes('--no-check-content')) {
-    preferences.checkContent = options.checkContent
+    preferencesScanner.checkContent = options.checkContent
   }
 
   if (process.argv.includes('--check-dependencies') || process.argv.includes('--no-check-dependencies')) {
-    preferences.checkDependencies = options.checkDependencies
+    preferencesScanner.checkDependencies = options.checkDependencies
   }
 
   try {
@@ -45,8 +50,9 @@ export const scannerCommand = async (
 
     const report = await generateReport(files, {
       root: resolvedProjectPath,
-      checkContent: preferences.checkContent ?? true,
-      checkDependencies: preferences.checkDependencies ?? true,
+      checkContent: preferencesScanner.checkContent ?? true,
+      checkDependencies: preferencesScanner.checkDependencies ?? true,
+      mode: preferencesGeneral.mode,
     })
 
     spinner.stop()
@@ -58,6 +64,7 @@ export const scannerCommand = async (
   } catch {
     spinner.fail()
   } finally {
-    conf.set('scanner', preferences)
+    conf.set('scanner', preferencesScanner)
+    conf.set('general', preferencesGeneral)
   }
 }

@@ -23,6 +23,7 @@ export const configCommand = async (name: 'scanner' | 'all', options: { reset?: 
     }
 
     console.dir({
+      general: conf.get('general'),
       scanner: conf.get('scanner'),
     })
 

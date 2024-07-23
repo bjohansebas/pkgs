@@ -1,9 +1,10 @@
 import { getFormatters } from '@/helpers'
+import type { ConfigReport } from '@/types'
 import { describe, expect, it, vi } from 'vitest'
 
 vi.stubEnv('NODE_ENV', 'production')
 
-describe('getFormatters()', () => {
+describe('mode: quite', () => {
   describe('biome', () => {
     it('should return ["biome"] when biome is installed and formatter is true and checkDependencies(true)', () => {
       const report = getFormatters({
@@ -158,6 +159,28 @@ describe('getFormatters()', () => {
     const biome = { installed: false, formatter: false }
     const prettier = { path: null, installed: false, config: false }
     const config = { root: '/some/path', checkContent: true, checkDependencies: true }
+
+    const result = getFormatters({ biome, prettier, config })
+
+    expect(result).toBeNull()
+  })
+})
+
+describe('mode: verbose', () => {
+  it('should return both prettier and biome when config.mode is "verbose"', () => {
+    const biome = { path: '/path/to/biome', installed: true, linter: true }
+    const prettier = { config: false, installed: true }
+    const config: ConfigReport = { mode: 'verbose', checkDependencies: true, checkContent: true, root: './project' }
+
+    const result = getFormatters({ biome, prettier, config })
+
+    expect(result).toEqual({ prettier, biome })
+  })
+
+  it('should return null when no linters meet criteria and config.mode is not "verbose"', () => {
+    const biome = { installed: true, linter: false }
+    const prettier = { config: false, installed: false }
+    const config: ConfigReport = { mode: 'quite', checkDependencies: false, checkContent: false, root: 'project' }
 
     const result = getFormatters({ biome, prettier, config })
 

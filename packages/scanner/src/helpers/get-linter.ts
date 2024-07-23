@@ -6,7 +6,11 @@ export function getLinters({
   biome,
   eslint,
   config,
-}: { biome: BiomeConfig | null; eslint: ESLintConfig | null; config: ConfigReport }): Linters[] | null {
+}: { biome: BiomeConfig | null; eslint: ESLintConfig | null; config: ConfigReport }) {
+  if (config.mode === 'verbose') {
+    return { eslint, biome }
+  }
+
   const result: Linters[] = []
 
   if (biome !== null) {
