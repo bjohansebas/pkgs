@@ -49,6 +49,10 @@
     "url": "git+https://github.com/bjohansebas/pkgs.git",
     "directory": "packages/scanner"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/bjohansebas"
+  },
   "bugs": {
     "url": "https://github.com/bjohansebas/pkgs/issues"
   },
