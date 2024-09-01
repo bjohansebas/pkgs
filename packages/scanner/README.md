@@ -1,19 +1,22 @@
 # @rapidapp/scanner
 
+[![NPM Version][npm-version-image]][npm-url]
+[![NPM Install Size][npm-install-size-image]][npm-install-size-url]
+
 > A simple scan the technologies used in a TypeScript/JavaScript project
 
 ## Install
 
 ```sh
-npm install ora
+npm install @bjohansebas/scanner
 ```
 
 ## Usage
 
 
 ```js
-import { generateReport } from '@rapidapp/scanner'
-import { scanFolder } from '@rapidapp/scanner/helpers'
+import { generateReport } from '@bjohansebas/scanner'
+import { scanFolder } from '@bjohansebas/scanner/helpers'
 
 const files = await scanFolder(process.cwd())
 
@@ -63,40 +66,11 @@ Type: `string`
 
 Path where it will start searching for all files
 
-## CLI
-
-### Installation
-
-```bash
-npm i -g rapidapp
-```
-
-### Usage
-
-```bash
-rapidapp scan <project-directory>
-```
-
-### Output
-
-```json
-[
-  "name": "project-name",
-  "packages": [
-    {
-      "name": "package-name",
-      "languages": ["typescript","javascript"],
-      "linters": ["eslint"],
-      "formatter": ["prettier"]
-    }
-  ],
-  "languages": ["typescript","javascript"],
-  "package_manager": "pnpm",
-  "linters": ["biome"],
-  "formatter": ["biome"]
-]
-``` 
-
 ## License
 
-[Mozilla Public License Version 2.0](https://github.com/bjohansebas/rapidapp/blob/main/LICENSE)
+[Mozilla Public License Version 2.0](https://github.com/bjohansebas/pkgs/blob/main/LICENSE)
+
+[npm-install-size-image]: https://badgen.net/packagephobia/install/@bjohansebas/scanner
+[npm-install-size-url]: https://packagephobia.com/result?p=%40bjohansebas%2Fscanner
+[npm-url]: https://npmjs.com/package/@bjohansebas/scanner
+[npm-version-image]: https://badgen.net/npm/v/@bjohansebas/scanner
