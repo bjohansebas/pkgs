@@ -20,7 +20,7 @@
     "generate-docs": "node ../../scripts/generate-help-docs.mjs ."
   },
   "devDependencies": {
-    "@rapidapp/config": "workspace:*",
+    "@bjohansebas/config": "0.1.0",
     "@rapidapp/scanner": "workspace:*",
     "@types/node": "20.14.11",
     "@types/prompts": "2.4.9",

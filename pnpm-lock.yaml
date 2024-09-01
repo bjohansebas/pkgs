@@ -21,8 +21,6 @@ importers:
         specifier: 2.0.9
         version: 2.0.9
 
-  config: {}
-
   docs:
     dependencies:
       '@astrojs/check':
@@ -40,9 +38,9 @@ importers:
 
   packages/cli:
     devDependencies:
-      '@rapidapp/config':
-        specifier: workspace:*
-        version: link:../../config
+      '@bjohansebas/config':
+        specifier: 0.1.0
+        version: 0.1.0
       '@rapidapp/scanner':
         specifier: workspace:*
         version: link:../scanner
@@ -82,9 +80,9 @@ importers:
 
   packages/scanner:
     devDependencies:
-      '@rapidapp/config':
-        specifier: workspace:*
-        version: link:../../config
+      '@bjohansebas/config':
+        specifier: 0.1.0
+        version: 0.1.0
       '@types/node':
         specifier: 20.14.11
         version: 20.14.11
@@ -327,6 +325,9 @@ packages:
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
+
+  '@bjohansebas/config@0.1.0':
+    resolution: {integrity: sha512-LiGpzkVDlXLpPOGVjYFmCqT2PzG9phytjYQpErTIB1DmxizpBLiKk3QoHQ7vtZ1x6+ISXr0XB+uy0Sh04O9DjQ==}
 
   '@ctrl/tinycolor@4.1.0':
     resolution: {integrity: sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==}
@@ -3654,6 +3655,8 @@ snapshots:
 
   '@biomejs/cli-win32-x64@1.8.3':
     optional: true
+
+  '@bjohansebas/config@0.1.0': {}
 
   '@ctrl/tinycolor@4.1.0': {}
 

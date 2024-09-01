@@ -29,7 +29,7 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@rapidapp/config": "workspace:*",
+    "@bjohansebas/config": "0.1.0",
     "@types/node": "20.14.11",
     "@types/object.groupby": "1.0.4",
     "@types/parse-gitignore": "1.0.2",
