@@ -1,7 +1,7 @@
 import path from 'node:path'
 
-import { generateReport } from '@rapidapp/scanner'
-import { scanFolder } from '@rapidapp/scanner/helpers'
+import { generateReport } from '@bjohansebas/scanner'
+import { scanFolder } from '@bjohansebas/scanner/helpers'
 import ora from 'ora'
 import { cyan, green } from 'picocolors'
 
