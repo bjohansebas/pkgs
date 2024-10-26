@@ -3,6 +3,9 @@
 [![NPM Version][npm-version-image]][npm-url]
 [![NPM Install Size][npm-install-size-image]][npm-install-size-url]
 
+> [!WARNING]
+> This project is still a work in progress.
+
 > A simple scan the technologies used in a TypeScript/JavaScript project
 
 ## Install
